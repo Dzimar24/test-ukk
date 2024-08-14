@@ -19,7 +19,7 @@ class Register extends CI_Controller
 
 	public function process()
 	{
-		// Mengatur aturan validasi form
+		//? Mengatur aturan validasi form
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|is_unique[user.Username]');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');

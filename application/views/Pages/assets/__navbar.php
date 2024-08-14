@@ -6,8 +6,9 @@
 					<span><i class="bi bi-collection"></i> Collection</span>
 				</a>
 			</li>
+			<?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'petugas') : ?>
 			<li class="menu-item">
-				<a href="#" class='menu-link'>
+				<a href="<?= site_url('Admin/CategoryBook') ?>" class='menu-link'>
 					<span><i class="bi bi-list-task"></i> Category Book</span>
 				</a>
 			</li>
@@ -16,6 +17,7 @@
 					<span><i class="bi bi-person"></i> User</span>
 				</a>
 			</li>
+			<?php endif; ?>
 			<?php if($this->session->userdata('level') == true) : ?>
 				
 			<?php else: ?>
