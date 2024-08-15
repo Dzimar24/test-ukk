@@ -40,6 +40,17 @@ class Category_model extends CI_Model {
 
   // ------------------------------------------------------------------------
 
+  // ------------------------------------------------------------------------
+	public function add($post)
+	{
+		# code...
+		$dataSave['NamaKategori'] = $post['name'];
+
+		$this->db->insert('kategori', $dataSave);
+		
+	}
+	// ------------------------------------------------------------------------
+
 }
 
 /* End of file Category_model.php */

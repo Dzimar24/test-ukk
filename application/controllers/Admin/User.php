@@ -20,21 +20,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
-    
-  public function __construct()
-  {
-    parent::__construct();
+
+	public function __construct()
+	{
+		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
-  }
+	}
 
-  public function index()
-  {
-    // 
+	public function index()
+	{
+		// 
 		$data['titlePage'] = 'User';
 		$data['viewData'] = $this->user->viewDataUser();
 		$this->template->load('template', 'Pages/admin/user', $data);
-  }
+	}
 
 	public function add()
 	{
@@ -48,14 +48,15 @@ class User extends CI_Controller
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', 'Error Bro !!');
+			//! File view User  
 			$data['titlePage'] = 'User';
+			$data['viewData'] = $this->user->viewDataUser();
 			$this->template->load('template', 'Pages/admin/user', $data);
 		} else {
 			$post = $this->input->post(null, TRUE);
 			$this->user->AddUser($post);
 			$this->session->set_flashdata('success', 'User Successfully Added');
-			$data['titlePage'] = 'User';
-			$this->template->load('template', 'Pages/admin/user', $data);
+			$this->template->load('template', 'Pages/admin/user');
 		}
 	}
 

@@ -14,8 +14,6 @@
 	</div>
 </div>
 
-<?= validation_errors(); ?>
-
 <div class="row">
 	<div class="col-1">
 
@@ -31,27 +29,27 @@
 					<div class="row">
 						<div class="form-group">
 							<label for="formName">Name : </label>
-							<input type="text" name="name" placeholder="Enter Name" class="form-control" id="formName"
-								required>
+							<input type="text" name="name" placeholder="Enter Name" class="form-control" id="formName" required>
+							<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
 						</div>
 						<div class="col-md-6">
 
 							<div class="form-group">
 								<label for="formEmail">Email :</label>
-								<input type="email" name="email" class="form-control" placeholder="Enter Email" id="formEmail"
-									required>
+								<input type="email" name="email" class="form-control" placeholder="Enter Email" id="formEmail" required>
+								<?= form_error('email', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 							<div class="form-group">
 								<label for="formPassword">Password : </label>
-								<input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter Password"
-									required>
+								<input type="password" id="formPassword" name="password" class="form-control" placeholder="Enter Password" required>
+								<?= form_error('password', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label for="formUsername">Username : </label>
-								<input type="text" class="form-control" name="username" placeholder="Enter Username"
-									id="formUsername" required>
+								<input type="text" class="form-control" name="username" placeholder="Enter Username" id="formUsername" required>
+								<?= form_error('username', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 
 							<div class="form-group">
@@ -62,13 +60,14 @@
 									<option value="petugas">Petugas</option>
 									<option value="peminjam">Peminjam</option>
 								</select>
+								<?= form_error('level', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 						</div>
 						<div class="form-group mt-2">
 							<div class="form-floating">
-								<textarea class="form-control" placeholder="Leave a comment here" name="alamat" id="floatingTextarea"
-									required></textarea>
+								<textarea class="form-control" placeholder="Leave a comment here" name="alamat" id="floatingTextarea" required></textarea>
 								<label for="floatingTextarea">Alamat</label>
+								<?= form_error('alamat', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 						</div>
 						<style>

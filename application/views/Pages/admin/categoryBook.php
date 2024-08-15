@@ -31,8 +31,7 @@
 					<div class="row">
 						<div class="form-group">
 							<label for="formName">Name : </label>
-							<input type="text" name="name" placeholder="Enter Name" class="form-control" id="formName"
-								required>
+							<input type="text" name="name" placeholder="Enter Name" class="form-control" id="formName" required>
 						</div>
 						<style>
 							.button-custom {

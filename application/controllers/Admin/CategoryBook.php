@@ -20,26 +20,42 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class CategoryBook extends CI_Controller
 {
-    
-  public function __construct()
-  {
-    parent::__construct();
-		$this->load->model('Category_model', 'category');
-  }
 
-  public function index()
-  {
-    //
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('form_validation');
+		$this->load->model('Category_model', 'category');
+	}
+
+	public function index()
+	{
+		//
 
 		$data['titlePage'] = 'Category Book';
 		$data['viewData'] = $this->category->viewDataCategory();
 		$this->template->load('template', 'Pages/admin/categoryBook', $data);
-  }
+	}
 
 	public function add()
 	{
 		# code...
-		show_source('application/controllers/Admin/CategoryBook.php');
+		$this->form_validation->set_rules('name', 'Name', 'trim|required|unique[kategori.NamaKategori]');
+		
+		if ($this->form_validation->run() == FALSE) {
+			# code...
+			$this->session->set_flashdata('error', 'Error Bro !!');
+			$data['titlePage'] = 'Category Book';
+			$this->template->load('template', 'Pages/admin/categoryBook', $data);
+		} else {
+			# code...
+			$post = $this->input->post(null, TRUE);
+			$this->category->add($post);
+			$this->session->set_flashdata('success', 'Success Bro !!');
+			$this->template->load('template', 'Pages/admin/categoryBook', $data);
+		}
+		
+		
 	}
 
 }
