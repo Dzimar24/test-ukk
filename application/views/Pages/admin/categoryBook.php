@@ -76,14 +76,29 @@
 								<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 							<style>
-								.button-custom {
-									display: flex;
-									justify-content: end;
-									margin-top: 20px;
-									margin-right: 25px;
+								.button-container {
+										display: flex;
+										justify-content: space-between;
+										margin-top: 20px;
+										padding: 0 25px;
+								}
+
+								.button-custom-back{
+									background-color: #4E31AA; /* Warna latar belakang */
+									color: white; /* Warna teks */
+									border: none; /* Hilangkan border default */
+									padding: 10px 20px; /* Padding tombol */
+									text-align: center; /* Rata tengah teks */
+									text-decoration: none; /* Hilangkan garis bawah teks */
+									display: inline-block; /* Display inline-block */
+									font-size: 16px; /* Ukuran font */
+									margin: 4px 2px; /* Margin */
+									cursor: pointer; /* Kursor pointer */
+									border-radius: 5px; /* Sudut border */
 								}
 							</style>
-							<div class="button-custom">
+							<div class="button-container">
+								<a class="button-custom-back" href="<?= site_url('Admin/CategoryBook') ?>"><i class="bi bi-arrow-left"></i> Back</a>
 								<button type="submit" class="btn btn-primary">Update Data</button>
 							</div>
 						</div>
@@ -120,18 +135,13 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php $no = 1;
-								foreach ($viewData as $vd): ?>
+								<?php $no = 1; foreach ($viewData as $vd): ?>
 									<tr>
 										<td><?= $no++; ?></td>
 										<td><?= ucwords($vd['NamaKategori']); ?></td>
 										<td>
-											<a class="btn btn-warning"
-												href="<?= site_url('Admin/CategoryBook/Edit/' . $vd['KategoriID']) ?>"><i
-													class="bi bi-pencil-square"></i> Update</a>
-											<a class="btn btn-danger ml-2"
-												href="<?= site_url('Admin/CategoryBook/Delete/' . $vd['KategoriID']) ?>"><i
-													class="bi bi-trash"></i> Delete</a>
+											<a class="btn btn-warning" href="<?= site_url('Admin/CategoryBook/Edit/' . $vd['KategoriID']) ?>"><i class="bi bi-pencil-square"></i> Update</a>
+											<a class="btn btn-danger ml-2 button-delete" href="<?= site_url('Admin/CategoryBook/deleted/' . $vd['KategoriID']) ?>"><i class="bi bi-trash"></i> Delete</a>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -145,6 +155,9 @@
 	</div>
 </div>
 <!-- End Table User -->
+
+<!-- JQuery -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 
 <!-- JS -->
 <!-- //? Alert if success -->
@@ -168,3 +181,25 @@
 		});
 	</script>
 <?php endif; ?>
+
+<script>
+	//? Alert for button delete category book
+	$('.button-delete').on('click', function(e) {
+		e.preventDefault();
+		const url = $(this).attr('href');
+		
+		Swal.fire({
+			title: "Are you sure?",
+			text: "Are you sure delete this data category book ?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.location.href = url;
+			}
+		});
+	});
+</script>

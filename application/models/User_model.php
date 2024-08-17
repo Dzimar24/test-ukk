@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
@@ -16,16 +16,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class User_model extends CI_Model {
+class User_model extends CI_Model
+{
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public function viewDataUser()
 	{
 		# code...
@@ -34,13 +35,13 @@ class User_model extends CI_Model {
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
 
-  // ------------------------------------------------------------------------
-  public function AddUser($post)
-  {
-    //? Insert To Database User
+	// ------------------------------------------------------------------------
+	public function AddUser($post)
+	{
+		//? Insert To Database User
 		$data['Username'] = $post['username'];
 		$data['Password'] = $post['password'];
 		$data['Email'] = $post['email'];
@@ -49,9 +50,17 @@ class User_model extends CI_Model {
 		$data['level'] = $post['level'];
 
 		$this->db->insert('user', $data);
-  }
+	}
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewDataEditUser($id){
+		$this->db->select('*')->from('user')->where('UserID', $id);
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
 
 }
 

@@ -45,6 +45,7 @@ class CategoryBook extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			# code...
 			$this->session->set_flashdata('error', 'Error Bro !!');
+			//? Page will be thrown into Category book page
 			$data['titlePage'] = 'Category Book';
 			$data['parameter'] = '';
 			$data['viewData'] = $this->category->viewDataCategory();
@@ -54,6 +55,7 @@ class CategoryBook extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->category->add($post);
 			$this->session->set_flashdata('success', 'Success Bro !!');
+			//? Page will be thrown into Category book page
 			$data['titlePage'] = 'Category Book';
 			$data['parameter'] = '';
 			$data['viewData'] = $this->category->viewDataCategory();
@@ -75,6 +77,14 @@ class CategoryBook extends CI_Controller
 		$nameCategory = $this->input->post('nameCategoryUpdate');
 		$this->category->editData($nameCategory);
 		$this->session->set_flashdata('success', 'Success Bro !!');
+		redirect('Admin/CategoryBook');
+	}
+
+	public function deleted($id)
+	{
+		# code...
+		$this->category->deleteData($id);
+		$this->session->set_flashdata('success', 'Success Deleted Data Category Book !!');
 		redirect('Admin/CategoryBook');
 	}
 

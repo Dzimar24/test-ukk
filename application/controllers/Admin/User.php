@@ -63,6 +63,15 @@ class User extends CI_Controller
 		}
 	}
 
+	public function edit($id){
+		# code...
+		$data['parameter'] = 'updateUserPage';
+		$data['titlePage'] = 'User';
+		$data['viewDataEdit'] = $this->user->viewDataEditUser($id);
+		$data['viewData'] = $this->user->viewDataUser();
+		$this->template->load('template', 'Pages/admin/user', $data);
+	}
+
 }
 
 
