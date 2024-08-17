@@ -47,6 +47,30 @@ class Category_model extends CI_Model {
 		$dataSave['NamaKategori'] = $post['name'];
 
 		$this->db->insert('kategori', $dataSave);
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewDataEditCategory($id){
+		# code...
+		$this->db->select('*')->from('kategori')->where('KategoriID', $id);
+
+		$query = $this->db->get()->row();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function editData($nameCategory){
+		$where = [
+			'KategoriID' => $this->input->post('id'),
+		];
+
+		$data = [
+			'NamaKategori' => $nameCategory
+		];
+
+		$this->db->update('kategori', $data, $where);
 		
 	}
 	// ------------------------------------------------------------------------

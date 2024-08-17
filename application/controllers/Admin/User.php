@@ -56,7 +56,10 @@ class User extends CI_Controller
 			$post = $this->input->post(null, TRUE);
 			$this->user->AddUser($post);
 			$this->session->set_flashdata('success', 'User Successfully Added');
-			$this->template->load('template', 'Pages/admin/user');
+			//! File view User  
+			$data['titlePage'] = 'User';
+			$data['viewData'] = $this->user->viewDataUser();
+			$this->template->load('template', 'Pages/admin/user', $data);
 		}
 	}
 

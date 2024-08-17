@@ -31,7 +31,7 @@ class CategoryBook extends CI_Controller
 	public function index()
 	{
 		//
-
+		$data['parameter'] = '';
 		$data['titlePage'] = 'Category Book';
 		$data['viewData'] = $this->category->viewDataCategory();
 		$this->template->load('template', 'Pages/admin/categoryBook', $data);
@@ -40,22 +40,42 @@ class CategoryBook extends CI_Controller
 	public function add()
 	{
 		# code...
-		$this->form_validation->set_rules('name', 'Name', 'trim|required|unique[kategori.NamaKategori]');
+		$this->form_validation->set_rules('name', 'Name', 'trim|required|is_unique[kategori.NamaKategori]');
 		
 		if ($this->form_validation->run() == FALSE) {
 			# code...
 			$this->session->set_flashdata('error', 'Error Bro !!');
 			$data['titlePage'] = 'Category Book';
+			$data['parameter'] = '';
+			$data['viewData'] = $this->category->viewDataCategory();
 			$this->template->load('template', 'Pages/admin/categoryBook', $data);
 		} else {
 			# code...
 			$post = $this->input->post(null, TRUE);
 			$this->category->add($post);
 			$this->session->set_flashdata('success', 'Success Bro !!');
+			$data['titlePage'] = 'Category Book';
+			$data['parameter'] = '';
+			$data['viewData'] = $this->category->viewDataCategory();
 			$this->template->load('template', 'Pages/admin/categoryBook', $data);
 		}
-		
-		
+	}
+
+	public function edit($id){
+		# code...
+		$data['parameter'] = 'updatePage';
+		$data['titlePage'] = 'Category Book';
+		$data['editData'] = $this->category->viewDataEditCategory($id);
+		$data['viewData'] = $this->category->viewDataCategory();
+
+		$this->template->load('template', 'Pages/admin/categoryBook', $data);
+	}
+
+	public function Update(){
+		$nameCategory = $this->input->post('nameCategoryUpdate');
+		$this->category->editData($nameCategory);
+		$this->session->set_flashdata('success', 'Success Bro !!');
+		redirect('Admin/CategoryBook');
 	}
 
 }

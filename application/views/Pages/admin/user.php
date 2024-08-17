@@ -33,7 +33,6 @@
 							<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
 						</div>
 						<div class="col-md-6">
-
 							<div class="form-group">
 								<label for="formEmail">Email :</label>
 								<input type="email" name="email" class="form-control" placeholder="Enter Email" id="formEmail" required>

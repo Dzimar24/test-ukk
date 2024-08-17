@@ -14,96 +14,136 @@
 	</div>
 </div>
 
-<?= validation_errors(); ?>
+<?php if ($parameter != "updatePage"): ?>
+	<!-- //! Input Form Add Category -->
+	<div class="row">
+		<div class="col-1">
 
+		</div>
+		<div class="col-10">
+			<section class="section mt-2">
+				<div class="card ">
+					<div class="card-header">
+						<h4 class="card-title"><i class="bi bi-plus"></i> Category Book</h4>
+					</div>
+					<div class="card-body">
+						<?= form_open('Admin/CategoryBook/Add') ?>
+						<div class="row">
+							<div class="form-group">
+								<label for="formName">Name Category Book: </label>
+								<input type="text" name="name" placeholder="Enter Name Category Book" class="form-control"
+									id="formName" required>
+								<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
+							</div>
+							<style>
+								.button-custom {
+									display: flex;
+									justify-content: end;
+									margin-top: 20px;
+									margin-right: 25px;
+								}
+							</style>
+							<div class="button-custom">
+								<button type="submit" class="btn btn-primary">Save Data</button>
+							</div>
+						</div>
+						<?= form_close(); ?>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<!-- //! End Input Form Add Category -->
+<?php else: ?>
+	<!-- //! Input Form Update Category -->
+	<div class="row">
+		<div class="col-1">
+
+		</div>
+		<div class="col-10">
+			<section class="section mt-2">
+				<div class="card ">
+					<div class="card-header">
+						<h4 class="card-title"><i class="bi bi-pencil-square"></i> Category Book</h4>
+					</div>
+					<div class="card-body">
+						<?= form_open('Admin/CategoryBook/Update') ?>
+						<div class="row">
+							<div class="form-group">
+								<label for="formName">Name Category Book: </label>
+								<input type="hidden" name="id" value="<?= $editData->KategoriID; ?>">
+								<input type="text" name="nameCategoryUpdate" value="<?= $editData->NamaKategori; ?>" class="form-control" id="formName" required>
+								<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
+							</div>
+							<style>
+								.button-custom {
+									display: flex;
+									justify-content: end;
+									margin-top: 20px;
+									margin-right: 25px;
+								}
+							</style>
+							<div class="button-custom">
+								<button type="submit" class="btn btn-primary">Update Data</button>
+							</div>
+						</div>
+						<?= form_close(); ?>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+	<!-- //! End Input Form Update Category -->
+<?php endif; ?>
+
+<!-- Table User -->
 <div class="row">
 	<div class="col-1">
 
 	</div>
 	<div class="col-10">
-		<section class="section mt-2">
-			<div class="card ">
+		<section class="section custom-section">
+			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title"><i class="bi bi-plus"></i> Category Book</h4>
+					<h5 class="card-title">
+						Table Category
+					</h5>
 				</div>
 				<div class="card-body">
-					<?= form_open('Admin/CategoryBook/Add') ?>
-					<div class="row">
-						<div class="form-group">
-							<label for="formName">Name : </label>
-							<input type="text" name="name" placeholder="Enter Name" class="form-control" id="formName" required>
-						</div>
-						<style>
-							.button-custom {
-								display: flex;
-								justify-content: end;
-								margin-top: 20px;
-								margin-right: 25px;
-							}
-						</style>
-						<div class="button-custom">
-							<button type="submit" class="btn btn-primary">Save Data</button>
-						</div>
+					<div class="table-responsive">
+						<table class="table" id="table1">
+							<thead class="custom-table">
+								<tr>
+									<th>No</th>
+									<th>Name Category Book</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $no = 1;
+								foreach ($viewData as $vd): ?>
+									<tr>
+										<td><?= $no++; ?></td>
+										<td><?= ucwords($vd['NamaKategori']); ?></td>
+										<td>
+											<a class="btn btn-warning"
+												href="<?= site_url('Admin/CategoryBook/Edit/' . $vd['KategoriID']) ?>"><i
+													class="bi bi-pencil-square"></i> Update</a>
+											<a class="btn btn-danger ml-2"
+												href="<?= site_url('Admin/CategoryBook/Delete/' . $vd['KategoriID']) ?>"><i
+													class="bi bi-trash"></i> Delete</a>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
 					</div>
-					<?= form_close(); ?>
 				</div>
 			</div>
+
 		</section>
 	</div>
 </div>
-
-<style>
-	.custom-table {
-		width: 500px;
-	}
-
-	.custom-section {
-		margin-left: 20px;
-	}
-</style>
-
-<!-- Table User -->
-<div class="row">
-	<!-- <div class="col-1">
-
-	</div> -->
-	<!-- <div class="col-10"> -->
-	<section class="section custom-section">
-		<div class="card">
-			<div class="card-header">
-				<h5 class="card-title">
-					Table Category
-				</h5>
-			</div>
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table" id="table1">
-						<thead class="custom-table">
-							<tr>
-								<th>No</th>
-								<th>Name Category Book</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php $no = 1; foreach ($viewData as $vd) : ?>
-								<tr>
-									<td><?= $no++; ?></td>
-									<td><?= ucwords($vd['NamaKategori']); ?></td>
-									<td>
-										<span class="badge bg-success">Active</span>
-									</td>
-								</tr>
-							<?php endforeach; ?>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-
-	</section>
-</div>
-<!-- </div> -->
 <!-- End Table User -->
 
 <!-- JS -->
