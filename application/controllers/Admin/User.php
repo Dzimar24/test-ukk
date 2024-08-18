@@ -10,9 +10,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  * @package   CodeIgniter
  * @category  Controller USER
- * @author    Setiawan Jodi <jodisetiawan@fisip-untirta.ac.id>
- * @author    Raul Guerrero <r.g.c@me.com>
- * @link      https://github.com/setdjod/myci-extension/
+ * @author    Muchamad Dzimar Ramadhan <ramadzimar@gmail.com>
+ * @link      ...
  * @param     ...
  * @return    ...
  *
@@ -31,6 +30,7 @@ class User extends CI_Controller
 	public function index()
 	{
 		// 
+		$data['parameter'] = '';
 		$data['titlePage'] = 'User';
 		$data['viewData'] = $this->user->viewDataUser();
 		$this->template->load('template', 'Pages/admin/user', $data);

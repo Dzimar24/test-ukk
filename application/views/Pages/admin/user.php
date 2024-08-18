@@ -13,8 +13,10 @@
 		</div>
 	</div>
 </div>
+<!-- End Header Page User -->
 
 <?php if($parameter != 'updateUserPage') : ?>
+	<!-- //! Input Form Add User -->
 	<div class="row">
 		<div class="col-1">
 
@@ -88,7 +90,9 @@
 			</section>
 		</div>
 	</div>
+	<!-- //! End Input Form Add User -->
 <?php else : ?>
+	<!-- //! Input Form Update User -->
 	<div class="row">
 		<div class="col-1">
 
@@ -97,7 +101,7 @@
 			<section class="section mt-2">
 				<div class="card ">
 					<div class="card-header">
-						<h4 class="card-title"><i class="bi bi-person-fill-add"></i> User</h4>
+						<h4 class="card-title"><i class="bi bi-person-fill-gear"></i> User</h4>
 					</div>
 					<?php foreach($viewDataEdit as $vde) : ?>
 					<div class="card-body">
@@ -146,15 +150,30 @@
 								</div>
 							</div>
 							<style>
-								.button-custom {
-									display: flex;
-									justify-content: end;
-									margin-top: 20px;
-									margin-right: 25px;
+								.button-container {
+										display: flex;
+										justify-content: space-between;
+										margin-top: 20px;
+										padding: 0 25px;
+								}
+
+								.button-custom-back{
+									background-color: #4E31AA; /* Warna latar belakang */
+									color: white; /* Warna teks */
+									border: none; /* Hilangkan border default */
+									padding: 10px 20px; /* Padding tombol */
+									text-align: center; /* Rata tengah teks */
+									text-decoration: none; /* Hilangkan garis bawah teks */
+									display: inline-block; /* Display inline-block */
+									font-size: 16px; /* Ukuran font */
+									margin: 4px 2px; /* Margin */
+									cursor: pointer; /* Kursor pointer */
+									border-radius: 5px; /* Sudut border */
 								}
 							</style>
-							<div class="button-custom">
-								<button type="submit" class="btn btn-primary">Save Data</button>
+							<div class="button-container">
+								<a class="button-custom-back" href="<?= site_url('Admin/User') ?>"><i class="bi bi-arrow-left"></i> Back</a>
+								<button type="submit" class="btn btn-primary">Update Data</button>
 							</div>
 						</div>
 						<?= form_close(); ?>
@@ -164,6 +183,8 @@
 			</section>
 		</div>
 	</div>
+	<!-- //! End Input Form Update User -->
+
 <?php endif; ?>
 
 <style>
