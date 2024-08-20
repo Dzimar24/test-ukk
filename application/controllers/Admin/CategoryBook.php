@@ -46,7 +46,7 @@ class CategoryBook extends CI_Controller
 			$this->session->set_flashdata('error', 'Error Bro !!');
 			//? Page will be thrown into Category book page
 			$data['titlePage'] = 'Category Book';
-			$data['parameter'] = '';
+			$data['parameter'] = 'updatePage';
 			$data['viewData'] = $this->category->viewDataCategory();
 			$this->template->load('template', 'Pages/admin/categoryBook', $data);
 		} else {
@@ -72,11 +72,43 @@ class CategoryBook extends CI_Controller
 		$this->template->load('template', 'Pages/admin/categoryBook', $data);
 	}
 
-	public function Update(){
-		$nameCategory = $this->input->post('nameCategoryUpdate');
-		$this->category->editData($nameCategory);
-		$this->session->set_flashdata('success', 'Success Bro !!');
-		redirect('Admin/CategoryBook');
+	public function Update($id){
+		//? Get Data via ID Catagory
+		$dataCategory = $this->category->get_category_by_id($id);
+
+		$newNameCategory = $this->input->post('nameCategoryUpdate');
+
+		//? validasi form
+		$this->form_validation->set_rules('nameCategoryUpdate', 'Category', 'trim');
+
+		//? Hanya validasi unik jika username berubah
+		if ($newNameCategory != $dataCategory) {
+			$this->form_validation->set_rules('nameCategoryUpdate', 'Category', 'trim|is_unique[kategori.NamaKategori]');
+		}
+
+		if ($this->form_validation->run() == FALSE) {
+			# code...
+			$this->session->set_flashdata('error', 'Error Bro !!');
+			//? Page will be thrown into Category book page
+			$data['titlePage'] = 'Category Book';
+			$data['parameter'] = 'updatePage';
+			$data['editData'] = $this->category->viewDataEditCategory($id);
+			$data['viewData'] = $this->category->viewDataCategory();
+			$this->template->load('template', 'Pages/admin/categoryBook', $data);
+		} else {
+			# code...
+			$post = $this->input->post(null, TRUE);
+			$this->category->editData($post, $id);
+			$this->session->set_flashdata('success', 'Success Bro !!');
+			//? Page will be thrown into Category book page
+			$data['titlePage'] = 'Category Book';
+			$data['parameter'] = '';
+			$data['editData'] = $this->category->viewDataEditCategory($id);
+			$data['viewData'] = $this->category->viewDataCategory();
+			$this->template->load('template', 'Pages/admin/categoryBook', $data);
+		}
+		// $this->session->set_flashdata('success', 'Success Bro !!');
+		// redirect('Admin/CategoryBook');
 	}
 
 	public function deleted($id)

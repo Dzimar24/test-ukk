@@ -61,12 +61,19 @@ class Category_model extends CI_Model
 		return $query;
 	}
 	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function get_category_by_id($id){
+		$query = $this->db->get_where('kategori', array('KategoriID' => $id));
+		return $query->row();
+	}
+	// ------------------------------------------------------------------------
 
 	// ------------------------------------------------------------------------
-	public function editData($nameCategory)
+	public function editData($nameCategory, $id)
 	{
 		$where = [
-			'KategoriID' => $this->input->post('id'),
+			'KategoriID' => $id,
 		];
 
 		$data = [

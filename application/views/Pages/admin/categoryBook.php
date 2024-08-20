@@ -67,13 +67,13 @@
 						<h4 class="card-title"><i class="bi bi-pencil-square"></i> Category Book</h4>
 					</div>
 					<div class="card-body">
-						<?= form_open('Admin/CategoryBook/Update') ?>
+						<?= form_open('Admin/CategoryBook/Update/'. $editData->KategoriID) ?>
 						<div class="row">
 							<div class="form-group">
 								<label for="formName">Name Category Book: </label>
 								<input type="hidden" name="id" value="<?= $editData->KategoriID; ?>">
 								<input type="text" name="nameCategoryUpdate" value="<?= $editData->NamaKategori; ?>" class="form-control" id="formName" required>
-								<?= form_error('name', '<span class="text-danger mt-2">* ', '</span>') ?>
+								<?= form_error('nameCategoryUpdate', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
 							<style>
 								.button-container {
