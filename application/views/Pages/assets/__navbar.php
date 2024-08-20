@@ -13,6 +13,11 @@
 				</a>
 			</li>
 			<li class="menu-item">
+				<a href="<?= site_url('Admin/Book') ?>" class='menu-link'>
+					<span><i class="bi bi-book"></i> Book</span>
+				</a>
+			</li>
+			<li class="menu-item">
 				<a href="<?= site_url('Admin/User') ?>" class='menu-link'>
 					<span><i class="bi bi-person"></i> User</span>
 				</a>
