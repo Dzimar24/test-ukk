@@ -105,7 +105,7 @@
 					</div>
 					<?php foreach($viewDataEdit as $vde) : ?>
 					<div class="card-body">
-						<?= form_open('Admin/User/Add') ?>
+						<?= form_open('Admin/User/updateData/'. $vde['UserID']) ?>
 						<div class="row">
 							<div class="form-group">
 								<label for="formName">Name : </label>
@@ -118,35 +118,29 @@
 									<input type="email" value="<?= $vde['Email']; ?>" name="emailUpdate" class="form-control" placeholder="Enter Email" id="formEmail" required>
 									<?= form_error('email', '<span class="text-danger mt-2">* ', '</span>') ?>
 								</div>
-								<div class="form-group">
-									<label for="formPassword">Password : </label>
-									<input type="password" id="formPassword" name="passwordUpdate" class="form-control" placeholder="Enter Password" required>
-									<?= form_error('password', '<span class="text-danger mt-2">* ', '</span>') ?>
+								<div class="form-group mt-2">
+								<div class="form-floating">
+									<textarea class="form-control" placeholder="Leave a comment here" name="alamatUpdate" id="floatingTextarea" required><?= $vde['Alamat'] ?></textarea>
+									<label for="floatingTextarea">Alamat</label>
+									<?= form_error('alamat', '<span class="text-danger mt-2">* ', '</span>') ?>
 								</div>
+							</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="formUsername">Username : </label>
 									<input type="text" value="<?= $vde['Username']; ?>" class="form-control" name="usernameUpdate" placeholder="Enter Username" id="formUsername" required>
-									<?= form_error('username', '<span class="text-danger mt-2">* ', '</span>') ?>
+									<?= form_error('usernameUpdate', '<span class="text-danger mt-2">* ', '</span>') ?>
 								</div>
 
 								<div class="form-group">
 									<label for="formLevel">Level : </label>
 									<select name="levelUpdate" id="formLevel" class="form-control">
-										<option>-- Option Level --</option>
-										<option value="admin">Admin</option>
-										<option value="petugas">Petugas</option>
-										<option value="peminjam">Peminjam</option>
+										<option value="admin" <?php if($vde['level'] == 'admin') echo('selected') ?>>Admin</option>
+										<option value="petugas" <?php if($vde['level'] == 'petugas') echo('selected') ?>>Petugas</option>
+										<option value="peminjam" <?php if($vde['level'] == 'peminjam') echo('selected') ?>>Peminjam</option>
 									</select>
 									<?= form_error('level', '<span class="text-danger mt-2">* ', '</span>') ?>
-								</div>
-							</div>
-							<div class="form-group mt-2">
-								<div class="form-floating">
-									<textarea class="form-control" placeholder="Leave a comment here" name="alamatUpdate" id="floatingTextarea" required><?= $vde['Alamat'] ?></textarea>
-									<label for="floatingTextarea">Alamat</label>
-									<?= form_error('alamat', '<span class="text-danger mt-2">* ', '</span>') ?>
 								</div>
 							</div>
 							<style>

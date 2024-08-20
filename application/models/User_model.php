@@ -61,6 +61,37 @@ class User_model extends CI_Model
 		return $query;
 	}
 	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewDataLevel($id){
+		$this->db->select('*')->from('user');
+		$this->db->where('UserID', $id);
+		$dataLevel = $this->db->get()->row();
+		return $dataLevel;
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function updateUser($post, $id)
+	{
+		# code...
+		$updateData['Username'] = $post['usernameUpdate'];
+		$updateData['Email'] = $post['emailUpdate'];
+		$updateData['NamaLengkap'] = $post['nameUpdate'];
+		$updateData['level'] = $post['levelUpdate'];
+		$updateData['Alamat'] = $post['alamatUpdate'];
+
+		$this->db->where('UserID', $id);
+		$this->db->update('user', $updateData);
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function get_user_by_id($id){
+		$query = $this->db->get_where('user', array('UserID' => $id));
+		return $query->row();
+	}
+	// ------------------------------------------------------------------------
 
 }
 

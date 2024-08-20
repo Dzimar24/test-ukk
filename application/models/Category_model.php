@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
@@ -16,31 +16,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class Category_model extends CI_Model {
+class Category_model extends CI_Model
+{
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
 
-  // ------------------------------------------------------------------------
-  public function viewDataCategory()
-  {
-    // 
+	// ------------------------------------------------------------------------
+	public function viewDataCategory()
+	{
+		// 
 		$this->db->select('*');
 		$this->db->from('kategori');
 		$query = $this->db->get()->result_array();
 		return $query;
-  }
+	}
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 	public function add($post)
 	{
 		# code...
@@ -49,9 +50,10 @@ class Category_model extends CI_Model {
 		$this->db->insert('kategori', $dataSave);
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
-	public function viewDataEditCategory($id){
+	public function viewDataEditCategory($id)
+	{
 		# code...
 		$this->db->select('*')->from('kategori')->where('KategoriID', $id);
 
@@ -59,9 +61,10 @@ class Category_model extends CI_Model {
 		return $query;
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
-	public function editData($nameCategory){
+	public function editData($nameCategory)
+	{
 		$where = [
 			'KategoriID' => $this->input->post('id'),
 		];
@@ -71,10 +74,10 @@ class Category_model extends CI_Model {
 		];
 
 		$this->db->update('kategori', $data, $where);
-		
+
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
 	public function deleteData($id)
 	{

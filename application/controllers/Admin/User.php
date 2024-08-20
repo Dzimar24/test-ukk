@@ -63,14 +63,68 @@ class User extends CI_Controller
 		}
 	}
 
-	public function edit($id){
+	public function edit($id)
+	{
 		# code...
 		$data['parameter'] = 'updateUserPage';
 		$data['titlePage'] = 'User';
+		$data['viewDataLevel'] = $this->user->viewDataLevel($id);
 		$data['viewDataEdit'] = $this->user->viewDataEditUser($id);
 		$data['viewData'] = $this->user->viewDataUser();
 		$this->template->load('template', 'Pages/admin/user', $data);
 	}
+
+	public function updateData($id)
+	{
+		//? Ambil data user berdasarkan ID
+		$dataUser = $this->user->get_user_by_id($id);
+		$dataUsername = $dataUser->Username;
+
+		//? Ambil input baru dari form
+		$newUsername = $this->input->post('usernameUpdate');
+
+		// Mengatur aturan validasi form
+		$this->form_validation->set_rules('name', 'Nama Lengkap', 'trim');
+		$this->form_validation->set_rules('email', 'Email', 'trim|valid_email');
+		$this->form_validation->set_rules('usernameUpdate', 'Username', 'trim');
+
+		//? Hanya validasi unik jika username berubah
+		if ($newUsername != $dataUsername) {
+			$this->form_validation->set_rules('usernameUpdate', 'Username', 'trim|is_unique[user.Username]');
+		}
+
+		$this->form_validation->set_rules('level', 'Level', 'trim');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'trim');
+
+		//! Jalankan validasi form
+		if ($this->form_validation->run() == FALSE) {
+			//! Validasi gagal, kembalikan ke form dengan error
+			$this->session->set_flashdata('error', 'Error Bro !!');
+
+			$data['parameter'] = 'updateUserPage';
+			$data['titlePage'] = 'User';
+			$data['viewDataLevel'] = $this->user->viewDataLevel($id);
+			$data['viewDataEdit'] = $this->user->viewDataEditUser($id);
+			$data['viewData'] = $this->user->viewDataUser();
+
+			//? Load view dengan template
+			$this->template->load('template', 'Pages/admin/user', $data);
+		} else {
+			//! Validasi sukses, update data di database
+			$post = $this->input->post(null, TRUE);
+			$this->user->updateUser($post, $id);
+
+			//? Set pesan sukses dan redirect ke halaman user
+			$this->session->set_flashdata('success', 'User Successfully Updated');
+
+			$data['parameter'] = '';
+			$data['titlePage'] = 'User';
+			$data['viewData'] = $this->user->viewDataUser();
+
+			$this->template->load('template', 'Pages/admin/user', $data);
+		}
+	}
+
 
 }
 
