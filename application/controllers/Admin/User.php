@@ -50,6 +50,7 @@ class User extends CI_Controller
 			$this->session->set_flashdata('error', 'Error Bro !!');
 			//! File view User  
 			$data['titlePage'] = 'User';
+			$data['parameter'] = '';
 			$data['viewData'] = $this->user->viewDataUser();
 			$this->template->load('template', 'Pages/admin/user', $data);
 		} else {
@@ -57,6 +58,7 @@ class User extends CI_Controller
 			$this->user->AddUser($post);
 			$this->session->set_flashdata('success', 'User Successfully Added');
 			//! File view User  
+			$data['parameter'] = '';
 			$data['titlePage'] = 'User';
 			$data['viewData'] = $this->user->viewDataUser();
 			$this->template->load('template', 'Pages/admin/user', $data);
@@ -125,6 +127,13 @@ class User extends CI_Controller
 		}
 	}
 
+	public function delete($id)
+	{
+		# code...
+		$this->user->deleteDataUser($id);
+		$this->session->set_flashdata('success', 'Success Deleted Data User !!');
+		redirect('Admin/User');
+	}
 
 }
 

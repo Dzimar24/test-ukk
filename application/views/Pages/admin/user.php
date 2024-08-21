@@ -229,7 +229,7 @@
 									<td><?= ucwords($vd['level']); ?></td>
 									<td>
 										<a class="btn btn-warning" href="<?= site_url('Admin/User/edit/' . $vd['UserID']); ?>"><i class="bi bi-pencil-square"></i> Edit</a>
-										<a class="btn btn-danger" href="<?= site_url('Admin/User/delete/' . $vd['UserID']); ?>"><i class="bi bi-trash"></i> Delete</a>
+										<a class="btn btn-danger button-delete" href="<?= site_url('Admin/User/delete/' . $vd['UserID']); ?>"><i class="bi bi-trash"></i> Delete</a>
 									</td>
 								</tr>
 							<?php endforeach; ?>
@@ -243,6 +243,9 @@
 </div>
 <!-- </div> -->
 <!-- End Table User -->
+
+<!-- JQuery -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 
 <!-- JS -->
 <!-- //? Alert if success -->
@@ -266,3 +269,24 @@
 		});
 	</script>
 <?php endif; ?>
+
+<script>
+	$('.button-delete').on('click', function(e) {
+		e.preventDefault();
+		const url = $(this).attr('href');
+		
+		Swal.fire({
+			title: "Are you sure?",
+			text: "Are you sure delete this data User ?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#3085d6",
+			cancelButtonColor: "#d33",
+			confirmButtonText: "Yes, delete it!"
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.location.href = url;
+			}
+		});
+	});
+</script>

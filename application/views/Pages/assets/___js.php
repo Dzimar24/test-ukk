@@ -16,3 +16,29 @@
 <!-- SweetAlert2 -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/sweetalert2/sweetalert2.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/sweetalert2.js"></script>
+
+<!-- JS Quill -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/tinymce/tinymce.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/tinymce.js"></script>
+<script>
+	tinymce.init({
+		selector: '#default',  // Target textarea by ID
+		height: 150,           // Set the height of the editor (in pixels)
+		width: 770,            // Set the width of the editor (in pixels)
+		menubar: false,        // Optionally disable the menubar
+		plugins: 'lists link image',  // Add plugins you want (optional)
+		toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',  // Customize the toolbar
+	});
+</script>
+
+<!-- JS Image Preview -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-file-validate-type/filepond-plugin-file-validate-type.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-crop/filepond-plugin-image-crop.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-filter/filepond-plugin-image-filter.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond/filepond.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/toastify-js/src/toastify.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/filepond.js"></script>

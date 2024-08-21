@@ -29,12 +29,21 @@ class Book_model extends CI_Model {
 
 
   // ------------------------------------------------------------------------
-  public function index()
+  public function viewDataCategoryBook()
   {
-    // 
+		$this->db->select('*')->from('kategori');
+		$query = $this->db->get()->result_array();
+		return $query;
   }
-
   // ------------------------------------------------------------------------
+  
+	// ------------------------------------------------------------------------
+  public function viewDataBook(){
+		$this->db->from('buku');
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
 
 }
 

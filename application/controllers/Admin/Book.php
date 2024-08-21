@@ -30,10 +30,14 @@ class Book extends CI_Controller
   {
 		$data['parameter'] = '';
 		$data['titlePage'] = 'Book';
+		$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
+		$data['viewDataBook'] = $this->book->viewDataBook();
     $this->template->load('template', 'Pages/admin/book', $data);
   }
 
-	
+	public function add(){
+		
+	}
 
 }
 
