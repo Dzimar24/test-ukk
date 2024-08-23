@@ -4,7 +4,8 @@
 <!-- DataTables -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script
+	src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/datatables.js"></script>
 
 <!-- JS Page -->
@@ -13,21 +14,25 @@
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/compiled/js/app.js"></script>
 
+
 <!-- SweetAlert2 -->
-<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/sweetalert2/sweetalert2.min.js"></script>
-<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/sweetalert2.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- JS Quill -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/tinymce/tinymce.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/tinymce.js"></script>
 <script>
+	// Inisialisasi TinyMCE
 	tinymce.init({
-		selector: '#default',  // Target textarea by ID
-		height: 150,           // Set the height of the editor (in pixels)
-		width: 770,            // Set the width of the editor (in pixels)
-		menubar: false,        // Optionally disable the menubar
-		plugins: 'lists link image',  // Add plugins you want (optional)
-		toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',  // Customize the toolbar
+		selector: '#dark',
+		menubar: false,
+		plugins: 'link image',
+		toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | link image',
+		setup: function (editor) {
+			editor.on('change', function () {
+					editor.save();  // Menyimpan perubahan ke textarea
+			});
+		}
 	});
 </script>
 
