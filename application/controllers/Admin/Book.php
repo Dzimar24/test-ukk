@@ -118,6 +118,17 @@ class Book extends CI_Controller
 		}
 	}
 
+	public function edit($id)
+	{
+		# code...
+		$data['parameter'] = 'updatePage';
+		$data['titlePage'] = 'Book';
+		$data['viewDataEdit'] = $this->book->viewDataEditBook($id);
+		$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
+		$data['viewDataBook'] = $this->book->viewDataBook();
+		$this->template->load('template', 'Pages/admin/book', $data);
+	}
+
 }
 
 

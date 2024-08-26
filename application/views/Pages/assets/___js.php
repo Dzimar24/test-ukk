@@ -26,13 +26,22 @@
 	tinymce.init({
 		selector: '#dark',
 		menubar: false,
-		plugins: 'link image',
 		toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | link image',
 		setup: function (editor) {
 			editor.on('change', function () {
 					editor.save();  // Menyimpan perubahan ke textarea
 			});
 		}
+	});
+
+	// readonly in tinyMCE
+	tinymce.init({
+		selector: 'textarea#readonlyTinyMCE',
+		menubar: false,
+		toolbar: false,
+		height: 200,
+		readonly: true,
+		// opsi konfigurasi lainnya...
 	});
 </script>
 
