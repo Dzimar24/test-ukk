@@ -6,6 +6,13 @@
 					<span><i class="bi bi-collection"></i> Collection</span>
 				</a>
 			</li>
+			<?php if($this->session->userdata('level') == 'peminjam') : ?>
+				<li class="menu-item">
+					<a href="<?= site_url('Public/Peminjaman') ?>" class='menu-link'>
+						<span><i class="bi bi-clipboard"></i> Borrowing</span>
+					</a>
+				</li>
+			<?php endif; ?>
 			<?php if($this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'petugas') : ?>
 			<li class="menu-item">
 				<a href="<?= site_url('Admin/CategoryBook') ?>" class='menu-link'>

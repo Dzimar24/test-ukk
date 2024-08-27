@@ -195,6 +195,37 @@ class Book extends CI_Controller
 		$this->template->load('template', 'Pages/admin/book', $data);
 	}
 
+	public function delete($id)
+	{
+		//? Periksa apakah ID valid
+		if (!$id) {
+			$this->session->set_flashdata('error', 'Invalid book ID.');
+			redirect('admin/book');
+		}
+
+		//? Ambil informasi buku sebelum dihapus
+		$book = $this->book->getBookById($id);
+
+		if (!$book) {
+			$this->session->set_flashdata('error', 'Book not found.');
+			redirect('admin/book');
+		}
+
+		// Hapus buku dari database
+		if ($this->book->deleteBook($id)) {
+			// Jika penghapusan dari database berhasil, hapus file cover
+			if ($book->coverBook && file_exists('./assets/uploads/coverBook/' . $book->coverBook)) {
+				unlink('./assets/uploads/coverBook/' . $book->coverBook);
+			}
+
+			$this->session->set_flashdata('success', 'Book deleted successfully.');
+		} else {
+			$this->session->set_flashdata('error', 'Failed to delete book. Please try again.');
+		}
+
+		redirect('admin/book');
+	}
+
 }
 
 
