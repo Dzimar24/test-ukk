@@ -38,10 +38,6 @@ class Book extends CI_Controller
 
 	public function Add()
 	{
-		// $data = [
-		// 	$this->input->post(null, true),
-		// ];
-		// var_dump($data); die;
 		//? Aturan validasi
 		$this->form_validation->set_rules('title', 'Title', 'trim|required');
 		$this->form_validation->set_rules('categoryBook', 'Category', 'trim|required');
@@ -123,6 +119,76 @@ class Book extends CI_Controller
 		# code...
 		$data['parameter'] = 'updatePage';
 		$data['titlePage'] = 'Book';
+		$data['viewDataEdit'] = $this->book->viewDataEditBook($id);
+		$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
+		$data['viewDataBook'] = $this->book->viewDataBook();
+		$this->template->load('template', 'Pages/admin/book', $data);
+	}
+
+	public function UpdateBook()
+	{
+		$id = $this->input->post('id');
+
+		// Aturan validasi
+		$this->form_validation->set_rules('titleUpdate', 'Title', 'trim|required');
+		$this->form_validation->set_rules('categoryBookUpdate', 'Category', 'trim|required');
+		$this->form_validation->set_rules('authorUpdate', 'Author', 'trim|required');
+		$this->form_validation->set_rules('publisherUpdate', 'Publisher', 'trim|required');
+		$this->form_validation->set_rules('publication_year_update', 'Publication Year', 'trim|required');
+		$this->form_validation->set_rules('descriptionUpdate', 'Description', 'trim|required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->session->set_flashdata('error', validation_errors());
+			$this->redirectToUpdatePage($id);
+		} else {
+			$data = [
+				'Judul' => $this->input->post('titleUpdate'),
+				'idKategory' => $this->input->post('categoryBookUpdate'),
+				'Penulis' => $this->input->post('authorUpdate'),
+				'Penerbit' => $this->input->post('publisherUpdate'),
+				'TahunTerbit' => $this->input->post('publication_year_update'),
+				'deskripsi' => $this->input->post('descriptionUpdate')
+			];
+
+			$old_cover = $this->book->getOldCover($id);
+
+			if ($_FILES['coverBookNew']['size'] > 0) {
+				$config['upload_path'] = './assets/uploads/coverBook/';
+				$config['allowed_types'] = 'jpg|jpeg|png';
+				$config['max_size'] = 2048;
+				$config['file_name'] = time() . '_cover_book';
+
+				$this->load->library('upload', $config);
+
+				if (!$this->upload->do_upload('coverBookNew')) {
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+					$this->redirectToUpdatePage($id);
+					return;
+				}
+
+				$uploadData = $this->upload->data();
+				$data['coverBook'] = $uploadData['file_name'];
+
+				// Hapus cover lama
+				if ($old_cover && file_exists('./assets/uploads/coverBook/' . $old_cover)) {
+					unlink('./assets/uploads/coverBook/' . $old_cover);
+				}
+			}
+
+			if ($this->book->updateDataBook($id, $data)) {
+				$this->session->set_flashdata('success', 'Book updated successfully.');
+				redirect('admin/book');
+			} else {
+				$this->session->set_flashdata('error', 'Failed to update book, please try again.');
+				$this->redirectToUpdatePage($id);
+			}
+		}
+	}
+
+	private function redirectToUpdatePage($id)
+	{
+		$data['parameter'] = 'updatePage';
+		$data['titlePage'] = 'Update Book';
 		$data['viewDataEdit'] = $this->book->viewDataEditBook($id);
 		$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
 		$data['viewDataBook'] = $this->book->viewDataBook();

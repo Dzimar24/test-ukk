@@ -123,89 +123,111 @@
 		<section class="section mt-2">
 			<div class="card">
 				<div class="card-header">
-					<h4 class="card-title"><i class="bi bi-journal-plus"></i> Book</h4>
+					<h4 class="card-title"><i class="bi bi-pencil-square"></i> Book</h4>
 				</div>
-				<?= form_open_multipart('Admin/Book/Add') ?>
+				<?= form_open_multipart('Admin/Book/UpdateBook') ?>
 				<div class="card-body">
-					<div class="row">
-						<!-- Input for book cover image -->
-						<div class="col-md-3">
-							<label for="bookCover">Cover Book</label>
-							<div class="form-group">
-								<!-- Tambahkan class form-control jika perlu -->
-								<input type="file" name="cover" class="form-control image-preview-filepond" id="bookCover" required>
+					<?php foreach($viewDataEdit as $vde) : ?>
+						<div class="row">
+							<input type="hidden" name="id" value="<?= $vde['BukuID'] ?>">
+							<!-- Input for book cover image -->
+							<div class="col-md-3">
+								<label for="bookCover" class="form-label" style="margin-left: 20px;">Old Cover Book</label>
+								<div class="form-group">
+									<div style="max-width: 200px; max-height: 500px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.8) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; margin-top: 10px; margin-left: 20px;">
+										<img src="<?= base_url('/assets/uploads/coverBook/' . $vde['coverBook']) ?>" alt="Image Error" style="width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain;">
+									</div>
+								</div>
+								<div class="mt-6">
+									<label for="bookCoverUpdate">New Cover Book</label>
+									<div class="form-group">
+										<!-- Tambahkan class form-control jika perlu -->
+										<input type="file" name="coverBookNew" class="form-control image-preview-filepond" id="bookCover">
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<!-- Input fields for book details -->
-						<div class="col-md-9">
-							<div class="row">
-								<!-- Title and Category -->
-								<div class="col-md-9">
-									<div class="form-group">
-										<label for="bookTitle">Title:</label>
-										<input type="text" class="form-control" name="title" placeholder="Enter Book Title"
-											id="bookTitle" required>
+							<!-- Input fields for book details -->
+							<div class="col-md-9">
+								<div class="row">
+									<!-- Title and Category -->
+									<div class="col-md-9">
+										<div class="form-group">
+											<label for="bookTitle">Title:</label>
+											<input type="text" class="form-control" name="titleUpdate" value="<?= $vde['Judul'] ?>" id="bookTitle">
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="bookCategory">Category Book:</label>
+											<select name="categoryBookUpdate" class="form-control" id="categoryBook">
+												<?php foreach ($viewDataCategory as $vdc): ?>
+													<option value="<?= $vdc['KategoriID'] ?>" <?= ($vde['idKategory'] == $vdc['KategoriID']) ? 'selected' : '' ?>>
+														<?= $vdc['NamaKategori'] ?>
+													</option>
+												<?php endforeach; ?>
+											</select>
+										</div>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="bookCategory">Category Book:</label>
-										<select name="categoryBook" class="form-control" id="categoryBook">
-											<option selected>-- Category Book --</option>
-											<?php foreach ($viewDataCategory as $key => $vdc): ?>
-												<option value="<?= $vdc['KategoriID'] ?>"><?= $vdc['NamaKategori'] ?></option>
-											<?php endforeach; ?>
-										</select>
+								<div class="row">
+									<!-- Author -->
+									<div class="col-md-4">
+										<div class="form-group mt-2">
+											<label for="bookAuthor">Author:</label>
+											<input type="text" class="form-control" name="authorUpdate" value="<?= $vde['Penulis'] ?>" id="bookAuthor">
+										</div>
+									</div>
+									<!-- Publisher -->
+									<div class="col-md-4">
+										<div class="form-group mt-2">
+											<label for="bookPublisher">Publisher:</label>
+											<input type="text" class="form-control" name="publisherUpdate" value="<?= $vde['Penerbit'] ?>" id="bookPublisher">
+										</div>
+									</div>
+									<!-- Publication Year -->
+									<div class="col-md-4">
+										<div class="form-group mt-2">
+											<label for="publicationYear">Publication Year:</label>
+											<input type="date" class="form-control" name="publication_year_update" value="<?= $vde['TahunTerbit'] ?>" id="publicationYear">
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<!-- Author -->
-								<div class="col-md-4">
-									<div class="form-group mt-2">
-										<label for="bookAuthor">Author:</label>
-										<input type="text" class="form-control" name="author" placeholder="Enter Book Author"
-											id="bookAuthor" required>
-									</div>
+								<!-- Book Description -->
+								<div class="form-group mt-3">
+									<label for="dark">Book Description:</label>
+									<textarea id="dark" cols="30" name="descriptionUpdate" rows="10"><?= $vde['deskripsi'] ?></textarea>
 								</div>
-								<!-- Publisher -->
-								<div class="col-md-4">
-									<div class="form-group mt-2">
-										<label for="bookPublisher">Publisher:</label>
-										<input type="text" class="form-control" name="publisher"
-											placeholder="Enter Book Publisher" id="bookPublisher" required>
-									</div>
-								</div>
-								<!-- Publication Year -->
-								<div class="col-md-4">
-									<div class="form-group mt-2">
-										<label for="publicationYear">Publication Year:</label>
-										<input type="date" class="form-control" name="publication_year" id="publicationYear"
-											required>
-									</div>
-								</div>
-							</div>
-							<!-- Book Description -->
-							<div class="form-group mt-3">
-								<label for="dark">Book Description:</label>
-								<textarea id="dark" cols="30" placeholder="Enter Book Description" name="description" rows="10"></textarea>
 							</div>
 						</div>
-					</div>
-					<!-- Style Button Save Book -->
-					<style>
-						.button-custom {
-							display: flex;
-							justify-content: flex-end;
-							margin-top: 20px;
-							margin-right: 20px;
-						}
-					</style>
-					<!-- Save Button -->
-					<div class="button-custom">
-						<button type="submit" class="btn btn-primary">Save Book</button>
-					</div>
+						<!-- Style Button Update Book -->
+						<style>
+								.button-container {
+									display: flex;
+									justify-content: space-between;
+									margin-top: 20px;
+									padding: 0 25px;
+								}
+
+								.button-custom-back{
+									background-color: #4E31AA; /* Warna latar belakang */
+									color: white; /* Warna teks */
+									border: none; /* Hilangkan border default */
+									padding: 10px 20px; /* Padding tombol */
+									text-align: center; /* Rata tengah teks */
+									text-decoration: none; /* Hilangkan garis bawah teks */
+									display: inline-block; /* Display inline-block */
+									font-size: 16px; /* Ukuran font */
+									margin: 4px 2px; /* Margin */
+									cursor: pointer; /* Kursor pointer */
+									border-radius: 5px; /* Sudut border */
+								}
+							</style>
+							<div class="button-container">
+								<a class="button-custom-back" href="<?= site_url('Admin/Book') ?>"><i class="bi bi-arrow-left"></i> Back</a>
+								<button type="submit" class="btn btn-primary">Update Data</button>
+							</div>
+					<?php endforeach; ?>
 				</div>
 				<?= form_close(); ?>
 			</div>

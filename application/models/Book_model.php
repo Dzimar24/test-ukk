@@ -43,7 +43,7 @@ class Book_model extends CI_Model
 	{
 		$this->db->from('buku');
 		$this->db->join('kategori', 'buku.idKategory = kategori.KategoriID', 'left');
-		
+
 		$query = $this->db->get()->result_array();
 		return $query;
 	}
@@ -55,12 +55,34 @@ class Book_model extends CI_Model
 		$this->db->insert('buku', $data);
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
-	public function viewDataEditBook($id){
+	public function viewDataEditBook($id)
+	{
 		$this->db->select('*')->from('buku')->where('BukuID', $id);
 		$query = $this->db->get()->result_array();
 		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function updateDataBook($id, $data)
+	{
+		$this->db->where('BukuID', $id);
+		return $this->db->update('buku', $data);
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function getOldCover($id)
+	{
+		$this->db->select('coverBook');
+		$this->db->where('BukuID', $id);
+		$query = $this->db->get('buku');
+		if ($query->num_rows() > 0) {
+			return $query->row()->coverBook;
+		}
+		return null;
 	}
 	// ------------------------------------------------------------------------
 
