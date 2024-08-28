@@ -24,6 +24,10 @@ class Peminjaman extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if ($this->session->userdata('level') != 'peminjam') {
+			# code...
+			redirect('error/NotFound');
+		}
 	}
 
 	public function index()
