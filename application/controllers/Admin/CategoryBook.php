@@ -97,7 +97,7 @@ class CategoryBook extends CI_Controller
 			$this->template->load('template', 'Pages/admin/categoryBook', $data);
 		} else {
 			# code...
-			$post = $this->input->post(null, TRUE);
+			$post = $this->input->post('nameCategoryUpdate');
 			$this->category->editData($post, $id);
 			$this->session->set_flashdata('success', 'Success Bro !!');
 			//? Page will be thrown into Category book page

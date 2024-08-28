@@ -53,6 +53,7 @@ class Book_model extends CI_Model
 	public function addDataBook($data)
 	{
 		$this->db->insert('buku', $data);
+		return $this->db->affected_rows() > 0;
 	}
 	// ------------------------------------------------------------------------
 

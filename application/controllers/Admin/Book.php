@@ -49,13 +49,7 @@ class Book extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			//! Validasi gagal, tampilkan error flashdata
 			$this->session->set_flashdata('error', validation_errors());
-			//! Redirect ke halaman form
-			//? View to 
-			$data['parameter'] = '';
-			$data['titlePage'] = 'Book';
-			$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
-			$data['viewDataBook'] = $this->book->viewDataBook();
-			$this->template->load('template', 'Pages/admin/book', $data);
+			$this->redirectToBookPage();
 		} else {
 			//? Konfigurasi upload file
 			$config['upload_path'] = './assets/uploads/coverBook/';
@@ -68,12 +62,7 @@ class Book extends CI_Controller
 			if (!$this->upload->do_upload('cover')) {
 				//? Upload gambar gagal, tampilkan pesan error
 				$this->session->set_flashdata('error', $this->upload->display_errors());
-				//? View to 
-				$data['parameter'] = '';
-				$data['titlePage'] = 'Book';
-				$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
-				$data['viewDataBook'] = $this->book->viewDataBook();
-				$this->template->load('template', 'Pages/admin/book', $data);
+				$this->redirectToBookPage();
 			} else {
 				//? Upload berhasil, simpan data buku
 				$uploadData = $this->upload->data();
@@ -90,28 +79,32 @@ class Book extends CI_Controller
 					'coverBook' => $cover_image
 				];
 
-				//? Simpan ke database
+				// Di dalam fungsi Add() di controller
 				if ($this->book->addDataBook($data)) {
-					//? Proses berhasil, tampilkan pesan sukses
+					// Proses berhasil, tampilkan pesan sukses
 					$this->session->set_flashdata('success', 'Book added successfully.');
-					// ? View to 
-					$data['parameter'] = '';
-					$data['titlePage'] = 'Book';
-					$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
-					$data['viewDataBook'] = $this->book->viewDataBook();
-					$this->template->load('template', 'Pages/admin/book', $data);
 				} else {
-					//? Simpan data gagal, tampilkan pesan error
+					// Simpan data gagal, tampilkan pesan error
 					$this->session->set_flashdata('error', 'Failed to add book, try again.');
-					//? View to 
-					$data['parameter'] = '';
-					$data['titlePage'] = 'Book';
-					$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
-					$data['viewDataBook'] = $this->book->viewDataBook();
-					$this->template->load('template', 'Pages/admin/book', $data);
 				}
+
+				// Redirect ke halaman buku setelah proses selesai
+				redirect('admin/book');
+
+				//? Redirect ke halaman buku setelah proses selesai
+				redirect('admin/book');
 			}
 		}
+	}
+
+	// Fungsi bantuan untuk redirect ke halaman buku
+	private function redirectToBookPage()
+	{
+		$data['parameter'] = '';
+		$data['titlePage'] = 'Book';
+		$data['viewDataCategory'] = $this->book->viewDataCategoryBook();
+		$data['viewDataBook'] = $this->book->viewDataBook();
+		$this->template->load('template', 'Pages/admin/book', $data);
 	}
 
 	public function edit($id)
