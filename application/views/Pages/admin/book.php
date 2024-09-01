@@ -307,7 +307,6 @@
 																</div>
 															</div>
 														</div>
-
 														<!-- Input fields for book details -->
 														<div class="col-md-9">
 															<div class="row">

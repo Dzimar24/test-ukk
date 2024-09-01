@@ -32,7 +32,9 @@ class Index_model extends CI_Model {
   public function viewDataBook()
   {
     // 
-		$this->db->select('*')->from('buku');
+		$this->db->select('*');
+		$this->db->from('buku');
+		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
 		$query = $this->db->get()->result_array();
 		return $query;
   }

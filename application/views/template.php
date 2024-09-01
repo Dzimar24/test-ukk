@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 
 <head>
 	<meta charset="UTF-8">
@@ -19,7 +19,7 @@
 
 <body>
 	<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/initTheme.js"></script>
-	<div id="app">
+	<div id="app" data-bs-theme="light">
 		<div id="main" class="layout-horizontal">
 			<header class="mb-5">
 				<?php include 'Pages/assets/__header.php' ?>

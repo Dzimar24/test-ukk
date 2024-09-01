@@ -25,7 +25,7 @@
 
 					<?= form_open('Auth/Login/process');?>
 						<div class="form-group position-relative has-icon-left mb-4">
-							<input type="text" name="username" class="form-control form-control-xl" placeholder="Username">
+							<input type="text" id="username" name="username" class="form-control form-control-xl" placeholder="Username">
 							<div class="form-control-icon">
 								<i class="bi bi-person"></i>
 							</div>
@@ -55,6 +55,12 @@
 	<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 	<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/sweetalert2.js"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('username').focus();
+		});
+	</script>
 
 	<!-- //? Alert if success -->
 	<?php if ($this->session->flashdata('success')): ?>
