@@ -109,7 +109,7 @@
 							</button>
 							<!-- //! End Button Love -->
 							<!-- //! Button Borrowing -->
-							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal">
+							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
 								<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
 							</button>
 							<!-- //! End Button Borrowing -->
@@ -122,38 +122,39 @@
 					</div>
 				</div>
 			</div>
+			<!-- //! Modal Borrowing Book -->
+			<div class="modal fade" id="borrowingModal<?= $vdb['BukuID']?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5" id="exampleModalLabel">Borrowing Book</h1>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<?= form_open('Index/Borrowing');?>
+							<div class="modal-body">
+								<input type="hidden" name="id" value="<?= $vdb['BukuID'] ?>">
+								<div class="mb-3">
+									<label for="startBorrowing" class="form-label">Start Borrowing Book :</label>
+									<input type="date" name="startBorrowing" class="form-control" id="startBorrowing">
+								</div>
+								<div class="mb-3">
+									<label for="endBorrowing" class="form-label">End Borrowing Book :</label>
+									<input type="date" name="endBorrowing" class="form-control" id="endBorrowing">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Borrowing Book</button>
+							</div>
+						<?= form_close() ?>
+					</div>
+				</div>
+			</div>
+			<!-- //! End Modal Borrowing Book -->
 		<?php endforeach; ?>
 	</div>
 </div>
 <!-- End Page Content -->
-
-<!-- Modal Borrowing Book -->
-<div class="modal fade" id="borrowingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Borrowing Book</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<?= form_open('');?>
-				<div class="modal-body">
-					<div class="mb-3">
-						<label for="startBorrowing" class="form-label">Start Borrowing Book :</label>
-						<input type="date" class="form-control" id="startBorrowing">
-					</div>
-					<div class="mb-3">
-						<label for="endBorrowing" class="form-label">End Borrowing Book :</label>
-						<input type="date" class="form-control" id="endBorrowing">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Borrowing Book</button>
-				</div>
-			<?= form_close() ?>
-		</div>
-	</div>
-</div>
 
 <script>
 	document.addEventListener('DOMContentLoaded', function () {

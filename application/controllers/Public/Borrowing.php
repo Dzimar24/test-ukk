@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  */
 
-class Peminjaman extends CI_Controller
+class Borrowing extends CI_Controller
 {
 
 	public function __construct()

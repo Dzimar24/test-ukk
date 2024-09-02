@@ -38,8 +38,23 @@ class Index_model extends CI_Model {
 		$query = $this->db->get()->result_array();
 		return $query;
   }
-
   // ------------------------------------------------------------------------
+  
+	// ------------------------------------------------------------------------
+  public function addBorrowing($idUser, $idBook, $startBorrowing, $endBorrowingWithTime)
+	{
+		# code...
+		$saveData['idUser'] = $idUser;
+		$saveData['idBuku'] = $idBook;
+		$saveData['borrow_date'] = $startBorrowing;
+		$saveData['return_date'] = $endBorrowingWithTime;
+		$saveData['status'] = 'Please wait';
+		$saveData['created_at'] = date('Y-m-d H:i:s');
+		$saveData['updated_at'] = NULL;
+
+		$this->db->insert('borrowing', $saveData);
+	}
+	// ------------------------------------------------------------------------
 
 }
 

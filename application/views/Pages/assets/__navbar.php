@@ -8,7 +8,7 @@
 			</li>
 			<?php if($this->session->userdata('level') == 'peminjam') : ?>
 				<li class="menu-item">
-					<a href="<?= site_url('Public/Peminjaman') ?>" class='menu-link'>
+					<a href="<?= site_url('Public/Borrowing') ?>" class='menu-link'>
 						<span><i class="bi bi-clipboard"></i> Borrowing</span>
 					</a>
 				</li>
