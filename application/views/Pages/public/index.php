@@ -109,9 +109,15 @@
 							</button>
 							<!-- //! End Button Love -->
 							<!-- //! Button Borrowing -->
+							<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
+							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
+								<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+							</button>
+							<?php else : ?>
 							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
 								<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
 							</button>
+							<?php endif; ?>
 							<!-- //! End Button Borrowing -->
 							<!-- //! Button Bookmark -->
 							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
@@ -157,6 +163,20 @@
 <!-- End Page Content -->
 
 <script>
+	//? Ambil semua elemen dengan kelas 'custom-button-check-borrowing'
+	const buttonTriggers = document.querySelectorAll('.custom-button-check-borrowing');
+
+	//? Tambahkan event listener ke setiap elemen
+	buttonTriggers.forEach(button => {
+		button.addEventListener('click', function () {
+			Swal.fire({
+					icon: "warning",
+					title: "Oops...",
+					text: "The book is in the process of being borrowed",
+			});
+		});
+	});
+
 	document.addEventListener('DOMContentLoaded', function () {
 		var popoverTriggerList = [].slice.call(document.querySelectorAll('.custom-tooltip'));
 		var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {

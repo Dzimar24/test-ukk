@@ -33,7 +33,7 @@ class Borrowing extends CI_Controller
 	public function index()
 	{
 		// 
-		exit;
+		$this->template->load('template', 'Pages/public/borrowingData');
 	}
 
 }

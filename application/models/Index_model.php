@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
@@ -16,32 +16,43 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  */
 
-class Index_model extends CI_Model {
+class Index_model extends CI_Model
+{
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
-  public function __construct()
-  {
-    parent::__construct();
-  }
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-  // ------------------------------------------------------------------------
+	// ------------------------------------------------------------------------
 
 
-  // ------------------------------------------------------------------------
-  public function viewDataBook()
-  {
-    // 
+	// ------------------------------------------------------------------------
+	public function viewDataBook()
+	{
+		// 
 		$this->db->select('*');
 		$this->db->from('buku');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
 		$query = $this->db->get()->result_array();
 		return $query;
-  }
-  // ------------------------------------------------------------------------
-  
+	}
 	// ------------------------------------------------------------------------
-  public function addBorrowing($idUser, $idBook, $startBorrowing, $endBorrowingWithTime)
+	
+	// ------------------------------------------------------------------------
+	public function check_existing_borrow()
+	{
+		# code...
+		$this->db->select('*')->from('borrowing');
+		$query = $this->db->get()->row();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function addBorrowing($idUser, $idBook, $startBorrowing, $endBorrowingWithTime)
 	{
 		# code...
 		$saveData['idUser'] = $idUser;

@@ -13,6 +13,7 @@ class Index extends CI_Controller
 
 	public function index()
 	{
+		$data['checkUserExists'] = $this->index->check_existing_borrow();
 		$data['viewDataBook'] = $this->index->viewDataBook();
 		$this->template->load('template', 'Pages/public/index', $data);
 	}
@@ -36,7 +37,7 @@ class Index extends CI_Controller
 		$this->index->addBorrowing($idUser, $idBook, $startBorrowingWithTime, $endBorrowingWithTime);
 
 		//? Redirect ke halaman utama plus Alert
-		$this->session->set_flashdata('success', 'Successfully Borrowing Book !!');
+		$this->session->set_flashdata('success', 'Process successful, please wait for approval from the staff to collect the book at the library!!');
 		redirect('Index');
 	}
 
