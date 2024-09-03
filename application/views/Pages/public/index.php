@@ -109,14 +109,20 @@
 							</button>
 							<!-- //! End Button Love -->
 							<!-- //! Button Borrowing -->
-							<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
-							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
-								<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-							</button>
+							<?php if ($this->session->userdata('UserID') == NULL) : ?>
+								<a class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing" href="<?= site_url('Auth/Login') ?>">
+									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+								</a>
 							<?php else : ?>
-							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
-								<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-							</button>
+								<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
+								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
+									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+								</button>
+								<?php else : ?>
+								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
+									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+								</button>
+								<?php endif; ?>
 							<?php endif; ?>
 							<!-- //! End Button Borrowing -->
 							<!-- //! Button Bookmark -->

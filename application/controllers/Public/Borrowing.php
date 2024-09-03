@@ -28,12 +28,15 @@ class Borrowing extends CI_Controller
 			# code...
 			redirect('error/NotFound');
 		}
+		$this->load->model('Borrowing_model', 'bm');
 	}
 
 	public function index()
 	{
 		// 
-		$this->template->load('template', 'Pages/public/borrowingData');
+		$data['titlePage'] = 'Borrowing Page';
+		$data['viewDataBorrowing'] = $this->bm->viewDataBorrowing();
+		$this->template->load('template', 'Pages/public/borrowingData', $data);
 	}
 
 }
