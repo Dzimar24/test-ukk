@@ -41,4 +41,10 @@ class Index extends CI_Controller
 		redirect('Index');
 	}
 
+	public function bookmark()
+	{
+		# code...
+		exit;
+	}
+
 }

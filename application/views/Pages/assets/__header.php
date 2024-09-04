@@ -5,9 +5,16 @@
 		</div>
 		<div class="header-top-right">
 			<?php if ($this->session->userdata('level') == TRUE): ?>
+				<ul class="navbar-nav ms-auto mb-lg-0">
+					<li class="nav-item dropdown me-3">
+						<a class="nav-link active text-gray-600" href="<?= site_url('Index/bookmark') ?>">
+							<i class="bi bi-bookmark-fill fs-5"></i>
+							<span class="badge badge-notification bg-danger">1</span>
+						</a>
+					</li>
+				</ul>
 				<div class="dropdown">
-					<a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle "
-						data-bs-toggle="dropdown" aria-expanded="false">
+					<a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
 						<div class="avatar avatar-md2">
 							<img src="<?= base_url('/assets/mazer/') ?>assets/compiled/jpg/1.jpg" alt="Avatar">
 						</div>
@@ -43,10 +50,10 @@
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 
 <script>
-	$('.button-log-out').on('click', function(e) {
+	$('.button-log-out').on('click', function (e) {
 		e.preventDefault();
 		const url = $(this).attr('href');
-		
+
 		Swal.fire({
 			title: "Are you sure?",
 			text: "Are you sure you want to log out ?",

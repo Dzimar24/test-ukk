@@ -35,6 +35,8 @@ class Borrowing_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('borrowing');
 		$this->db->join('buku', 'buku.BukuID = borrowing.idBuku', 'left');
+		$this->db->join('kategori', 'kategori.KategoriID = buku.BukuID', 'left');
+		
 		$query = $this->db->get()->result_array();
 		return $query;
   }
