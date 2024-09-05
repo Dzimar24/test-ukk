@@ -5,14 +5,16 @@
 		</div>
 		<div class="header-top-right">
 			<?php if ($this->session->userdata('level') == TRUE): ?>
-				<ul class="navbar-nav ms-auto mb-lg-0">
-					<li class="nav-item dropdown me-3">
-						<a class="nav-link active text-gray-600" href="<?= site_url('Index/bookmark') ?>">
-							<i class="bi bi-bookmark-fill fs-5"></i>
-							<span class="badge badge-notification bg-danger">1</span>
-						</a>
-					</li>
-				</ul>
+				<?php if ($this->session->userdata('level') == 'peminjam'): ?>
+					<ul class="navbar-nav ms-auto mb-lg-0">
+						<li class="nav-item dropdown me-3">
+							<a class="nav-link active text-gray-600" href="<?= site_url('Public/Bookmark') ?>">
+								<i class="bi bi-bookmark-fill fs-5"></i>
+								<span class="badge badge-notification bg-danger"><?= $viewDataCountBookmark; ?></span>
+							</a>
+						</li>
+					</ul>
+				<?php endif; ?>
 				<div class="dropdown">
 					<a href="#" id="topbarUserDropdown" class="user-dropdown d-flex align-items-center dropend dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
 						<div class="avatar avatar-md2">

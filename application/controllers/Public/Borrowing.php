@@ -34,7 +34,10 @@ class Borrowing extends CI_Controller
 	public function index()
 	{
 		// 
+		$user_id = $this->session->userdata('UserID');
+
 		$data['titlePage'] = 'Borrowing Page';
+		$data['viewDataCountBookmark'] = $this->bm->count_user_bookmarks($user_id);
 		$data['viewDataBorrowing'] = $this->bm->viewDataBorrowing();
 		$this->template->load('template', 'Pages/public/borrowingData', $data);
 	}

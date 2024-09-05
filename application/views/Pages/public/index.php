@@ -104,34 +104,30 @@
 						</a>
 						<div class="btn-group align-items-center mx-2 px-1">
 							<!-- //! Button Love -->
-							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
-								<i class="bi bi-heart d-flex align-items-center justify-content-center text-secondary"></i>
-							</button>
-							<!-- //! End Button Love -->
-							<!-- //! Button Borrowing -->
-							<?php if ($this->session->userdata('UserID') == NULL) : ?>
-								<a class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing" href="<?= site_url('Auth/Login') ?>">
+							<?php if ($this->session->userdata('level') == 'peminjam') : ?>
+								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
+									<i class="bi bi-heart d-flex align-items-center justify-content-center text-secondary"></i>
+								</button>
+								<!-- //! End Button Love -->
+								<!-- //! Button Borrowing -->
+								<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
+								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
 									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-								</a>
-							<?php else : ?>
-								<?php if ($this->session->userdata('level') == 'peminjam') : ?>
-									<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
-									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
-										<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-									</button>
-									<?php else : ?>
-									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
-										<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-									</button>
-									<?php endif; ?>
+								</button>
+								<?php else : ?>
+								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
+									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+								</button>
 								<?php endif; ?>
+								<!-- //! End Button Borrowing -->
+								<!-- //! Button Bookmark -->
+								<a href="<?= site_url('Index/addBookmark/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
+									<i class="bi bi-bookmark d-flex align-items-center justify-content-center text-secondary"></i>
+								</a>
+								<!-- //! End Button Bookmark -->
+							<?php else : ?>
+								
 							<?php endif; ?>
-							<!-- //! End Button Borrowing -->
-							<!-- //! Button Bookmark -->
-							<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
-								<i class="bi bi-bookmark d-flex align-items-center justify-content-center text-secondary"></i>
-							</button>
-							<!-- //! End Button Bookmark -->
 						</div>
 					</div>
 				</div>

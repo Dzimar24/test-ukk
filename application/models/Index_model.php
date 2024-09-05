@@ -40,7 +40,7 @@ class Index_model extends CI_Model
 		return $query;
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
 	public function check_existing_borrow()
 	{
@@ -64,6 +64,25 @@ class Index_model extends CI_Model
 		$saveData['updated_at'] = NULL;
 
 		$this->db->insert('borrowing', $saveData);
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function count_user_bookmarks($user_id)
+	{
+		// Menghitung total bookmark berdasarkan user_id
+		$this->db->where('UserID', $user_id);
+		$total_bookmarks = $this->db->count_all_results('bookmark');
+		return $total_bookmarks;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function addBookmark($idBook, $idUser)
+	{
+		$saveData['BukuID'] = $idBook;
+		$saveData['UserID'] = $idUser;
+		$this->db->insert('bookmark', $saveData);
 	}
 	// ------------------------------------------------------------------------
 

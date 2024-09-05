@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  *
- * Model Borrowing_model
+ * Model Bookmark_model
  *
  * This Model for ...
  * 
@@ -16,7 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  *
  */
 
-class Borrowing_model extends CI_Model
+class Bookmark_model extends CI_Model
 {
 
 	// ------------------------------------------------------------------------
@@ -30,20 +30,6 @@ class Borrowing_model extends CI_Model
 
 
 	// ------------------------------------------------------------------------
-	public function viewDataBorrowing()
-	{
-		// 
-		$this->db->select('*');
-		$this->db->from('borrowing');
-		$this->db->join('buku', 'buku.BukuID = borrowing.idBuku', 'left');
-		$this->db->join('kategori', 'kategori.KategoriID = buku.BukuID', 'left');
-
-		$query = $this->db->get()->result_array();
-		return $query;
-	}
-	// ------------------------------------------------------------------------
-
-	// ------------------------------------------------------------------------
 	public function count_user_bookmarks($user_id)
 	{
 		// Menghitung total bookmark berdasarkan user_id
@@ -52,8 +38,19 @@ class Borrowing_model extends CI_Model
 		return $total_bookmarks;
 	}
 	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewDataBookmark($id) {
+		$this->db->select('*')->from('bookmark');
+		$this->db->join('buku', 'buku.BukuID = bookmark.BukuID', 'left');
+		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
+		$this->db->where('UserID', $id);
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
 
 }
 
-/* End of file Borrowing_model.php */
-/* Location: ./application/models/Borrowing_model.php */
+/* End of file Bookmark_model.php */
+/* Location: ./application/models/Bookmark_model.php */

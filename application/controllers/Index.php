@@ -13,6 +13,8 @@ class Index extends CI_Controller
 
 	public function index()
 	{
+		$user_id = $this->session->userdata('UserID');
+		$data['viewDataCountBookmark'] = $this->index->count_user_bookmarks($user_id);
 		$data['checkUserExists'] = $this->index->check_existing_borrow();
 		$data['viewDataBook'] = $this->index->viewDataBook();
 		$this->template->load('template', 'Pages/public/index', $data);
@@ -41,10 +43,15 @@ class Index extends CI_Controller
 		redirect('Index');
 	}
 
-	public function bookmark()
+	public function addBookmark($idBook)
 	{
 		# code...
-		exit;
+		$idUser = $this->session->userdata('UserID');
+		$this->index->addBookmark($idBook, $idUser);
+		//? Redirect ke halaman utama plus Alert
+		$this->session->set_flashdata('success', 'The book has been successfully saved to bookmarks');
+		redirect('Index');
 	}
+
 
 }
