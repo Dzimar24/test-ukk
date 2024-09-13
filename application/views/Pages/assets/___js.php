@@ -14,6 +14,9 @@
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/compiled/js/app.js"></script>
 
+<!-- Flatpickr -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/flatpickr/flatpickr.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/date-picker.js"></script>
 
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

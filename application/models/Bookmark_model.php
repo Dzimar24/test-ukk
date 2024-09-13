@@ -38,15 +38,24 @@ class Bookmark_model extends CI_Model
 		return $total_bookmarks;
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
-	public function viewDataBookmark($id) {
+	public function viewDataBookmark($id)
+	{
 		$this->db->select('*')->from('bookmark');
 		$this->db->join('buku', 'buku.BukuID = bookmark.BukuID', 'left');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
 		$this->db->where('UserID', $id);
 		$query = $this->db->get()->result_array();
 		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function deleteBookmark($id)
+	{
+		$this->db->where('BukuID', $id);
+		$this->db->delete('bookmark');
 	}
 	// ------------------------------------------------------------------------
 

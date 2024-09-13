@@ -20,13 +20,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Bookmark extends CI_Controller
 {
-    
-  public function __construct()
-  {
-    parent::__construct();
+
+	public function __construct()
+	{
+		parent::__construct();
 		$this->load->model('Bookmark_model', 'bmm');
-		
-  }
+
+	}
 
 	public function index()
 	{
@@ -36,6 +36,14 @@ class Bookmark extends CI_Controller
 		$data['viewDataBookmark'] = $this->bmm->viewDataBookmark($user_id);
 		$data['titlePage'] = 'Bookmark';
 		$this->template->load('template', 'Pages/public/bookmark', $data);
+	}
+
+	public function delete($id)
+	{
+		# code...
+		$this->bmm->deleteBookmark($id);
+		$this->session->set_flashdata('success', 'The book has been removed from the bookmark list!!');
+		redirect('Public/Bookmark');
 	}
 
 }

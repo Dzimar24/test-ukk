@@ -58,7 +58,7 @@
 							<h5 class="text-title">Table <?= $titlePage; ?></h5>
 						</div>
 						<div class="col-1 d-flex justify-content-start align-items-center">
-							<input type="checkbox" name="" class="form-check-input" id="selectAllCheckbox">
+							<input type="checkbox" class="form-check-input" id="selectAllCheckbox">
 						</div>
 					</div>
 				</div>
@@ -80,14 +80,20 @@
 							?>
 							<tbody>
 								<tr>
-									<td><input type="checkbox" class="form-check-input" name="" id="checkboxes"></td>
+									<td><input type="checkbox" class="form-check-input row-checkbox"></td>
 									<td><?= $no++; ?></td>
 									<td><?= $vdb['Judul'] ?></td>
 									<td>
 										<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView<?= $vdb['BukuID'] ?>"><i class="bi bi-eye"></i> Views</button>
 									</td>
 									<td>
-										<button class="btn btn-sm btn-danger rounded-4"><i class="bi bi-x-circle"></i></button>
+										<?= form_open('Public/Bookmark/delete/' . $vdb['BukuID']); ?>
+											<div class="d-inline-block mb-2 me-1">
+												<button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Bookmark">
+													<i class="bi bi-x-circle"></i>
+												</button>
+											</div>
+										<?= form_close(); ?>
 									</td>
 								</tr>
 							</tbody>
@@ -180,7 +186,45 @@
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 
 <script>
-	$('#selectAllCheckbox').change(function () {
-		$('#checkboxes').prop('checked', $(this).prop('checked'));
+	// Get the 'select all' checkbox
+	const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+
+	// Get all the individual checkboxes
+	const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+
+	// Event listener for 'select all' checkbox
+	selectAllCheckbox.addEventListener('change', function () {
+		// When 'select all' is checked or unchecked, set the same state for all row checkboxes
+		rowCheckboxes.forEach(checkbox => {
+			checkbox.checked = selectAllCheckbox.checked;
+		});
+	});
+
+	// Event listeners for individual checkboxes
+	rowCheckboxes.forEach(checkbox => {
+		checkbox.addEventListener('change', function () {
+			// If any checkbox is unchecked, uncheck the 'select all' checkbox
+			if (!checkbox.checked) {
+					selectAllCheckbox.checked = false;
+			}
+
+			// If all checkboxes are checked, check the 'select all' checkbox
+			if (Array.from(rowCheckboxes).every(checkbox => checkbox.checked)) {
+					selectAllCheckbox.checked = true;
+			}
+		});
 	});
 </script>
+
+<!-- //? Alert if success -->
+<?php if ($this->session->flashdata('success')): ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			Swal.fire({
+				icon: 'success',
+				title: 'Success!',
+				text: '<?php echo $this->session->flashdata('success'); ?>'
+			});
+		});
+	</script>
+<?php endif; ?>

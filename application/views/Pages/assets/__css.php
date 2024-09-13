@@ -12,5 +12,8 @@
 <link rel="stylesheet" href="<?= base_url('/assets/mazer/') ?>assets/extensions/filepond-plugin-image-preview/filepond-plugin-image-preview.css">
 <link rel="stylesheet" href="<?= base_url('/assets/mazer/') ?>assets/extensions/toastify-js/src/toastify.css">
 
+<!-- Flatpickr -->
+<link rel="stylesheet" href="<?= base_url('/assets/mazer/') ?>assets/extensions/flatpickr/flatpickr.min.css">
+
 <!-- SweetAlert2 -->
 <link rel="stylesheet" href="<?= base_url('/assets/mazer/') ?>assets/extensions/sweetalert2/sweetalert2.min.css">
