@@ -53,6 +53,30 @@ class Borrowing_model extends CI_Model
 	}
 	// ------------------------------------------------------------------------
 
+	// ------------------------------------------------------------------------
+	public function viewDataBorrowingInTemporary()
+	{
+		$idUser = $this->session->userdata('UserID');
+
+		//? View data for temporaryBorrowing
+		$this->db->from('temporaryborrowing');
+		$this->db->join('user', 'user.UserID = temporaryborrowing.idUser', 'left');
+		$this->db->join('buku', 'buku.BukuID = temporaryborrowing.idBook', 'left');
+
+		$this->db->where('idUser', $idUser);
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function viewDataBook()
+	{
+		$query = $this->db->get('buku')->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+
 }
 
 /* End of file Borrowing_model.php */

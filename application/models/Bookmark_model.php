@@ -28,11 +28,10 @@ class Bookmark_model extends CI_Model
 
 	// ------------------------------------------------------------------------
 
-
 	// ------------------------------------------------------------------------
 	public function count_user_bookmarks($user_id)
 	{
-		// Menghitung total bookmark berdasarkan user_id
+		//? Menghitung total bookmark berdasarkan user_id
 		$this->db->where('UserID', $user_id);
 		$total_bookmarks = $this->db->count_all_results('bookmark');
 		return $total_bookmarks;

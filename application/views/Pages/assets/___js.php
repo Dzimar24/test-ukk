@@ -4,9 +4,16 @@
 <!-- DataTables -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-<script
-	src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
 <script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/datatables.js"></script>
+<script>
+	$(document).ready(function () {
+		$('#dataTables').dataTable({
+			"paging": true,
+			"searching": true,
+		});
+	})
+</script>
 
 <!-- JS Page -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/static/js/components/dark.js"></script>
@@ -32,7 +39,7 @@
 		toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | link image',
 		setup: function (editor) {
 			editor.on('change', function () {
-					editor.save();  // Menyimpan perubahan ke textarea
+				editor.save();  // Menyimpan perubahan ke textarea
 			});
 		}
 	});

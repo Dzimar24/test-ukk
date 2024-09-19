@@ -38,8 +38,16 @@
 	}
 
 	.col-action {
-		width: 100px;
+		width: 80px;
 		/* Ubah sesuai kebutuhan */
+	}
+
+	.icon-custom {
+		color: #E72929;
+	}
+
+	.input-checkbox-custom {
+		margin-right: 10px;
 	}
 </style>
 <!-- End Style Table -->
@@ -54,11 +62,12 @@
 			<div class="card">
 				<div class="card-header">
 					<div class="row mb-3">
-						<div class="col-11 d-flex align-items-center">
+						<div class="col-10 d-flex align-items-center">
 							<h5 class="text-title">Table <?= $titlePage; ?></h5>
 						</div>
-						<div class="col-1 d-flex justify-content-start align-items-center">
-							<input type="checkbox" class="form-check-input" id="selectAllCheckbox">
+						<div class="col-2 d-flex justify-content-start align-items-center">
+							<input type="checkbox" class="form-check-input input-checkbox-custom" id="selectAllCheckbox">
+							<button class="btn btn-sm btn-primary" id="borrowing-many-book">Borrowing</button>
 						</div>
 					</div>
 				</div>
@@ -80,20 +89,16 @@
 							?>
 							<tbody>
 								<tr>
-									<td><input type="checkbox" class="form-check-input row-checkbox"></td>
+									<td>
+										<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbok-many-book">
+									</td>
 									<td><?= $no++; ?></td>
 									<td><?= $vdb['Judul'] ?></td>
 									<td>
 										<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView<?= $vdb['BukuID'] ?>"><i class="bi bi-eye"></i> Views</button>
 									</td>
 									<td>
-										<?= form_open('Public/Bookmark/delete/' . $vdb['BukuID']); ?>
-											<div class="d-inline-block mb-2 me-1">
-												<button type="submit" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Bookmark">
-													<i class="bi bi-x-circle"></i>
-												</button>
-											</div>
-										<?= form_close(); ?>
+										<a href="<?= site_url('Public/Bookmark/delete/' . $vdb['BukuID']) ?>" class="m-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Bookmark"><i class="bi bi-x-circle icon-custom"></i></a>
 									</td>
 								</tr>
 							</tbody>
@@ -214,6 +219,34 @@
 			}
 		});
 	});
+
+	// Aksi ngirim data buku but diborong
+	const buttonBorrowingBook = document.getElementById("borrowing-many-book");
+	const checkboxBorrowingBook = document.querySelectorAll(".checkbok-many-book");
+
+	buttonBorrowingBook.addEventListener("click", function() {
+		const bookBorrowed = [];
+		checkboxBorrowingBook.forEach(checkbox => {
+			if (checkbox.checked) {
+				bookBorrowed.push(checkbox.value);
+			}
+		});
+		if (bookBorrowed.length > 0) {
+			Swal.fire({
+				icon: "success",
+				title: "Success,",
+				text: "The book is in the process of being borrowed",
+			}).then(() => {
+				window.location.href = "<?= base_url() ?>Index/Borrowing/?buku[]=" + bookBorrowed.join("&buku[]=");
+			})
+		} else {
+			Swal.fire({
+				icon: "error",
+				title: "Oops...",
+				text: "Please select a book to borrow",
+			});
+		}
+	})
 </script>
 
 <!-- //? Alert if success -->

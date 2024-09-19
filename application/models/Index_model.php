@@ -54,16 +54,23 @@ class Index_model extends CI_Model
 	// ------------------------------------------------------------------------
 	public function addBorrowing($idUser, $idBook, $startBorrowing, $endBorrowingWithTime)
 	{
-		# code...
-		$saveData['idUser'] = $idUser;
-		$saveData['idBuku'] = $idBook;
-		$saveData['borrow_date'] = $startBorrowing;
-		$saveData['return_date'] = $endBorrowingWithTime;
-		$saveData['status'] = 'Please wait';
-		$saveData['created_at'] = date('Y-m-d H:i:s');
-		$saveData['updated_at'] = NULL;
+		$data = array();
 
-		$this->db->insert('borrowing', $saveData);
+		foreach ($idBook as $key => $value) {
+			array_push($data, 
+				array(
+					'idUser' => $idUser,
+					'idBuku' => $value,
+					'borrow_date' => $startBorrowing,
+					'return_date' => $endBorrowingWithTime,
+					'status' => 'Please wait',
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => NULL
+				)
+			);
+		}
+
+		$this->db->insert_batch('borrowing', $data);
 	}
 	// ------------------------------------------------------------------------
 

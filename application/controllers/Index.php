@@ -27,9 +27,15 @@ class Index extends CI_Controller
 
 		//? Ambil data dari input & session
 		$idUser = $this->session->userdata('UserID');
-		$idBook = $this->input->post('id');
+		$idBook = $this->input->get('buku');
 		$startBorrowing = $this->input->post('startBorrowing'); // Format: YYYY-MM-DD
 		$endBorrowing = $this->input->post('endBorrowing');     // Format: YYYY-MM-DD
+
+		if (empty($idBook) || is_array($idBook) == FALSE || count($idBook) < 1) {
+			# code...
+			$this->session->set_flashdata('error', 'Please select a book to borrow');
+			redirect('Index');
+		}
 
 		//? Tambahkan waktu default ke tanggal startBorrowing
 		$startBorrowingWithTime = $startBorrowing . ' ' . date('H:i:s'); // YYYY-MM-DD H:i:s

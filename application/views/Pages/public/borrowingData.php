@@ -59,7 +59,7 @@
 </style>
 <!-- End Style Table -->
 
-<!-- //! Table User -->
+<!-- //! Table Borrowing -->
 <div class="row mt-4">
 	<div class="col-1">
 
@@ -68,9 +68,14 @@
 		<section class="section custom-section">
 			<div class="card">
 				<div class="card-header">
-					<h5 class="card-title">
-						Table Borrowing
-					</h5>
+					<div class="row mb-3">
+						<div class="col-10 d-flex align-items-center">
+							<h5 class="text-title">Table Borrowing</h5>
+						</div>
+						<div class="col-2 d-flex justify-content-start align-items-center">
+							<a class="btn btn-sm btn-primary" href="<?= site_url('Public/Borrowing/addBorrowing') ?>">Borrowing Book</a>
+						</div>
+					</div>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
@@ -206,4 +211,4 @@
 		</section>
 	</div>
 </div>
-<!-- //! End Table User -->
+<!-- //! End Table Borrowing -->
