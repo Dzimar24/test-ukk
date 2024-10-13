@@ -24,6 +24,7 @@ class CategoryBook extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->library('encryption');
 		$this->load->model('Category_model', 'category');
 	}
 
@@ -72,7 +73,10 @@ class CategoryBook extends CI_Controller
 		$this->template->load('template', 'Pages/admin/categoryBook', $data);
 	}
 
-	public function Update($id){
+	public function Update(){
+		//? Get ID Category
+		$id = $this->input->post('id');
+
 		//? Get Data via ID Catagory
 		$dataCategory = $this->category->get_category_by_id($id);
 

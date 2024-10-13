@@ -160,7 +160,8 @@ $config['composer_autoload'] = FALSE;
 | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
 |
 */
-$config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+// $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-@\='; old
+$config['permitted_uri_chars'] = '+=\a-z 0-9~%.:_-';
 
 /*
 |--------------------------------------------------------------------------
@@ -326,7 +327,9 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'b26d283bc88cf24589c0f152db9e3a';
+$config['encryption_cipher'] = 'aes-256';  // Contoh pengaturan cipher
+$config['encryption_mode'] = 'cbc';  // Contoh pengaturan mode
 
 /*
 |--------------------------------------------------------------------------

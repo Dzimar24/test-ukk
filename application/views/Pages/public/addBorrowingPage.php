@@ -30,6 +30,10 @@
 	.col-name{
 		width: 100px;
 	}
+
+	.checkbox-custom {
+		margin-right: 50px;
+	}
 </style>
 <!-- End Style -->
 
@@ -53,103 +57,31 @@
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">
+						<!-- Tabel Borrowing Temporary -->
 						<table class="table" id="table1">
 							<thead class="custom-table">
 								<tr>
-									<th class="col-no">No</th>
-									<th>Title Book</th>
-									<th class="col-view-data">View Data</th>
+										<th class="col-no">No</th>
+										<th>Title Book</th>
+										<th class="col-view-data">View Data</th>
 								</tr>
 							</thead>
-							<?php 
-								$no = 1;
-								foreach($viewDataBorrowingTemp as $dbt) :
-							?>
 							<tbody>
+								<?php 
+								$no = 1;
+								foreach($viewDataBorrowingTemp as $dbt) : 
+								?>
 								<tr>
 									<td><?= $no++; ?></td>
 									<td><?= $dbt['Judul'] ?></td>
 									<td>
-										<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView<?= $dbt['BukuID'] ?>"><i class="bi bi-eye"></i> Views</button>
+										<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView<?= $dbt['BukuID'] ?>">
+											<i class="bi bi-eye"></i> Views
+										</button>
 									</td>
 								</tr>
+								<?php endforeach; ?>
 							</tbody>
-							<!-- //! Modal View -->
-							<div class="modal fade" id="modalView<?= $dbt['BukuID'] ?>" tabindex="-1" aria-labelledby="modalViewLabel<?= $dbt['BukuID'] ?>" aria-hidden="true">
-								<div class="modal-dialog modal-xl modal-dialog-centered">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title" id="modalViewLabel<?= $dbt['BukuID'] ?>">Book Details</h5>
-											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<!-- Add your modal content here -->
-											<div class="row">
-												<!-- Input for book cover image -->
-												<div class="col-md-3">
-													<label for="bookCover" class="form-label" style="margin-left: 20px;">Cover Book</label>
-													<div class="form-group">
-														<div style="max-width: 200px; max-height: 500px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.8) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; margin-top: 10px; margin-left: 20px;">
-															<img src="<?= base_url('/assets/uploads/coverBook/' . $dbt['coverBook']) ?>" alt="Image Error" style="width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain;">
-														</div>
-													</div>
-												</div>
-												<!-- Input fields for book details -->
-												<div class="col-md-9">
-													<div class="row">
-														<!-- Title and Category -->
-														<div class="col-md-9">
-															<div class="form-group">
-																<label for="bookTitle">Title:</label>
-																<input type="text" class="form-control" value="<?= $dbt['Judul'] ?>" readonly id="bookTitle">
-															</div>
-														</div>
-														<div class="col-md-3">
-															<div class="form-group">
-																<label for="bookCategory">Category Book:</label>
-																<input type="text" name="categoryBook" class="form-control" value="<?= $dbt['NamaKategori'] ?>" id="bookCategory" readonly>
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<!-- Author -->
-														<div class="col-md-4">
-															<div class="form-group mt-2">
-																<label for="bookAuthor">Author:</label>
-																<input type="text" class="form-control" value="<?= $dbt['Penulis'] ?>" id="bookAuthor" readonly>
-															</div>
-														</div>
-														<!-- Publisher -->
-														<div class="col-md-4">
-															<div class="form-group mt-2">
-																<label for="bookPublisher">Publisher:</label>
-																<input type="text" class="form-control" value="<?= $dbt['Penerbit'] ?>" id="bookPublisher" readonly>
-															</div>
-														</div>
-														<!-- Publication Year -->
-														<div class="col-md-4">
-															<div class="form-group mt-2">
-																<label for="publicationYear">Publication Year:</label>
-																<input type="text" class="form-control" value="<?= date("l, d F Y", strtotime($dbt['TahunTerbit'])) ?>" id="publicationYear" readonly>
-															</div>
-														</div>
-													</div>
-													<!-- Book Description -->
-													<div class="form-group mt-3">
-														<label for="readonlyTinyMCE">Book Description:</label>
-														<textarea cols="30" class="form-control" id="readonlyTinyMCE"  rows="10"><?= $dbt['deskripsi'] ?></textarea>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- //! End Modal View -->
-							<?php endforeach; ?>
 						</table>
 					</div>
 				</div>
@@ -160,14 +92,14 @@
 <!-- End Table Borrowing Add Book Page -->
 
 <!-- Modal View Data Book -->
-<!--scrolling content Modal -->
 <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
 		<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalScrollableTitle">Data Book</h5>
-					<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-						<i data-feather="x"></i>
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i>
+						<span class="d-none d-sm-block">Close</span>
 					</button>
 				</div>
 				<div class="modal-body">
@@ -186,9 +118,10 @@
 										</thead>
 										<tbody>
 												<?php 
-												foreach ($viewDataBook as $vdb) : ?>
+												foreach ($viewDataBook as $vdb) :
+												// var_dump($vdb); exit; ?>
 													<tr>
-														<td><input type="checkbox" class="form-check-input" name="" id=""></td>
+														<td><input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book"></td>
 														<td><?= $vdb['Judul'] ?></td>
 														<td><?= $vdb['Penulis'] ?></td>
 														<td><?= date("Y", strtotime($vdb['TahunTerbit'])) ?></td>
@@ -209,11 +142,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-						<i class="bx bx-x d-block d-sm-none"></i>
-						<span class="d-none d-sm-block">Close</span>
-					</button>
-					<button type="button" class="btn btn-primary ms-1" data-bs-dismiss="modal">
+					<input type="checkbox" class="form-check-input checkbox-custom" name="" id="selectAllCheckbox">
+					<button type="submit" class="btn btn-primary ms-1" data-bs-dismiss="modal" id="borrowing-many-book">
 						<i class="bx bx-check d-block d-sm-none"></i>
 						<span class="d-none d-sm-block">Accept</span>
 					</button>
@@ -222,3 +152,123 @@
 	</div>
 </div>
 <!-- End Modal View Data Book -->
+
+<!-- JQuery -->
+<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
+
+<script>
+	// Fungsi untuk memperbarui tabel utama
+	function updateMainTable(newData) {
+		const mainTable = $('#table1 tbody');
+		mainTable.empty(); // Kosongkan tabel terlebih dahulu
+
+		newData.forEach((item, index) => {
+			mainTable.append(`
+					<tr>
+						<td>${index + 1}</td>
+						<td>${item.Judul}</td>
+						<td>
+							<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView${item.BukuID}">
+									<i class="bi bi-eye"></i> Views
+							</button>
+						</td>
+					</tr>
+			`);
+		});
+	}
+
+	// Event listener untuk tombol "Accept"
+	$('#borrowing-many-book').on('click', function(event) {
+		event.preventDefault();
+		const bookBorrowed = [];
+		
+		$('.checkbox-many-book:checked').each(function() {
+			bookBorrowed.push($(this).val());
+		});
+
+		if (bookBorrowed.length > 0) {
+			$.ajax({
+					url: "<?= base_url('Public/Borrowing/BorrowingBook') ?>",
+					method: "POST",
+					data: { buku: bookBorrowed },
+					dataType: 'json',
+					success: function(response) {
+						if (response.status === 'success') {
+							// Perbarui tabel utama
+							updateMainTable(response.data);
+							
+							// Hapus baris yang telah dipilih dari modal
+							$('.checkbox-many-book:checked').closest('tr').remove();
+							
+							// Perbarui tampilan tabel modal jika kosong
+							const modalTable = $("#dataTables tbody");
+							if (modalTable.children().length === 0) {
+									modalTable.html('<tr><td colspan="5" class="text-center">Tidak ada data tersedia</td></tr>');
+							}
+
+							// Tampilkan pesan sukses
+							Swal.fire({
+									icon: "success",
+									title: "Sukses",
+									text: "Buku telah ditempatkan dalam peminjaman sementara dan siap untuk dipinjam.",
+							});
+
+							// Tutup modal
+							$('#exampleModalScrollable').modal('hide');
+						} else {
+							Swal.fire({
+									icon: "error",
+									title: "Oops...",
+									text: response.message || "Terjadi kesalahan saat memproses permintaan Anda.",
+							});
+						}
+					},
+					error: function(xhr, status, error) {
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: "Terjadi kesalahan saat memproses permintaan Anda.",
+						});
+					}
+			});
+		} else {
+			Swal.fire({
+					icon: "error",
+					title: "Oops...",
+					text: "Silakan pilih buku untuk dipinjam",
+			});
+		}
+	});
+
+	// Reset checkbox saat modal dibuka
+	$('#exampleModalScrollable').on('show.bs.modal', function () {
+		$('.checkbox-many-book').prop('checked', false);
+		$('#selectAllCheckbox').prop('checked', false);
+	});
+</script>
+
+<!-- //? Alert if success -->
+<?php if ($this->session->flashdata('success')): ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			Swal.fire({
+				icon: 'success',
+				title: 'Success!',
+				text: '<?php echo $this->session->flashdata('success'); ?>'
+			});
+		});
+	</script>
+<?php endif; ?>
+
+<!-- //? Alert if Error -->
+<?php if ($this->session->flashdata('error')): ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: '<?php echo $this->session->flashdata('error'); ?>'
+			});
+		});
+	</script>
+<?php endif; ?>

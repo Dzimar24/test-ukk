@@ -67,14 +67,16 @@
 						<h4 class="card-title"><i class="bi bi-pencil-square"></i> Category Book</h4>
 					</div>
 					<div class="card-body">
-						<?= form_open('Admin/CategoryBook/Update/'. $editData->KategoriID) ?>
+						<?= form_open('Admin/CategoryBook/Update') ?>
 						<div class="row">
+							<?php foreach($editData as $ed) : ?>
+							<input type="hidden" name="id" value="<?= $ed['KategoriID']; ?>">
 							<div class="form-group">
 								<label for="formName">Name Category Book: </label>
-								<input type="hidden" name="id" value="<?= $editData->KategoriID; ?>">
-								<input type="text" name="nameCategoryUpdate" value="<?= $editData->NamaKategori; ?>" class="form-control" id="formName" required>
+								<input type="text" name="nameCategoryUpdate" value="<?= $ed['NamaKategori']; ?>" class="form-control" id="formName">
 								<?= form_error('nameCategoryUpdate', '<span class="text-danger mt-2">* ', '</span>') ?>
 							</div>
+							<?php endforeach; ?>
 							<style>
 								.button-container {
 										display: flex;
@@ -99,7 +101,7 @@
 							</style>
 							<div class="button-container">
 								<a class="button-custom-back" href="<?= site_url('Admin/CategoryBook') ?>"><i class="bi bi-arrow-left"></i> Back</a>
-								<button type="submit" class="btn btn-primary">Update Data</button>
+								<button type="submit" class="btn btn-primary btn-sm">Update Data</button>
 							</div>
 						</div>
 						<?= form_close(); ?>

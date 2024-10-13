@@ -55,9 +55,10 @@ class Category_model extends CI_Model
 	public function viewDataEditCategory($id)
 	{
 		# code...
-		$this->db->select('*')->from('kategori')->where('KategoriID', $id);
+		$this->db->from('kategori');
+		$this->db->where('KategoriID', $id);
 
-		$query = $this->db->get()->row();
+		$query = $this->db->get()->result_array();
 		return $query;
 	}
 	// ------------------------------------------------------------------------

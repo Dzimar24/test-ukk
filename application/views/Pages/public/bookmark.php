@@ -221,32 +221,32 @@
 	});
 
 	// Aksi ngirim data buku but diborong
-	const buttonBorrowingBook = document.getElementById("borrowing-many-book");
-	const checkboxBorrowingBook = document.querySelectorAll(".checkbok-many-book");
+	// const buttonBorrowingBook = document.getElementById("borrowing-many-book");
+	// const checkboxBorrowingBook = document.querySelectorAll(".checkbok-many-book");
 
-	buttonBorrowingBook.addEventListener("click", function() {
-		const bookBorrowed = [];
-		checkboxBorrowingBook.forEach(checkbox => {
-			if (checkbox.checked) {
-				bookBorrowed.push(checkbox.value);
-			}
-		});
-		if (bookBorrowed.length > 0) {
-			Swal.fire({
-				icon: "success",
-				title: "Success,",
-				text: "The book is in the process of being borrowed",
-			}).then(() => {
-				window.location.href = "<?= base_url() ?>Index/Borrowing/?buku[]=" + bookBorrowed.join("&buku[]=");
-			})
-		} else {
-			Swal.fire({
-				icon: "error",
-				title: "Oops...",
-				text: "Please select a book to borrow",
-			});
-		}
-	})
+	// buttonBorrowingBook.addEventListener("click", function() {
+	// 	const bookBorrowed = [];
+	// 	checkboxBorrowingBook.forEach(checkbox => {
+	// 		if (checkbox.checked) {
+	// 			bookBorrowed.push(checkbox.value);
+	// 		}
+	// 	});
+	// 	if (bookBorrowed.length > 0) {
+	// 		Swal.fire({
+	// 			icon: "success",
+	// 			title: "Success,",
+	// 			text: "The book is in the process of being borrowed",
+	// 		}).then(() => {
+	// 			window.location.href = "<?= base_url() ?>Index/Borrowing/?buku[]=" + bookBorrowed.join("&buku[]=");
+	// 		})
+	// 	} else {
+	// 		Swal.fire({
+	// 			icon: "error",
+	// 			title: "Oops...",
+	// 			text: "Please select a book to borrow",
+	// 		});
+	// 	}
+	// })
 </script>
 
 <!-- //? Alert if success -->
