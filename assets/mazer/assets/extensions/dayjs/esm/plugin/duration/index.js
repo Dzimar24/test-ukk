@@ -1,7 +1,15 @@
-import { MILLISECONDS_A_DAY, MILLISECONDS_A_HOUR, MILLISECONDS_A_MINUTE, MILLISECONDS_A_SECOND, MILLISECONDS_A_WEEK, REGEX_FORMAT } from '../../constant';
+import {
+  MILLISECONDS_A_DAY,
+  MILLISECONDS_A_HOUR,
+  MILLISECONDS_A_MINUTE,
+  MILLISECONDS_A_SECOND,
+  MILLISECONDS_A_WEEK,
+  REGEX_FORMAT,
+} from "../../constant";
 var MILLISECONDS_A_YEAR = MILLISECONDS_A_DAY * 365;
 var MILLISECONDS_A_MONTH = MILLISECONDS_A_DAY * 30;
-var durationRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
+var durationRegex =
+  /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 var unitToMS = {
   years: MILLISECONDS_A_YEAR,
   months: MILLISECONDS_A_MONTH,
@@ -10,13 +18,12 @@ var unitToMS = {
   minutes: MILLISECONDS_A_MINUTE,
   seconds: MILLISECONDS_A_SECOND,
   milliseconds: 1,
-  weeks: MILLISECONDS_A_WEEK
+  weeks: MILLISECONDS_A_WEEK,
 };
 
 var isDuration = function isDuration(d) {
   return d instanceof Duration;
 }; // eslint-disable-line no-use-before-define
-
 
 var $d;
 var $u;
@@ -24,7 +31,6 @@ var $u;
 var wrapper = function wrapper(input, instance, unit) {
   return new Duration(input, unit, instance.$l);
 }; // eslint-disable-line no-use-before-define
-
 
 var prettyUnit = function prettyUnit(unit) {
   return $u.p(unit) + "s";
@@ -46,24 +52,24 @@ var getNumberUnitFormat = function getNumberUnitFormat(number, unit) {
   if (!number) {
     return {
       negative: false,
-      format: ''
+      format: "",
     };
   }
 
   if (isNegative(number)) {
     return {
       negative: true,
-      format: "" + absolute(number) + unit
+      format: "" + absolute(number) + unit,
     };
   }
 
   return {
     negative: false,
-    format: "" + number + unit
+    format: "" + number + unit,
   };
 };
 
-var Duration = /*#__PURE__*/function () {
+var Duration = /*#__PURE__*/ (function () {
   function Duration(input, unit, locale) {
     var _this = this;
 
@@ -79,13 +85,13 @@ var Duration = /*#__PURE__*/function () {
       return wrapper(input * unitToMS[prettyUnit(unit)], this);
     }
 
-    if (typeof input === 'number') {
+    if (typeof input === "number") {
       this.$ms = input;
       this.parseFromMilliseconds();
       return this;
     }
 
-    if (typeof input === 'object') {
+    if (typeof input === "object") {
       Object.keys(input).forEach(function (k) {
         _this.$d[prettyUnit(k)] = input[k];
       });
@@ -93,7 +99,7 @@ var Duration = /*#__PURE__*/function () {
       return this;
     }
 
-    if (typeof input === 'string') {
+    if (typeof input === "string") {
       var d = input.match(durationRegex);
 
       if (d) {
@@ -144,29 +150,44 @@ var Duration = /*#__PURE__*/function () {
   };
 
   _proto.toISOString = function toISOString() {
-    var Y = getNumberUnitFormat(this.$d.years, 'Y');
-    var M = getNumberUnitFormat(this.$d.months, 'M');
+    var Y = getNumberUnitFormat(this.$d.years, "Y");
+    var M = getNumberUnitFormat(this.$d.months, "M");
     var days = +this.$d.days || 0;
 
     if (this.$d.weeks) {
       days += this.$d.weeks * 7;
     }
 
-    var D = getNumberUnitFormat(days, 'D');
-    var H = getNumberUnitFormat(this.$d.hours, 'H');
-    var m = getNumberUnitFormat(this.$d.minutes, 'M');
+    var D = getNumberUnitFormat(days, "D");
+    var H = getNumberUnitFormat(this.$d.hours, "H");
+    var m = getNumberUnitFormat(this.$d.minutes, "M");
     var seconds = this.$d.seconds || 0;
 
     if (this.$d.milliseconds) {
       seconds += this.$d.milliseconds / 1000;
     }
 
-    var S = getNumberUnitFormat(seconds, 'S');
-    var negativeMode = Y.negative || M.negative || D.negative || H.negative || m.negative || S.negative;
-    var T = H.format || m.format || S.format ? 'T' : '';
-    var P = negativeMode ? '-' : '';
-    var result = P + "P" + Y.format + M.format + D.format + T + H.format + m.format + S.format;
-    return result === 'P' || result === '-P' ? 'P0D' : result;
+    var S = getNumberUnitFormat(seconds, "S");
+    var negativeMode =
+      Y.negative ||
+      M.negative ||
+      D.negative ||
+      H.negative ||
+      m.negative ||
+      S.negative;
+    var T = H.format || m.format || S.format ? "T" : "";
+    var P = negativeMode ? "-" : "";
+    var result =
+      P +
+      "P" +
+      Y.format +
+      M.format +
+      D.format +
+      T +
+      H.format +
+      m.format +
+      S.format;
+    return result === "P" || result === "-P" ? "P0D" : result;
   };
 
   _proto.toJSON = function toJSON() {
@@ -174,22 +195,22 @@ var Duration = /*#__PURE__*/function () {
   };
 
   _proto.format = function format(formatStr) {
-    var str = formatStr || 'YYYY-MM-DDTHH:mm:ss';
+    var str = formatStr || "YYYY-MM-DDTHH:mm:ss";
     var matches = {
       Y: this.$d.years,
-      YY: $u.s(this.$d.years, 2, '0'),
-      YYYY: $u.s(this.$d.years, 4, '0'),
+      YY: $u.s(this.$d.years, 2, "0"),
+      YYYY: $u.s(this.$d.years, 4, "0"),
       M: this.$d.months,
-      MM: $u.s(this.$d.months, 2, '0'),
+      MM: $u.s(this.$d.months, 2, "0"),
       D: this.$d.days,
-      DD: $u.s(this.$d.days, 2, '0'),
+      DD: $u.s(this.$d.days, 2, "0"),
       H: this.$d.hours,
-      HH: $u.s(this.$d.hours, 2, '0'),
+      HH: $u.s(this.$d.hours, 2, "0"),
       m: this.$d.minutes,
-      mm: $u.s(this.$d.minutes, 2, '0'),
+      mm: $u.s(this.$d.minutes, 2, "0"),
       s: this.$d.seconds,
-      ss: $u.s(this.$d.seconds, 2, '0'),
-      SSS: $u.s(this.$d.milliseconds, 3, '0')
+      ss: $u.s(this.$d.seconds, 2, "0"),
+      SSS: $u.s(this.$d.milliseconds, 3, "0"),
     };
     return str.replace(REGEX_FORMAT, function (match, $1) {
       return $1 || String(matches[match]);
@@ -204,9 +225,9 @@ var Duration = /*#__PURE__*/function () {
     var base = this.$ms;
     var pUnit = prettyUnit(unit);
 
-    if (pUnit === 'milliseconds') {
+    if (pUnit === "milliseconds") {
       base %= 1000;
-    } else if (pUnit === 'weeks') {
+    } else if (pUnit === "weeks") {
       base = roundNumber(base / unitToMS[pUnit]);
     } else {
       base = this.$d[pUnit];
@@ -244,7 +265,7 @@ var Duration = /*#__PURE__*/function () {
   };
 
   _proto.humanize = function humanize(withSuffix) {
-    return $d().add(this.$ms, 'ms').locale(this.$l).fromNow(!withSuffix);
+    return $d().add(this.$ms, "ms").locale(this.$l).fromNow(!withSuffix);
   };
 
   _proto.valueOf = function valueOf() {
@@ -252,74 +273,81 @@ var Duration = /*#__PURE__*/function () {
   };
 
   _proto.milliseconds = function milliseconds() {
-    return this.get('milliseconds');
+    return this.get("milliseconds");
   };
 
   _proto.asMilliseconds = function asMilliseconds() {
-    return this.as('milliseconds');
+    return this.as("milliseconds");
   };
 
   _proto.seconds = function seconds() {
-    return this.get('seconds');
+    return this.get("seconds");
   };
 
   _proto.asSeconds = function asSeconds() {
-    return this.as('seconds');
+    return this.as("seconds");
   };
 
   _proto.minutes = function minutes() {
-    return this.get('minutes');
+    return this.get("minutes");
   };
 
   _proto.asMinutes = function asMinutes() {
-    return this.as('minutes');
+    return this.as("minutes");
   };
 
   _proto.hours = function hours() {
-    return this.get('hours');
+    return this.get("hours");
   };
 
   _proto.asHours = function asHours() {
-    return this.as('hours');
+    return this.as("hours");
   };
 
   _proto.days = function days() {
-    return this.get('days');
+    return this.get("days");
   };
 
   _proto.asDays = function asDays() {
-    return this.as('days');
+    return this.as("days");
   };
 
   _proto.weeks = function weeks() {
-    return this.get('weeks');
+    return this.get("weeks");
   };
 
   _proto.asWeeks = function asWeeks() {
-    return this.as('weeks');
+    return this.as("weeks");
   };
 
   _proto.months = function months() {
-    return this.get('months');
+    return this.get("months");
   };
 
   _proto.asMonths = function asMonths() {
-    return this.as('months');
+    return this.as("months");
   };
 
   _proto.years = function years() {
-    return this.get('years');
+    return this.get("years");
   };
 
   _proto.asYears = function asYears() {
-    return this.as('years');
+    return this.as("years");
   };
 
   return Duration;
-}();
+})();
 
 var manipulateDuration = function manipulateDuration(date, duration, k) {
-  return date.add(duration.years() * k, 'y').add(duration.months() * k, 'M').add(duration.days() * k, 'd').add(duration.hours() * k, 'h').add(duration.minutes() * k, 'm').add(duration.seconds() * k, 's').add(duration.milliseconds() * k, 'ms');
+  return date
+    .add(duration.years() * k, "y")
+    .add(duration.months() * k, "M")
+    .add(duration.days() * k, "d")
+    .add(duration.hours() * k, "h")
+    .add(duration.minutes() * k, "m")
+    .add(duration.seconds() * k, "s")
+    .add(duration.milliseconds() * k, "ms");
 };
 
 export default (function (option, Dayjs, dayjs) {
@@ -328,9 +356,13 @@ export default (function (option, Dayjs, dayjs) {
 
   dayjs.duration = function (input, unit) {
     var $l = dayjs.locale();
-    return wrapper(input, {
-      $l: $l
-    }, unit);
+    return wrapper(
+      input,
+      {
+        $l: $l,
+      },
+      unit,
+    );
   };
 
   dayjs.isDuration = isDuration;

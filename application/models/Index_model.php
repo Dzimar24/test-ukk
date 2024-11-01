@@ -33,7 +33,6 @@ class Index_model extends CI_Model
 	public function viewDataBook()
 	{
 		// 
-		$this->db->select('*');
 		$this->db->from('buku');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
 		$query = $this->db->get()->result_array();
@@ -45,7 +44,9 @@ class Index_model extends CI_Model
 	public function check_existing_borrow()
 	{
 		# code...
-		$this->db->select('*')->from('borrowing');
+		$this->db->from('peminjaman_detail');
+		$this->db->join('peminjaman', 'peminjaman.id = peminjaman_detail.peminjaman_id', 'left');
+
 		$query = $this->db->get()->row();
 		return $query;
 	}
@@ -54,30 +55,34 @@ class Index_model extends CI_Model
 	// ------------------------------------------------------------------------
 	public function addBorrowing($idUser, $idBook, $startBorrowing, $endBorrowingWithTime)
 	{
-		$data = array();
+		// Simpan data peminjaman ke dalam tabel peminjaman
+		$borrowingData = array(
+			'user_id' => $idUser,
+			'tanggal_pinjam' => $startBorrowing,
+			'tanggal_kembali' => $endBorrowingWithTime,
+			'status' => 'pending',
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => NULL
+		);
+		$this->db->insert('peminjaman', $borrowingData);
+		$id_peminjaman = $this->db->insert_id();
 
-		foreach ($idBook as $key => $value) {
-			array_push($data, 
-				array(
-					'idUser' => $idUser,
-					'idBuku' => $value,
-					'borrow_date' => $startBorrowing,
-					'return_date' => $endBorrowingWithTime,
-					'status' => 'Please wait',
-					'created_at' => date('Y-m-d H:i:s'),
-					'updated_at' => NULL
-				)
+		// Simpan data buku yang dipinjam ke dalam tabel peminjaman_detail
+		$detailData = array();
+		foreach ($idBook as $book) {
+			$detailData[] = array(
+				'id_peminjaman' => $id_peminjaman,
+				'idBuku' => $book
 			);
 		}
 
-		$this->db->insert_batch('borrowing', $data);
+		$this->db->insert_batch('peminjaman_detail', $detailData);
 	}
 	// ------------------------------------------------------------------------
 
 	// ------------------------------------------------------------------------
 	public function count_user_bookmarks($user_id)
 	{
-		// Menghitung total bookmark berdasarkan user_id
 		$this->db->where('UserID', $user_id);
 		$total_bookmarks = $this->db->count_all_results('bookmark');
 		return $total_bookmarks;
@@ -90,6 +95,17 @@ class Index_model extends CI_Model
 		$saveData['BukuID'] = $idBook;
 		$saveData['UserID'] = $idUser;
 		$this->db->insert('bookmark', $saveData);
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewFullDataBook($idBook){
+		$this->db->from('buku');
+		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
+		$this->db->where('buku.BukuID', $idBook);
+		
+		$query = $this->db->get()->result_array();
+		return $query;
 	}
 	// ------------------------------------------------------------------------
 

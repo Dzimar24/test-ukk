@@ -1,7 +1,7 @@
-import * as C from './constant';
-import en from './locale/en';
-import U from './utils';
-var L = 'en'; // global locale
+import * as C from "./constant";
+import en from "./locale/en";
+import U from "./utils";
+var L = "en"; // global locale
 
 var Ls = {}; // global loaded locale
 
@@ -11,12 +11,11 @@ var isDayjs = function isDayjs(d) {
   return d instanceof Dayjs;
 }; // eslint-disable-line no-use-before-define
 
-
 var parseLocale = function parseLocale(preset, object, isLocal) {
   var l;
   if (!preset) return L;
 
-  if (typeof preset === 'string') {
+  if (typeof preset === "string") {
     var presetLower = preset.toLowerCase();
 
     if (Ls[presetLower]) {
@@ -28,7 +27,7 @@ var parseLocale = function parseLocale(preset, object, isLocal) {
       l = presetLower;
     }
 
-    var presetSplit = preset.split('-');
+    var presetSplit = preset.split("-");
 
     if (!l && presetSplit.length > 1) {
       return parseLocale(presetSplit[0]);
@@ -40,7 +39,7 @@ var parseLocale = function parseLocale(preset, object, isLocal) {
   }
 
   if (!isLocal && l) L = l;
-  return l || !isLocal && L;
+  return l || (!isLocal && L);
 };
 
 var dayjs = function dayjs(date, c) {
@@ -48,8 +47,7 @@ var dayjs = function dayjs(date, c) {
     return date.clone();
   } // eslint-disable-next-line no-nested-ternary
 
-
-  var cfg = typeof c === 'object' ? c : {};
+  var cfg = typeof c === "object" ? c : {};
   cfg.date = date;
   cfg.args = arguments; // eslint-disable-line prefer-rest-params
 
@@ -61,8 +59,7 @@ var wrapper = function wrapper(date, instance) {
     locale: instance.$L,
     utc: instance.$u,
     x: instance.$x,
-    $offset: instance.$offset // todo: refactor; do not use this.$offset in you code
-
+    $offset: instance.$offset, // todo: refactor; do not use this.$offset in you code
   });
 };
 
@@ -74,22 +71,24 @@ Utils.w = wrapper;
 
 var parseDate = function parseDate(cfg) {
   var date = cfg.date,
-      utc = cfg.utc;
+    utc = cfg.utc;
   if (date === null) return new Date(NaN); // null is invalid
 
   if (Utils.u(date)) return new Date(); // today
 
   if (date instanceof Date) return new Date(date);
 
-  if (typeof date === 'string' && !/Z$/i.test(date)) {
+  if (typeof date === "string" && !/Z$/i.test(date)) {
     var d = date.match(C.REGEX_PARSE);
 
     if (d) {
       var m = d[2] - 1 || 0;
-      var ms = (d[7] || '0').substring(0, 3);
+      var ms = (d[7] || "0").substring(0, 3);
 
       if (utc) {
-        return new Date(Date.UTC(d[1], m, d[3] || 1, d[4] || 0, d[5] || 0, d[6] || 0, ms));
+        return new Date(
+          Date.UTC(d[1], m, d[3] || 1, d[4] || 0, d[5] || 0, d[6] || 0, ms),
+        );
       }
 
       return new Date(d[1], m, d[3] || 1, d[4] || 0, d[5] || 0, d[6] || 0, ms);
@@ -99,7 +98,7 @@ var parseDate = function parseDate(cfg) {
   return new Date(date); // everything else
 };
 
-var Dayjs = /*#__PURE__*/function () {
+var Dayjs = /*#__PURE__*/ (function () {
   function Dayjs(cfg) {
     this.$L = parseLocale(cfg.locale, null, true);
     this.parse(cfg); // for plugin
@@ -123,8 +122,7 @@ var Dayjs = /*#__PURE__*/function () {
     this.$m = $d.getMinutes();
     this.$s = $d.getSeconds();
     this.$ms = $d.getMilliseconds();
-  } // eslint-disable-next-line class-methods-use-this
-  ;
+  }; // eslint-disable-next-line class-methods-use-this
 
   _proto.$utils = function $utils() {
     return Utils;
@@ -169,21 +167,30 @@ var Dayjs = /*#__PURE__*/function () {
     var unit = Utils.p(units);
 
     var instanceFactory = function instanceFactory(d, m) {
-      var ins = Utils.w(_this.$u ? Date.UTC(_this.$y, m, d) : new Date(_this.$y, m, d), _this);
+      var ins = Utils.w(
+        _this.$u ? Date.UTC(_this.$y, m, d) : new Date(_this.$y, m, d),
+        _this,
+      );
       return isStartOf ? ins : ins.endOf(C.D);
     };
 
     var instanceFactorySet = function instanceFactorySet(method, slice) {
       var argumentStart = [0, 0, 0, 0];
       var argumentEnd = [23, 59, 59, 999];
-      return Utils.w(_this.toDate()[method].apply( // eslint-disable-line prefer-spread
-      _this.toDate('s'), (isStartOf ? argumentStart : argumentEnd).slice(slice)), _this);
+      return Utils.w(
+        _this.toDate()[method].apply(
+          // eslint-disable-line prefer-spread
+          _this.toDate("s"),
+          (isStartOf ? argumentStart : argumentEnd).slice(slice),
+        ),
+        _this,
+      );
     };
 
     var $W = this.$W,
-        $M = this.$M,
-        $D = this.$D;
-    var utcPad = "set" + (this.$u ? 'UTC' : '');
+      $M = this.$M,
+      $D = this.$D;
+    var utcPad = "set" + (this.$u ? "UTC" : "");
 
     switch (unit) {
       case C.Y:
@@ -192,12 +199,11 @@ var Dayjs = /*#__PURE__*/function () {
       case C.M:
         return isStartOf ? instanceFactory(1, $M) : instanceFactory(0, $M + 1);
 
-      case C.W:
-        {
-          var weekStart = this.$locale().weekStart || 0;
-          var gap = ($W < weekStart ? $W + 7 : $W) - weekStart;
-          return instanceFactory(isStartOf ? $D - gap : $D + (6 - gap), $M);
-        }
+      case C.W: {
+        var weekStart = this.$locale().weekStart || 0;
+        var gap = ($W < weekStart ? $W + 7 : $W) - weekStart;
+        return instanceFactory(isStartOf ? $D - gap : $D + (6 - gap), $M);
+      }
 
       case C.D:
       case C.DATE:
@@ -226,8 +232,17 @@ var Dayjs = /*#__PURE__*/function () {
 
     // private set
     var unit = Utils.p(units);
-    var utcPad = "set" + (this.$u ? 'UTC' : '');
-    var name = (_C$D$C$DATE$C$M$C$Y$C = {}, _C$D$C$DATE$C$M$C$Y$C[C.D] = utcPad + "Date", _C$D$C$DATE$C$M$C$Y$C[C.DATE] = utcPad + "Date", _C$D$C$DATE$C$M$C$Y$C[C.M] = utcPad + "Month", _C$D$C$DATE$C$M$C$Y$C[C.Y] = utcPad + "FullYear", _C$D$C$DATE$C$M$C$Y$C[C.H] = utcPad + "Hours", _C$D$C$DATE$C$M$C$Y$C[C.MIN] = utcPad + "Minutes", _C$D$C$DATE$C$M$C$Y$C[C.S] = utcPad + "Seconds", _C$D$C$DATE$C$M$C$Y$C[C.MS] = utcPad + "Milliseconds", _C$D$C$DATE$C$M$C$Y$C)[unit];
+    var utcPad = "set" + (this.$u ? "UTC" : "");
+    var name = ((_C$D$C$DATE$C$M$C$Y$C = {}),
+    (_C$D$C$DATE$C$M$C$Y$C[C.D] = utcPad + "Date"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.DATE] = utcPad + "Date"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.M] = utcPad + "Month"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.Y] = utcPad + "FullYear"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.H] = utcPad + "Hours"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.MIN] = utcPad + "Minutes"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.S] = utcPad + "Seconds"),
+    (_C$D$C$DATE$C$M$C$Y$C[C.MS] = utcPad + "Milliseconds"),
+    _C$D$C$DATE$C$M$C$Y$C)[unit];
     var arg = unit === C.D ? this.$D + (_int - this.$W) : _int;
 
     if (unit === C.M || unit === C.Y) {
@@ -252,7 +267,7 @@ var Dayjs = /*#__PURE__*/function () {
 
   _proto.add = function add(number, units) {
     var _this2 = this,
-        _C$MIN$C$H$C$S$unit;
+      _C$MIN$C$H$C$S$unit;
 
     number = Number(number); // eslint-disable-line no-param-reassign
 
@@ -279,7 +294,12 @@ var Dayjs = /*#__PURE__*/function () {
       return instanceFactorySet(7);
     }
 
-    var step = (_C$MIN$C$H$C$S$unit = {}, _C$MIN$C$H$C$S$unit[C.MIN] = C.MILLISECONDS_A_MINUTE, _C$MIN$C$H$C$S$unit[C.H] = C.MILLISECONDS_A_HOUR, _C$MIN$C$H$C$S$unit[C.S] = C.MILLISECONDS_A_SECOND, _C$MIN$C$H$C$S$unit)[unit] || 1; // ms
+    var step =
+      ((_C$MIN$C$H$C$S$unit = {}),
+      (_C$MIN$C$H$C$S$unit[C.MIN] = C.MILLISECONDS_A_MINUTE),
+      (_C$MIN$C$H$C$S$unit[C.H] = C.MILLISECONDS_A_HOUR),
+      (_C$MIN$C$H$C$S$unit[C.S] = C.MILLISECONDS_A_SECOND),
+      _C$MIN$C$H$C$S$unit)[unit] || 1; // ms
 
     var nextTimeStamp = this.$d.getTime() + number * step;
     return Utils.w(nextTimeStamp, this);
@@ -297,97 +317,102 @@ var Dayjs = /*#__PURE__*/function () {
     var str = formatStr || C.FORMAT_DEFAULT;
     var zoneStr = Utils.z(this);
     var $H = this.$H,
-        $m = this.$m,
-        $M = this.$M;
+      $m = this.$m,
+      $M = this.$M;
     var weekdays = locale.weekdays,
-        months = locale.months,
-        meridiem = locale.meridiem;
+      months = locale.months,
+      meridiem = locale.meridiem;
 
     var getShort = function getShort(arr, index, full, length) {
-      return arr && (arr[index] || arr(_this3, str)) || full[index].slice(0, length);
+      return (
+        (arr && (arr[index] || arr(_this3, str))) ||
+        full[index].slice(0, length)
+      );
     };
 
     var get$H = function get$H(num) {
-      return Utils.s($H % 12 || 12, num, '0');
+      return Utils.s($H % 12 || 12, num, "0");
     };
 
-    var meridiemFunc = meridiem || function (hour, minute, isLowercase) {
-      var m = hour < 12 ? 'AM' : 'PM';
-      return isLowercase ? m.toLowerCase() : m;
-    };
+    var meridiemFunc =
+      meridiem ||
+      function (hour, minute, isLowercase) {
+        var m = hour < 12 ? "AM" : "PM";
+        return isLowercase ? m.toLowerCase() : m;
+      };
 
     var matches = function matches(match) {
       switch (match) {
-        case 'YY':
+        case "YY":
           return String(_this3.$y).slice(-2);
 
-        case 'YYYY':
-          return Utils.s(_this3.$y, 4, '0');
+        case "YYYY":
+          return Utils.s(_this3.$y, 4, "0");
 
-        case 'M':
+        case "M":
           return $M + 1;
 
-        case 'MM':
-          return Utils.s($M + 1, 2, '0');
+        case "MM":
+          return Utils.s($M + 1, 2, "0");
 
-        case 'MMM':
+        case "MMM":
           return getShort(locale.monthsShort, $M, months, 3);
 
-        case 'MMMM':
+        case "MMMM":
           return getShort(months, $M);
 
-        case 'D':
+        case "D":
           return _this3.$D;
 
-        case 'DD':
-          return Utils.s(_this3.$D, 2, '0');
+        case "DD":
+          return Utils.s(_this3.$D, 2, "0");
 
-        case 'd':
+        case "d":
           return String(_this3.$W);
 
-        case 'dd':
+        case "dd":
           return getShort(locale.weekdaysMin, _this3.$W, weekdays, 2);
 
-        case 'ddd':
+        case "ddd":
           return getShort(locale.weekdaysShort, _this3.$W, weekdays, 3);
 
-        case 'dddd':
+        case "dddd":
           return weekdays[_this3.$W];
 
-        case 'H':
+        case "H":
           return String($H);
 
-        case 'HH':
-          return Utils.s($H, 2, '0');
+        case "HH":
+          return Utils.s($H, 2, "0");
 
-        case 'h':
+        case "h":
           return get$H(1);
 
-        case 'hh':
+        case "hh":
           return get$H(2);
 
-        case 'a':
+        case "a":
           return meridiemFunc($H, $m, true);
 
-        case 'A':
+        case "A":
           return meridiemFunc($H, $m, false);
 
-        case 'm':
+        case "m":
           return String($m);
 
-        case 'mm':
-          return Utils.s($m, 2, '0');
+        case "mm":
+          return Utils.s($m, 2, "0");
 
-        case 's':
+        case "s":
           return String(_this3.$s);
 
-        case 'ss':
-          return Utils.s(_this3.$s, 2, '0');
+        case "ss":
+          return Utils.s(_this3.$s, 2, "0");
 
-        case 'SSS':
-          return Utils.s(_this3.$ms, 3, '0');
+        case "SSS":
+          return Utils.s(_this3.$ms, 3, "0");
 
-        case 'Z':
+        case "Z":
           return zoneStr;
         // 'ZZ' logic below
 
@@ -399,7 +424,7 @@ var Dayjs = /*#__PURE__*/function () {
     };
 
     return str.replace(C.REGEX_FORMAT, function (match, $1) {
-      return $1 || matches(match) || zoneStr.replace(':', '');
+      return $1 || matches(match) || zoneStr.replace(":", "");
     }); // 'ZZ'
   };
 
@@ -414,7 +439,8 @@ var Dayjs = /*#__PURE__*/function () {
 
     var unit = Utils.p(units);
     var that = dayjs(input);
-    var zoneDelta = (that.utcOffset() - this.utcOffset()) * C.MILLISECONDS_A_MINUTE;
+    var zoneDelta =
+      (that.utcOffset() - this.utcOffset()) * C.MILLISECONDS_A_MINUTE;
     var diff = this - that;
 
     var getMonth = function getMonth() {
@@ -506,11 +532,20 @@ var Dayjs = /*#__PURE__*/function () {
   };
 
   return Dayjs;
-}();
+})();
 
 var proto = Dayjs.prototype;
 dayjs.prototype = proto;
-[['$ms', C.MS], ['$s', C.S], ['$m', C.MIN], ['$H', C.H], ['$W', C.D], ['$M', C.M], ['$y', C.Y], ['$D', C.DATE]].forEach(function (g) {
+[
+  ["$ms", C.MS],
+  ["$s", C.S],
+  ["$m", C.MIN],
+  ["$H", C.H],
+  ["$W", C.D],
+  ["$M", C.M],
+  ["$y", C.Y],
+  ["$D", C.DATE],
+].forEach(function (g) {
   proto[g[1]] = function (input) {
     return this.$g(input, g[0], g[1]);
   };

@@ -20,35 +20,6 @@ class Index extends CI_Controller
 		$this->template->load('template', 'Pages/public/index', $data);
 	}
 
-	// public function Borrowing()
-	// {
-	// 	# code...
-	// 	date_default_timezone_set('Asia/Jakarta');
-
-	// 	//? Ambil data dari input & session
-	// 	$idUser = $this->session->userdata('UserID');
-	// 	$idBook = $this->input->get('buku');
-	// 	$startBorrowing = $this->input->post('startBorrowing'); // Format: YYYY-MM-DD
-	// 	$endBorrowing = $this->input->post('endBorrowing');     // Format: YYYY-MM-DD
-
-	// 	if (empty($idBook) || is_array($idBook) == FALSE || count($idBook) < 1) {
-	// 		# code...
-	// 		$this->session->set_flashdata('error', 'Please select a book to borrow');
-	// 		redirect('Index');
-	// 	}
-
-	// 	//? Tambahkan waktu default ke tanggal startBorrowing
-	// 	$startBorrowingWithTime = $startBorrowing . ' ' . date('H:i:s'); // YYYY-MM-DD H:i:s
-	// 	$endBorrowingWithTime = $endBorrowing . ' ' . date('H:i:s'); // YYYY-MM-DD H:i:s
-
-	// 	//? Tambahkan data ke database
-	// 	$this->index->addBorrowing($idUser, $idBook, $startBorrowingWithTime, $endBorrowingWithTime);
-
-	// 	//? Redirect ke halaman utama plus Alert
-	// 	$this->session->set_flashdata('success', 'Process successful, please wait for approval from the staff to collect the book at the library!!');
-	// 	redirect('Index');
-	// }
-
 	public function addBookmark($idBook)
 	{
 		# code...
@@ -59,5 +30,12 @@ class Index extends CI_Controller
 		redirect('Index');
 	}
 
+	public function fullPageBook($idBook){
+		$idUser = $this->session->userdata('UserID');
+		$data['viewDataCountBookmark'] = $this->index->count_user_bookmarks($idUser);
+		$data['viewFullDataBook'] = $this->index->viewFullDataBook($idBook);
+		
+		$this->template->load('template', 'Pages/public/fullPageBook', $data);
+	}
 
 }

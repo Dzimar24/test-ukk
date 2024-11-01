@@ -58,7 +58,6 @@ There are many ways/formats of how to use dripicons. The fastest and recommended
 <i class="dripicons dripicons-alarm"></i>
 ```
 
-
 ## Bugs, Ideas, Pull Requests
 
 If you have any ideas or found bugs, please send me Pull Requests or let me know with [GitHub Issues][github issues].

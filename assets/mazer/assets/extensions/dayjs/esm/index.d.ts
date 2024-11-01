@@ -2,36 +2,65 @@
 
 export = dayjs;
 
-declare function dayjs (date?: dayjs.ConfigType): dayjs.Dayjs
+declare function dayjs(date?: dayjs.ConfigType): dayjs.Dayjs;
 
-declare function dayjs (date?: dayjs.ConfigType, format?: dayjs.OptionType, strict?: boolean): dayjs.Dayjs
+declare function dayjs(
+  date?: dayjs.ConfigType,
+  format?: dayjs.OptionType,
+  strict?: boolean,
+): dayjs.Dayjs;
 
-declare function dayjs (date?: dayjs.ConfigType, format?: dayjs.OptionType, locale?: string, strict?: boolean): dayjs.Dayjs
+declare function dayjs(
+  date?: dayjs.ConfigType,
+  format?: dayjs.OptionType,
+  locale?: string,
+  strict?: boolean,
+): dayjs.Dayjs;
 
 declare namespace dayjs {
   interface ConfigTypeMap {
-    default: string | number | Date | Dayjs | null | undefined
+    default: string | number | Date | Dayjs | null | undefined;
   }
 
-  export type ConfigType = ConfigTypeMap[keyof ConfigTypeMap]
+  export type ConfigType = ConfigTypeMap[keyof ConfigTypeMap];
 
-  export interface FormatObject { locale?: string, format?: string, utc?: boolean }
+  export interface FormatObject {
+    locale?: string;
+    format?: string;
+    utc?: boolean;
+  }
 
-  export type OptionType = FormatObject | string | string[]
+  export type OptionType = FormatObject | string | string[];
 
-  export type UnitTypeShort = 'd' | 'D' | 'M' | 'y' | 'h' | 'm' | 's' | 'ms'
+  export type UnitTypeShort = "d" | "D" | "M" | "y" | "h" | "m" | "s" | "ms";
 
-  export type UnitTypeLong = 'millisecond' | 'second' | 'minute' | 'hour' | 'day' | 'month' | 'year' | 'date'
+  export type UnitTypeLong =
+    | "millisecond"
+    | "second"
+    | "minute"
+    | "hour"
+    | "day"
+    | "month"
+    | "year"
+    | "date";
 
-  export type UnitTypeLongPlural = 'milliseconds' | 'seconds' | 'minutes' | 'hours' | 'days' | 'months' | 'years' | 'dates'
-  
+  export type UnitTypeLongPlural =
+    | "milliseconds"
+    | "seconds"
+    | "minutes"
+    | "hours"
+    | "days"
+    | "months"
+    | "years"
+    | "dates";
+
   export type UnitType = UnitTypeLong | UnitTypeLongPlural | UnitTypeShort;
 
-  export type OpUnitType = UnitType | "week" | "weeks" | 'w';
-  export type QUnitType = UnitType | "quarter" | "quarters" | 'Q';
-  export type ManipulateType = Exclude<OpUnitType, 'date' | 'dates'>;
+  export type OpUnitType = UnitType | "week" | "weeks" | "w";
+  export type QUnitType = UnitType | "quarter" | "quarters" | "Q";
+  export type ManipulateType = Exclude<OpUnitType, "date" | "dates">;
   class Dayjs {
-    constructor (config?: ConfigType)
+    constructor(config?: ConfigType);
     /**
      * All Day.js objects are immutable. Still, `dayjs#clone` can create a clone of the current object if you need one.
      * ```
@@ -40,7 +69,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/parse/dayjs-clone
      */
-    clone(): Dayjs
+    clone(): Dayjs;
     /**
      * This returns a `boolean` indicating whether the Day.js object contains a valid date or not.
      * ```
@@ -48,7 +77,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/parse/is-valid
      */
-    isValid(): boolean
+    isValid(): boolean;
     /**
      * Get the year.
      * ```
@@ -56,7 +85,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/year
      */
-    year(): number
+    year(): number;
     /**
      * Set the year.
      * ```
@@ -64,7 +93,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/year
      */
-    year(value: number): Dayjs
+    year(value: number): Dayjs;
     /**
      * Get the month.
      *
@@ -74,7 +103,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/month
      */
-    month(): number
+    month(): number;
     /**
      * Set the month.
      *
@@ -86,7 +115,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/month
      */
-    month(value: number): Dayjs
+    month(value: number): Dayjs;
     /**
      * Get the date of the month.
      * ```
@@ -94,7 +123,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/date
      */
-    date(): number
+    date(): number;
     /**
      * Set the date of the month.
      *
@@ -104,7 +133,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/date
      */
-    date(value: number): Dayjs
+    date(value: number): Dayjs;
     /**
      * Get the day of the week.
      *
@@ -114,7 +143,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/day
      */
-    day(): number
+    day(): number;
     /**
      * Set the day of the week.
      *
@@ -124,7 +153,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/day
      */
-    day(value: number): Dayjs
+    day(value: number): Dayjs;
     /**
      * Get the hour.
      * ```
@@ -132,7 +161,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/hour
      */
-    hour(): number
+    hour(): number;
     /**
      * Set the hour.
      *
@@ -142,7 +171,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/hour
      */
-    hour(value: number): Dayjs
+    hour(value: number): Dayjs;
     /**
      * Get the minutes.
      * ```
@@ -150,7 +179,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/minute
      */
-    minute(): number
+    minute(): number;
     /**
      * Set the minutes.
      *
@@ -160,7 +189,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/minute
      */
-    minute(value: number): Dayjs
+    minute(value: number): Dayjs;
     /**
      * Get the seconds.
      * ```
@@ -168,7 +197,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/second
      */
-    second(): number
+    second(): number;
     /**
      * Set the seconds.
      *
@@ -177,7 +206,7 @@ declare namespace dayjs {
      * dayjs().second(1)// Dayjs
      * ```
      */
-    second(value: number): Dayjs
+    second(value: number): Dayjs;
     /**
      * Get the milliseconds.
      * ```
@@ -185,7 +214,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/millisecond
      */
-    millisecond(): number
+    millisecond(): number;
     /**
      * Set the milliseconds.
      *
@@ -195,7 +224,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/millisecond
      */
-    millisecond(value: number): Dayjs
+    millisecond(value: number): Dayjs;
     /**
      * Generic setter, accepting unit as first argument, and value as second, returns a new instance with the applied changes.
      *
@@ -211,7 +240,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/set
      */
-    set(unit: UnitType, value: number): Dayjs
+    set(unit: UnitType, value: number): Dayjs;
     /**
      * String getter, returns the corresponding information getting from Day.js object.
      *
@@ -227,7 +256,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/get-set/get
      */
-    get(unit: UnitType): number
+    get(unit: UnitType): number;
     /**
      * Returns a cloned Day.js object with a specified amount of time added.
      * ```
@@ -237,7 +266,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/manipulate/add
      */
-    add(value: number, unit?: ManipulateType): Dayjs
+    add(value: number, unit?: ManipulateType): Dayjs;
     /**
      * Returns a cloned Day.js object with a specified amount of time subtracted.
      * ```
@@ -247,7 +276,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/manipulate/subtract
      */
-    subtract(value: number, unit?: ManipulateType): Dayjs
+    subtract(value: number, unit?: ManipulateType): Dayjs;
     /**
      * Returns a cloned Day.js object and set it to the start of a unit of time.
      * ```
@@ -257,7 +286,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/manipulate/start-of
      */
-    startOf(unit: OpUnitType): Dayjs
+    startOf(unit: OpUnitType): Dayjs;
     /**
      * Returns a cloned Day.js object and set it to the end of a unit of time.
      * ```
@@ -267,7 +296,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/manipulate/end-of
      */
-    endOf(unit: OpUnitType): Dayjs
+    endOf(unit: OpUnitType): Dayjs;
     /**
      * Get the formatted date according to the string of tokens passed in.
      *
@@ -279,7 +308,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/display/format
      */
-    format(template?: string): string
+    format(template?: string): string;
     /**
      * This indicates the difference between two date-time in the specified unit.
      *
@@ -300,7 +329,11 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/display/difference
      */
-    diff(date?: ConfigType, unit?: QUnitType | OpUnitType, float?: boolean): number
+    diff(
+      date?: ConfigType,
+      unit?: QUnitType | OpUnitType,
+      float?: boolean,
+    ): number;
     /**
      * This returns the number of **milliseconds** since the Unix Epoch of the Day.js object.
      * ```
@@ -311,7 +344,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/display/unix-timestamp-milliseconds
      */
-    valueOf(): number
+    valueOf(): number;
     /**
      * This returns the Unix timestamp (the number of **seconds** since the Unix Epoch) of the Day.js object.
      * ```
@@ -321,7 +354,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/display/unix-timestamp
      */
-    unix(): number
+    unix(): number;
     /**
      * Get the number of days in the current month.
      * ```
@@ -329,14 +362,14 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/display/days-in-month
      */
-    daysInMonth(): number
+    daysInMonth(): number;
     /**
      * To get a copy of the native `Date` object parsed from the Day.js object use `dayjs#toDate`.
      * ```
      * dayjs('2019-01-25').toDate()// => Date
      * ```
      */
-    toDate(): Date
+    toDate(): Date;
     /**
      * To serialize as an ISO 8601 string.
      * ```
@@ -344,7 +377,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/display/as-json
      */
-    toJSON(): string
+    toJSON(): string;
     /**
      * To format as an ISO 8601 string.
      * ```
@@ -352,7 +385,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/display/as-iso-string
      */
-    toISOString(): string
+    toISOString(): string;
     /**
      * Returns a string representation of the date.
      * ```
@@ -360,7 +393,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/display/as-string
      */
-    toString(): string
+    toString(): string;
     /**
      * Get the UTC offset in minutes.
      * ```
@@ -368,7 +401,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/manipulate/utc-offset
      */
-    utcOffset(): number
+    utcOffset(): number;
     /**
      * This indicates whether the Day.js object is before the other supplied date-time.
      * ```
@@ -382,7 +415,7 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/query/is-before
      */
-    isBefore(date?: ConfigType, unit?: OpUnitType): boolean
+    isBefore(date?: ConfigType, unit?: OpUnitType): boolean;
     /**
      * This indicates whether the Day.js object is the same as the other supplied date-time.
      * ```
@@ -394,7 +427,7 @@ declare namespace dayjs {
      * ```
      * Docs: https://day.js.org/docs/en/query/is-same
      */
-    isSame(date?: ConfigType, unit?: OpUnitType): boolean
+    isSame(date?: ConfigType, unit?: OpUnitType): boolean;
     /**
      * This indicates whether the Day.js object is after the other supplied date-time.
      * ```
@@ -408,22 +441,30 @@ declare namespace dayjs {
      *
      * Docs: https://day.js.org/docs/en/query/is-after
      */
-    isAfter(date?: ConfigType, unit?: OpUnitType): boolean
+    isAfter(date?: ConfigType, unit?: OpUnitType): boolean;
 
-    locale(): string
+    locale(): string;
 
-    locale(preset: string | ILocale, object?: Partial<ILocale>): Dayjs
+    locale(preset: string | ILocale, object?: Partial<ILocale>): Dayjs;
   }
 
-  export type PluginFunc<T = unknown> = (option: T, c: typeof Dayjs, d: typeof dayjs) => void
+  export type PluginFunc<T = unknown> = (
+    option: T,
+    c: typeof Dayjs,
+    d: typeof dayjs,
+  ) => void;
 
-  export function extend<T = unknown>(plugin: PluginFunc<T>, option?: T): Dayjs
+  export function extend<T = unknown>(plugin: PluginFunc<T>, option?: T): Dayjs;
 
-  export function locale(preset?: string | ILocale, object?: Partial<ILocale>, isLocal?: boolean): string
+  export function locale(
+    preset?: string | ILocale,
+    object?: Partial<ILocale>,
+    isLocal?: boolean,
+  ): string;
 
-  export function isDayjs(d: any): d is Dayjs
+  export function isDayjs(d: any): d is Dayjs;
 
-  export function unix(t: number): Dayjs
+  export function unix(t: number): Dayjs;
 
-  const Ls : { [key: string] :  ILocale }
+  const Ls: { [key: string]: ILocale };
 }

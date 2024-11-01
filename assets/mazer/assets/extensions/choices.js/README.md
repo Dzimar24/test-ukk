@@ -20,6 +20,7 @@ A vanilla, lightweight (~19kb gzipped 🎉), configurable select box/text input 
 ### Interested in writing your own ES6 JavaScript plugins? Check out [ES6.io](https://ES6.io/friend/JOHNSON) for great tutorials! 💪🏼
 
 ### Sponsored by:
+
 <p align="center">
   <a href="https://wanderermaps.com/" target="_blank" rel="noopener noreferrer">
     <img src="https://cdn.shopify.com/s/files/1/0614/3357/7715/files/Logo_BlackWithBackground_200x.png?v=1644802773" alt="Wanderer Maps logo">
@@ -62,24 +63,24 @@ From a [CDN](https://www.jsdelivr.com/package/npm/choices.js):
 ```html
 <!-- Include base CSS (optional) -->
 <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/base.min.css"
 />
 <!-- Or versioned -->
 <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/base.min.css"
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/base.min.css"
 />
 
 <!-- Include Choices CSS -->
 <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
 />
 <!-- Or versioned -->
 <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
+	rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
 />
 
 <!-- Include Choices JavaScript (latest) -->
@@ -213,11 +214,11 @@ Or include Choices directly:
 
 Choices works with the following input types, referenced in the documentation as noted.
 
-| HTML Element                                                                                           | Documentation "Input Type" |
-| -------------------------------------------------------------------------------------------------------| -------------------------- |
-| [`<input type="text">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)               | `text`                     |
-| [`<select>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)                         | `select-one`               |
-| [`<select multiple>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select#attr-multiple)  | `select-multiple`          |
+| HTML Element                                                                                          | Documentation "Input Type" |
+| ----------------------------------------------------------------------------------------------------- | -------------------------- |
+| [`<input type="text">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input)              | `text`                     |
+| [`<select>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select)                        | `select-one`               |
+| [`<select multiple>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select#attr-multiple) | `select-multiple`          |
 
 ## Configuration Options
 
@@ -498,10 +499,10 @@ const example = new Choices(element, {
 
 ```html
 <select>
-  <option value="">This is a placeholder</option>
-  <option>...</option>
-  <option>...</option>
-  <option>...</option>
+	<option value="">This is a placeholder</option>
+	<option>...</option>
+	<option>...</option>
+	<option>...</option>
 </select>
 ```
 
@@ -683,12 +684,12 @@ Templates receive the full Choices config as the first argument to any template,
 
 ```js
 const example = new Choices(element, {
-  callbackOnCreateTemplates: () => ({
-    input: (...args) =>
-      Object.assign(Choices.defaults.templates.input.call(this, ...args), {
-        type: 'email',
-      }),
-  }),
+	callbackOnCreateTemplates: () => ({
+		input: (...args) =>
+			Object.assign(Choices.defaults.templates.input.call(this, ...args), {
+				type: "email",
+			}),
+	}),
 });
 ```
 
@@ -696,40 +697,40 @@ or more complex:
 
 ```js
 const example = new Choices(element, {
-  callbackOnCreateTemplates: function(template) {
-    return {
-      item: ({ classNames }, data) => {
-        return template(`
+	callbackOnCreateTemplates: function (template) {
+		return {
+			item: ({ classNames }, data) => {
+				return template(`
           <div class="${classNames.item} ${
-          data.highlighted
-            ? classNames.highlightedState
-            : classNames.itemSelectable
-        } ${
-          data.placeholder ? classNames.placeholder : ''
-        }" data-item data-id="${data.id}" data-value="${data.value}" ${
-          data.active ? 'aria-selected="true"' : ''
-        } ${data.disabled ? 'aria-disabled="true"' : ''}>
+						data.highlighted
+							? classNames.highlightedState
+							: classNames.itemSelectable
+					} ${
+						data.placeholder ? classNames.placeholder : ""
+					}" data-item data-id="${data.id}" data-value="${data.value}" ${
+						data.active ? 'aria-selected="true"' : ""
+					} ${data.disabled ? 'aria-disabled="true"' : ""}>
             <span>&bigstar;</span> ${data.label}
           </div>
         `);
-      },
-      choice: ({ classNames }, data) => {
-        return template(`
+			},
+			choice: ({ classNames }, data) => {
+				return template(`
           <div class="${classNames.item} ${classNames.itemChoice} ${
-          data.disabled ? classNames.itemDisabled : classNames.itemSelectable
-        }" data-select-text="${this.config.itemSelectText}" data-choice ${
-          data.disabled
-            ? 'data-choice-disabled aria-disabled="true"'
-            : 'data-choice-selectable'
-        } data-id="${data.id}" data-value="${data.value}" ${
-          data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
-        }>
+						data.disabled ? classNames.itemDisabled : classNames.itemSelectable
+					}" data-select-text="${this.config.itemSelectText}" data-choice ${
+						data.disabled
+							? 'data-choice-disabled aria-disabled="true"'
+							: "data-choice-selectable"
+					} data-id="${data.id}" data-value="${data.value}" ${
+						data.groupId > 0 ? 'role="treeitem"' : 'role="option"'
+					}>
             <span>&bigstar;</span> ${data.label}
           </div>
         `);
-      },
-    };
-  },
+			},
+		};
+	},
 });
 ```
 
@@ -740,36 +741,36 @@ const example = new Choices(element, {
 **Example:**
 
 ```js
-const element = document.getElementById('example');
+const element = document.getElementById("example");
 const example = new Choices(element);
 
 element.addEventListener(
-  'addItem',
-  function(event) {
-    // do something creative here...
-    console.log(event.detail.id);
-    console.log(event.detail.value);
-    console.log(event.detail.label);
-    console.log(event.detail.customProperties);
-    console.log(event.detail.groupValue);
-  },
-  false,
+	"addItem",
+	function (event) {
+		// do something creative here...
+		console.log(event.detail.id);
+		console.log(event.detail.value);
+		console.log(event.detail.label);
+		console.log(event.detail.customProperties);
+		console.log(event.detail.groupValue);
+	},
+	false,
 );
 
 // or
-const example = new Choices(document.getElementById('example'));
+const example = new Choices(document.getElementById("example"));
 
 example.passedElement.element.addEventListener(
-  'addItem',
-  function(event) {
-    // do something creative here...
-    console.log(event.detail.id);
-    console.log(event.detail.value);
-    console.log(event.detail.label);
-    console.log(event.detail.customProperties);
-    console.log(event.detail.groupValue);
-  },
-  false,
+	"addItem",
+	function (event) {
+		// do something creative here...
+		console.log(event.detail.id);
+		console.log(event.detail.value);
+		console.log(event.detail.label);
+		console.log(event.detail.customProperties);
+		console.log(event.detail.groupValue);
+	},
+	false,
 );
 ```
 
@@ -862,19 +863,19 @@ Methods can be called either directly or by chaining:
 ```js
 // Calling a method by chaining
 const choices = new Choices(element, {
-  addItems: false,
-  removeItems: false,
+	addItems: false,
+	removeItems: false,
 })
-  .setValue(['Set value 1', 'Set value 2'])
-  .disable();
+	.setValue(["Set value 1", "Set value 2"])
+	.disable();
 
 // Calling a method directly
 const choices = new Choices(element, {
-  addItems: false,
-  removeItems: false,
+	addItems: false,
+	removeItems: false,
 });
 
-choices.setValue(['Set value 1', 'Set value 2']);
+choices.setValue(["Set value 1", "Set value 2"]);
 choices.disable();
 ```
 
@@ -948,14 +949,14 @@ This behaves the similar as passing items via the `choices` option but can be ca
 const example = new Choices(element);
 
 example.setChoices(
-  [
-    { value: 'One', label: 'Label One', disabled: true },
-    { value: 'Two', label: 'Label Two', selected: true },
-    { value: 'Three', label: 'Label Three' },
-  ],
-  'value',
-  'label',
-  false,
+	[
+		{ value: "One", label: "Label One", disabled: true },
+		{ value: "Two", label: "Label Two", selected: true },
+		{ value: "Three", label: "Label Three" },
+	],
+	"value",
+	"label",
+	false,
 );
 ```
 
@@ -966,12 +967,12 @@ const example = new Choices(element);
 
 // Passing a function that returns Promise of choices
 example.setChoices(async () => {
-  try {
-    const items = await fetch('/items');
-    return items.json();
-  } catch (err) {
-    console.error(err);
-  }
+	try {
+		const items = await fetch("/items");
+		return items.json();
+	} catch (err) {
+		console.error(err);
+	}
 });
 ```
 
@@ -981,38 +982,38 @@ example.setChoices(async () => {
 const example = new Choices(element);
 
 example.setChoices(
-  [
-    {
-      label: 'Group one',
-      id: 1,
-      disabled: false,
-      choices: [
-        { value: 'Child One', label: 'Child One', selected: true },
-        { value: 'Child Two', label: 'Child Two', disabled: true },
-        { value: 'Child Three', label: 'Child Three' },
-      ],
-    },
-    {
-      label: 'Group two',
-      id: 2,
-      disabled: false,
-      choices: [
-        { value: 'Child Four', label: 'Child Four', disabled: true },
-        { value: 'Child Five', label: 'Child Five' },
-        {
-          value: 'Child Six',
-          label: 'Child Six',
-          customProperties: {
-            description: 'Custom description about child six',
-            random: 'Another random custom property',
-          },
-        },
-      ],
-    },
-  ],
-  'value',
-  'label',
-  false,
+	[
+		{
+			label: "Group one",
+			id: 1,
+			disabled: false,
+			choices: [
+				{ value: "Child One", label: "Child One", selected: true },
+				{ value: "Child Two", label: "Child Two", disabled: true },
+				{ value: "Child Three", label: "Child Three" },
+			],
+		},
+		{
+			label: "Group two",
+			id: 2,
+			disabled: false,
+			choices: [
+				{ value: "Child Four", label: "Child Four", disabled: true },
+				{ value: "Child Five", label: "Child Five" },
+				{
+					value: "Child Six",
+					label: "Child Six",
+					customProperties: {
+						description: "Custom description about child six",
+						random: "Another random custom property",
+					},
+				},
+			],
+		},
+	],
+	"value",
+	"label",
+	false,
 );
 ```
 
@@ -1049,13 +1050,13 @@ const example = new Choices(element);
 
 // via an array of objects
 example.setValue([
-  { value: 'One', label: 'Label One' },
-  { value: 'Two', label: 'Label Two' },
-  { value: 'Three', label: 'Label Three' },
+	{ value: "One", label: "Label One" },
+	{ value: "Two", label: "Label Two" },
+	{ value: "Three", label: "Label Three" },
 ]);
 
 // or via an array of strings
-example.setValue(['Four', 'Five', 'Six']);
+example.setValue(["Four", "Five", "Six"]);
 ```
 
 ### setChoiceByValue(value);
@@ -1068,14 +1069,14 @@ example.setValue(['Four', 'Five', 'Six']);
 
 ```js
 const example = new Choices(element, {
-  choices: [
-    { value: 'One', label: 'Label One' },
-    { value: 'Two', label: 'Label Two', disabled: true },
-    { value: 'Three', label: 'Label Three' },
-  ],
+	choices: [
+		{ value: "One", label: "Label One" },
+		{ value: "Two", label: "Label Two", disabled: true },
+		{ value: "Three", label: "Label Three" },
+	],
 });
 
-example.setChoiceByValue('Two'); // Choice with value of 'Two' has now been selected.
+example.setChoiceByValue("Two"); // Choice with value of 'Two' has now been selected.
 ```
 
 ### clearStore();
@@ -1154,7 +1155,7 @@ To setup a local environment: clone this repo, navigate into its directory in a 
 
 ### Interested in contributing?
 
-We're always interested in having more active maintainers.  Please get in touch if you're interested 👍
+We're always interested in having more active maintainers. Please get in touch if you're interested 👍
 
 ## License
 

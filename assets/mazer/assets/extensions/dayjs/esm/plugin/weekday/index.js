@@ -10,6 +10,6 @@ export default (function (o, c) {
       return weekday;
     }
 
-    return this.subtract(weekday, 'day').add(input, 'day');
+    return this.subtract(weekday, "day").add(input, "day");
   };
 });

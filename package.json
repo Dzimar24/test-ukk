@@ -1,5 +1,9 @@
 {
   "devDependencies": {
-    "htmlhint": "^1.1.4"
+    "htmlhint": "^1.1.4",
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {
+    "@prettier/plugin-php": "^0.22.2"
   }
 }

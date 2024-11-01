@@ -1,5 +1,5 @@
-import { D, W, Y } from '../../constant';
-var isoWeekPrettyUnit = 'isoweek';
+import { D, W, Y } from "../../constant";
+var isoWeekPrettyUnit = "isoweek";
 export default (function (o, c, d) {
   var getYearFirstThursday = function getYearFirstThursday(year, isUtc) {
     var yearFirstDay = (isUtc ? d.utc : d)().year(year).startOf(Y);
@@ -49,7 +49,9 @@ export default (function (o, c, d) {
     var unit = utils.p(units);
 
     if (unit === isoWeekPrettyUnit) {
-      return isStartOf ? this.date(this.date() - (this.isoWeekday() - 1)).startOf('day') : this.date(this.date() - 1 - (this.isoWeekday() - 1) + 7).endOf('day');
+      return isStartOf
+        ? this.date(this.date() - (this.isoWeekday() - 1)).startOf("day")
+        : this.date(this.date() - 1 - (this.isoWeekday() - 1) + 7).endOf("day");
     }
 
     return oldStartOf.bind(this)(units, startOf);

@@ -94,7 +94,7 @@
 								<img class="book-cover-image" src="<?= base_url('/assets/uploads/coverBook/' . $vdb['coverBook']) ?>" alt="Cover buku <?= $vdb['Judul'] ?>" onerror="this.src='<?= base_url('/assets/uploads/imageError/og.png') ?>';">
 							</div>
 							<div class="card-body">
-								<a href="#" class="custom-tooltip" data-bs-toggle="popover" data-bs-html="true" title="<?= $vdb['Judul'] ?>" data-bs-content='<?= $popoverContent ?>'>
+								<a href="<?= site_url('Index/fullPageBook/' . $vdb['BukuID']) ?>" class="custom-tooltip" data-bs-toggle="popover" data-bs-html="true" title="<?= $vdb['Judul'] ?>" data-bs-content='<?= $popoverContent ?>'>
 									<h5 class="truncate-text"><?= $vdb['Judul'] ?></h5>
 								</a>
 								<div class="card-footer">
@@ -103,21 +103,21 @@
 							</div>
 						</a>
 						<div class="btn-group align-items-center mx-2 px-1">
-							<!-- //! Button Love -->
 							<?php if ($this->session->userdata('level') == 'peminjam') : ?>
+								<!-- //! Button Love -->
 								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
 									<i class="bi bi-heart d-flex align-items-center justify-content-center text-secondary"></i>
 								</button>
 								<!-- //! End Button Love -->
 								<!-- //! Button Borrowing -->
-								<?php if ($checkUserExists->idUser == $this->session->userdata('UserID') && $checkUserExists->idBuku == $vdb['BukuID'] && $checkUserExists->status != 'returned') : ?>
-								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
-									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-								</button>
+								<?php if ($checkUserExists->user_id == $this->session->userdata('UserID') || $checkUserExists->buku_id == $vdb['BukuID'] || $checkUserExists->status == 'pending') : ?>
+									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
+										<i class="bi bi-folder-x d-flex align-items-center justify-content-center text-secondary"></i>
+									</button>
 								<?php else : ?>
-								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
-									<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-								</button>
+									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
+										<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+									</button>
 								<?php endif; ?>
 								<!-- //! End Button Borrowing -->
 								<!-- //! Button Bookmark -->

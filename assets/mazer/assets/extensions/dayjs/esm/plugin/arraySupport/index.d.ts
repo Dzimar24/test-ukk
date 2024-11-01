@@ -1,10 +1,18 @@
-import { PluginFunc } from 'dayjs/esm'
+import { PluginFunc } from "dayjs/esm";
 
-declare module 'dayjs/esm' {
+declare module "dayjs/esm" {
   interface ConfigTypeMap {
-    arraySupport: [number?, number?, number?, number?, number?, number?, number?]
+    arraySupport: [
+      number?,
+      number?,
+      number?,
+      number?,
+      number?,
+      number?,
+      number?,
+    ];
   }
 }
 
-declare const plugin: PluginFunc
-export = plugin
+declare const plugin: PluginFunc;
+export = plugin;

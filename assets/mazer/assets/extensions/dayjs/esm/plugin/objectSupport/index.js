@@ -2,17 +2,23 @@ export default (function (o, c, dayjs) {
   var proto = c.prototype;
 
   var isObject = function isObject(obj) {
-    return obj !== null && !(obj instanceof Date) && !(obj instanceof Array) && !proto.$utils().u(obj) && obj.constructor.name === 'Object';
+    return (
+      obj !== null &&
+      !(obj instanceof Date) &&
+      !(obj instanceof Array) &&
+      !proto.$utils().u(obj) &&
+      obj.constructor.name === "Object"
+    );
   };
 
   var prettyUnit = function prettyUnit(u) {
     var unit = proto.$utils().p(u);
-    return unit === 'date' ? 'day' : unit;
+    return unit === "date" ? "day" : unit;
   };
 
   var parseDate = function parseDate(cfg) {
     var date = cfg.date,
-        utc = cfg.utc;
+      utc = cfg.utc;
     var $d = {};
 
     if (isObject(date)) {
@@ -70,17 +76,21 @@ export default (function (o, c, dayjs) {
   proto.set = function (unit, value) {
     value = value === undefined ? unit : value;
 
-    if (unit.constructor.name === 'Object') {
-      return callObject.bind(this)(function (i, s) {
-        return oldSet.bind(this)(s, i);
-      }, value, unit);
+    if (unit.constructor.name === "Object") {
+      return callObject.bind(this)(
+        function (i, s) {
+          return oldSet.bind(this)(s, i);
+        },
+        value,
+        unit,
+      );
     }
 
     return oldSet.bind(this)(unit, value);
   };
 
   proto.add = function (value, unit) {
-    if (value.constructor.name === 'Object') {
+    if (value.constructor.name === "Object") {
       return callObject.bind(this)(oldAdd, value, unit);
     }
 
@@ -88,7 +98,7 @@ export default (function (o, c, dayjs) {
   };
 
   proto.subtract = function (value, unit) {
-    if (value.constructor.name === 'Object') {
+    if (value.constructor.name === "Object") {
       return callObject.bind(this)(oldAdd, value, unit, -1);
     }
 

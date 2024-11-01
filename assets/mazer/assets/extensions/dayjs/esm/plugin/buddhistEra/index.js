@@ -1,4 +1,4 @@
-import { FORMAT_DEFAULT } from '../../constant';
+import { FORMAT_DEFAULT } from "../../constant";
 export default (function (o, c) {
   // locale needed later
   var proto = c.prototype;
@@ -13,8 +13,14 @@ export default (function (o, c) {
       var _this$$utils;
 
       var year = String(_this.$y + yearBias);
-      var args = match === 'BB' ? [year.slice(-2), 2] : [year, 4];
-      return a || (_this$$utils = _this.$utils()).s.apply(_this$$utils, args.concat(['0']));
+      var args = match === "BB" ? [year.slice(-2), 2] : [year, 4];
+      return (
+        a ||
+        (_this$$utils = _this.$utils()).s.apply(
+          _this$$utils,
+          args.concat(["0"]),
+        )
+      );
     });
     return oldFormat.bind(this)(result);
   };

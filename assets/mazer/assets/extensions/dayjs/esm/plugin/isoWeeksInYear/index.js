@@ -3,10 +3,10 @@ export default (function (o, c) {
 
   proto.isoWeeksInYear = function () {
     var isLeapYear = this.isLeapYear();
-    var last = this.endOf('y');
+    var last = this.endOf("y");
     var day = last.day();
 
-    if (day === 4 || isLeapYear && day === 5) {
+    if (day === 4 || (isLeapYear && day === 5)) {
       return 53;
     }
 

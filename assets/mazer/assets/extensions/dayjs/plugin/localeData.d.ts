@@ -1,11 +1,24 @@
-import { PluginFunc } from 'dayjs'
+import { PluginFunc } from "dayjs";
 
-declare const plugin: PluginFunc
-export = plugin
+declare const plugin: PluginFunc;
+export = plugin;
 
-declare module 'dayjs' {
+declare module "dayjs" {
   type WeekdayNames = [string, string, string, string, string, string, string];
-  type MonthNames = [string, string, string, string, string, string, string, string, string, string, string, string];
+  type MonthNames = [
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+    string,
+  ];
 
   interface InstanceLocaleDataReturn {
     firstDayOfWeek(): number;
@@ -16,7 +29,7 @@ declare module 'dayjs' {
     monthsShort(instance?: Dayjs): MonthNames;
     longDateFormat(format: string): string;
     meridiem(hour?: number, minute?: number, isLower?: boolean): string;
-    ordinal(n: number): string
+    ordinal(n: number): string;
   }
 
   interface GlobalLocaleDataReturn {
@@ -28,7 +41,7 @@ declare module 'dayjs' {
     monthsShort(): MonthNames;
     longDateFormat(format: string): string;
     meridiem(hour?: number, minute?: number, isLower?: boolean): string;
-    ordinal(n: number): string
+    ordinal(n: number): string;
   }
 
   interface Dayjs {

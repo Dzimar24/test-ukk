@@ -1,8 +1,8 @@
-import { PluginFunc } from 'dayjs/esm'
+import { PluginFunc } from "dayjs/esm";
 
 declare interface PluginOptions {
-    parseTwoDigitYear?: (yearString: string) => number
+  parseTwoDigitYear?: (yearString: string) => number;
 }
 
-declare const plugin: PluginFunc<PluginOptions>
-export = plugin
+declare const plugin: PluginFunc<PluginOptions>;
+export = plugin;

@@ -1,5 +1,5 @@
-import { FORMAT_DEFAULT } from '../../constant';
-import { u, englishFormats } from './utils';
+import { FORMAT_DEFAULT } from "../../constant";
+import { u, englishFormats } from "./utils";
 export default (function (o, c, d) {
   var proto = c.prototype;
   var oldFormat = proto.format;
@@ -11,8 +11,8 @@ export default (function (o, c, d) {
     }
 
     var _this$$locale = this.$locale(),
-        _this$$locale$formats = _this$$locale.formats,
-        formats = _this$$locale$formats === void 0 ? {} : _this$$locale$formats;
+      _this$$locale$formats = _this$$locale.formats,
+      formats = _this$$locale$formats === void 0 ? {} : _this$$locale$formats;
 
     var result = u(formatStr, formats);
     return oldFormat.call(this, result);

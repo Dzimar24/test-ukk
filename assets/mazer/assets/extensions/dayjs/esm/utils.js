@@ -1,4 +1,4 @@
-import * as C from './constant';
+import * as C from "./constant";
 
 var padStart = function padStart(string, length, pad) {
   var s = String(string);
@@ -11,7 +11,13 @@ var padZoneStr = function padZoneStr(instance) {
   var minutes = Math.abs(negMinutes);
   var hourOffset = Math.floor(minutes / 60);
   var minuteOffset = minutes % 60;
-  return "" + (negMinutes <= 0 ? '+' : '-') + padStart(hourOffset, 2, '0') + ":" + padStart(minuteOffset, 2, '0');
+  return (
+    "" +
+    (negMinutes <= 0 ? "+" : "-") +
+    padStart(hourOffset, 2, "0") +
+    ":" +
+    padStart(minuteOffset, 2, "0")
+  );
 };
 
 var monthDiff = function monthDiff(a, b) {
@@ -21,7 +27,12 @@ var monthDiff = function monthDiff(a, b) {
   var anchor = a.clone().add(wholeMonthDiff, C.M);
   var c = b - anchor < 0;
   var anchor2 = a.clone().add(wholeMonthDiff + (c ? -1 : 1), C.M);
-  return +(-(wholeMonthDiff + (b - anchor) / (c ? anchor - anchor2 : anchor2 - anchor)) || 0);
+  return +(
+    -(
+      wholeMonthDiff +
+      (b - anchor) / (c ? anchor - anchor2 : anchor2 - anchor)
+    ) || 0
+  );
 };
 
 var absFloor = function absFloor(n) {
@@ -39,9 +50,14 @@ var prettyUnit = function prettyUnit(u) {
     m: C.MIN,
     s: C.S,
     ms: C.MS,
-    Q: C.Q
+    Q: C.Q,
   };
-  return special[u] || String(u || '').toLowerCase().replace(/s$/, '');
+  return (
+    special[u] ||
+    String(u || "")
+      .toLowerCase()
+      .replace(/s$/, "")
+  );
 };
 
 var isUndefined = function isUndefined(s) {
@@ -54,5 +70,5 @@ export default {
   m: monthDiff,
   a: absFloor,
   p: prettyUnit,
-  u: isUndefined
+  u: isUndefined,
 };

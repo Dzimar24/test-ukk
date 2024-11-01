@@ -1,11 +1,11 @@
-import { PluginFunc } from 'dayjs/esm'
+import { PluginFunc } from "dayjs/esm";
 
-declare module 'dayjs/esm' {
+declare module "dayjs/esm" {
   interface ConfigTypeMap {
-    bigIntSupport: BigInt
+    bigIntSupport: BigInt;
   }
-  export function unix(t: BigInt): Dayjs
+  export function unix(t: BigInt): Dayjs;
 }
 
-declare const plugin: PluginFunc
-export = plugin
+declare const plugin: PluginFunc;
+export = plugin;

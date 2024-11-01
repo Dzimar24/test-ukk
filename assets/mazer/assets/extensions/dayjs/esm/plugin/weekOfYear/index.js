@@ -1,4 +1,4 @@
-import { MS, Y, D, W } from '../../constant';
+import { MS, Y, D, W } from "../../constant";
 export default (function (o, c, d) {
   var proto = c.prototype;
 
@@ -28,7 +28,7 @@ export default (function (o, c, d) {
     var diffInWeek = this.diff(yearStartWeek, W, true);
 
     if (diffInWeek < 0) {
-      return d(this).startOf('week').week();
+      return d(this).startOf("week").week();
     }
 
     return Math.ceil(diffInWeek);

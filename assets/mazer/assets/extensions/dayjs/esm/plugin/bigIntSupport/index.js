@@ -1,6 +1,6 @@
 // eslint-disable-next-line valid-typeof
 var isBigInt = function isBigInt(num) {
-  return typeof num === 'bigint';
+  return typeof num === "bigint";
 };
 
 export default (function (o, c, dayjs) {

@@ -1,1 +1,1 @@
-export type PositionOptionsType = 'auto' | 'top' | 'bottom';
+export type PositionOptionsType = "auto" | "top" | "bottom";

@@ -166,7 +166,8 @@
 	text-align: center;
 }
 
-.dataTable-top::after, .dataTable-bottom::after {
+.dataTable-top::after,
+.dataTable-bottom::after {
 	clear: both;
 	content: " ";
 	display: table;
@@ -178,5 +179,5 @@ table.dataTable-table:focus tr.dataTable-cursor > td:first-child {
 
 table.dataTable-table:focus {
 	outline: solid 1px black;
-    outline-offset: -1px;
+	outline-offset: -1px;
 }

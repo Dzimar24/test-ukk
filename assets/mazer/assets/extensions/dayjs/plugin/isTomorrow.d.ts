@@ -1,10 +1,10 @@
-import { PluginFunc } from 'dayjs'
+import { PluginFunc } from "dayjs";
 
-declare const plugin: PluginFunc
-export = plugin
+declare const plugin: PluginFunc;
+export = plugin;
 
-declare module 'dayjs' {
+declare module "dayjs" {
   interface Dayjs {
-    isTomorrow(): boolean
+    isTomorrow(): boolean;
   }
 }

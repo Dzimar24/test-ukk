@@ -103,14 +103,14 @@
 									<?php
 										if (isset($vdb['status'])) {
 											switch ($vdb['status']) {
-												case 'Please wait':
-													echo '<span class="span-custom-wait">Please Wait</span>';
+												case 'pending':
+													echo '<span class="span-custom-wait">Pending</span>';
+													break;
+												case 'approved':
+													echo '<span class="span-custom-return">The book has been approved</span>';
 													break;
 												case 'returned':
-													echo '<span class="span-custom-return">The book has been returned</span>';
-													break;
-												case 'borrowed':
-													echo '<span class="span-custom-borrowed">The book is ready to be borrowed</span>';
+													echo '<span class="span-custom-borrowed">The book is ready to be returned</span>';
 													break;
 												case 'rejected':
 													echo '<span class="span-custom-rejected">Book Loan Rejected</span>';

@@ -1,6 +1,6 @@
-import { Choice } from './choice';
+import { Choice } from "./choice";
 export interface Item extends Choice {
-    choiceId?: number;
-    highlighted?: boolean;
+	choiceId?: number;
+	highlighted?: boolean;
 }
 //# sourceMappingURL=item.d.ts.map

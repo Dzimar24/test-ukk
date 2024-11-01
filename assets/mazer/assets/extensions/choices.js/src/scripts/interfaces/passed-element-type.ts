@@ -1,1 +1,1 @@
-export type PassedElementType = 'text' | 'select-one' | 'select-multiple';
+export type PassedElementType = "text" | "select-one" | "select-multiple";

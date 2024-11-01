@@ -65,10 +65,6 @@
 						<div class="col-10 d-flex align-items-center">
 							<h5 class="text-title">Table <?= $titlePage; ?></h5>
 						</div>
-						<div class="col-2 d-flex justify-content-start align-items-center">
-							<input type="checkbox" class="form-check-input input-checkbox-custom" id="selectAllCheckbox">
-							<button class="btn btn-sm btn-primary" id="borrowing-many-book">Borrowing</button>
-						</div>
 					</div>
 				</div>
 				<div class="card-body">
@@ -76,7 +72,6 @@
 						<table class="table" id="table1">
 							<thead class="custom-table">
 								<tr>
-									<th class="col-unknown">#</th>
 									<th class="col-no">No</th>
 									<th>Title Book</th>
 									<th class="col-view-data">View Data</th>
@@ -89,9 +84,6 @@
 							?>
 							<tbody>
 								<tr>
-									<td>
-										<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbok-many-book">
-									</td>
 									<td><?= $no++; ?></td>
 									<td><?= $vdb['Judul'] ?></td>
 									<td>
@@ -189,65 +181,6 @@
 
 <!-- JQuery -->
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
-
-<script>
-	// Get the 'select all' checkbox
-	const selectAllCheckbox = document.getElementById('selectAllCheckbox');
-
-	// Get all the individual checkboxes
-	const rowCheckboxes = document.querySelectorAll('.row-checkbox');
-
-	// Event listener for 'select all' checkbox
-	selectAllCheckbox.addEventListener('change', function () {
-		// When 'select all' is checked or unchecked, set the same state for all row checkboxes
-		rowCheckboxes.forEach(checkbox => {
-			checkbox.checked = selectAllCheckbox.checked;
-		});
-	});
-
-	// Event listeners for individual checkboxes
-	rowCheckboxes.forEach(checkbox => {
-		checkbox.addEventListener('change', function () {
-			// If any checkbox is unchecked, uncheck the 'select all' checkbox
-			if (!checkbox.checked) {
-					selectAllCheckbox.checked = false;
-			}
-
-			// If all checkboxes are checked, check the 'select all' checkbox
-			if (Array.from(rowCheckboxes).every(checkbox => checkbox.checked)) {
-					selectAllCheckbox.checked = true;
-			}
-		});
-	});
-
-	// Aksi ngirim data buku but diborong
-	// const buttonBorrowingBook = document.getElementById("borrowing-many-book");
-	// const checkboxBorrowingBook = document.querySelectorAll(".checkbok-many-book");
-
-	// buttonBorrowingBook.addEventListener("click", function() {
-	// 	const bookBorrowed = [];
-	// 	checkboxBorrowingBook.forEach(checkbox => {
-	// 		if (checkbox.checked) {
-	// 			bookBorrowed.push(checkbox.value);
-	// 		}
-	// 	});
-	// 	if (bookBorrowed.length > 0) {
-	// 		Swal.fire({
-	// 			icon: "success",
-	// 			title: "Success,",
-	// 			text: "The book is in the process of being borrowed",
-	// 		}).then(() => {
-	// 			window.location.href = "<?= base_url() ?>Index/Borrowing/?buku[]=" + bookBorrowed.join("&buku[]=");
-	// 		})
-	// 	} else {
-	// 		Swal.fire({
-	// 			icon: "error",
-	// 			title: "Oops...",
-	// 			text: "Please select a book to borrow",
-	// 		});
-	// 	}
-	// })
-</script>
 
 <!-- //? Alert if success -->
 <?php if ($this->session->flashdata('success')): ?>

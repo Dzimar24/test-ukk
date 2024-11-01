@@ -3,7 +3,7 @@ export default (function (o, c, dayjs) {
 
   var parseDate = function parseDate(cfg) {
     var date = cfg.date,
-        utc = cfg.utc;
+      utc = cfg.utc;
 
     if (Array.isArray(date)) {
       if (utc) {

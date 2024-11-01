@@ -1,10 +1,10 @@
-import { MILLISECONDS_A_MINUTE, MIN } from '../../constant';
+import { MILLISECONDS_A_MINUTE, MIN } from "../../constant";
 var REGEX_VALID_OFFSET_FORMAT = /[+-]\d\d(?::?\d\d)?/g;
 var REGEX_OFFSET_HOURS_MINUTES_FORMAT = /([+-]|\d\d)/g;
 
 function offsetFromString(value) {
   if (value === void 0) {
-    value = '';
+    value = "";
   }
 
   var offset = value.match(REGEX_VALID_OFFSET_FORMAT);
@@ -13,10 +13,14 @@ function offsetFromString(value) {
     return null;
   }
 
-  var _ref = ("" + offset[0]).match(REGEX_OFFSET_HOURS_MINUTES_FORMAT) || ['-', 0, 0],
-      indicator = _ref[0],
-      hoursOffset = _ref[1],
-      minutesOffset = _ref[2];
+  var _ref = ("" + offset[0]).match(REGEX_OFFSET_HOURS_MINUTES_FORMAT) || [
+      "-",
+      0,
+      0,
+    ],
+    indicator = _ref[0],
+    hoursOffset = _ref[1],
+    minutesOffset = _ref[2];
 
   var totalOffsetInMinutes = +hoursOffset * 60 + +minutesOffset;
 
@@ -24,7 +28,7 @@ function offsetFromString(value) {
     return 0;
   }
 
-  return indicator === '+' ? totalOffsetInMinutes : -totalOffsetInMinutes;
+  return indicator === "+" ? totalOffsetInMinutes : -totalOffsetInMinutes;
 }
 
 export default (function (option, Dayjs, dayjs) {
@@ -34,7 +38,7 @@ export default (function (option, Dayjs, dayjs) {
     var cfg = {
       date: date,
       utc: true,
-      args: arguments
+      args: arguments,
     }; // eslint-disable-line prefer-rest-params
 
     return new Dayjs(cfg); // eslint-disable-line no-use-before-define
@@ -43,7 +47,7 @@ export default (function (option, Dayjs, dayjs) {
   proto.utc = function (keepLocalTime) {
     var ins = dayjs(this.toDate(), {
       locale: this.$L,
-      utc: true
+      utc: true,
     });
 
     if (keepLocalTime) {
@@ -56,7 +60,7 @@ export default (function (option, Dayjs, dayjs) {
   proto.local = function () {
     return dayjs(this.toDate(), {
       locale: this.$L,
-      utc: false
+      utc: false,
     });
   };
 
@@ -96,7 +100,7 @@ export default (function (option, Dayjs, dayjs) {
 
   proto.utcOffset = function (input, keepLocalTime) {
     var _this$$utils = this.$utils(),
-        u = _this$$utils.u;
+      u = _this$$utils.u;
 
     if (u(input)) {
       if (this.$u) {
@@ -110,7 +114,7 @@ export default (function (option, Dayjs, dayjs) {
       return oldUtcOffset.call(this);
     }
 
-    if (typeof input === 'string') {
+    if (typeof input === "string") {
       input = offsetFromString(input);
 
       if (input === null) {
@@ -128,7 +132,9 @@ export default (function (option, Dayjs, dayjs) {
     }
 
     if (input !== 0) {
-      var localTimezoneOffset = this.$u ? this.toDate().getTimezoneOffset() : -1 * this.utcOffset();
+      var localTimezoneOffset = this.$u
+        ? this.toDate().getTimezoneOffset()
+        : -1 * this.utcOffset();
       ins = this.local().add(offset + localTimezoneOffset, MIN);
       ins.$offset = offset;
       ins.$x.$localOffset = localTimezoneOffset;
@@ -140,15 +146,17 @@ export default (function (option, Dayjs, dayjs) {
   };
 
   var oldFormat = proto.format;
-  var UTC_FORMAT_DEFAULT = 'YYYY-MM-DDTHH:mm:ss[Z]';
+  var UTC_FORMAT_DEFAULT = "YYYY-MM-DDTHH:mm:ss[Z]";
 
   proto.format = function (formatStr) {
-    var str = formatStr || (this.$u ? UTC_FORMAT_DEFAULT : '');
+    var str = formatStr || (this.$u ? UTC_FORMAT_DEFAULT : "");
     return oldFormat.call(this, str);
   };
 
   proto.valueOf = function () {
-    var addedOffset = !this.$utils().u(this.$offset) ? this.$offset + (this.$x.$localOffset || this.$d.getTimezoneOffset()) : 0;
+    var addedOffset = !this.$utils().u(this.$offset)
+      ? this.$offset + (this.$x.$localOffset || this.$d.getTimezoneOffset())
+      : 0;
     return this.$d.valueOf() - addedOffset * MILLISECONDS_A_MINUTE;
   };
 
@@ -167,8 +175,8 @@ export default (function (option, Dayjs, dayjs) {
   var oldToDate = proto.toDate;
 
   proto.toDate = function (type) {
-    if (type === 's' && this.$offset) {
-      return dayjs(this.format('YYYY-MM-DD HH:mm:ss:SSS')).toDate();
+    if (type === "s" && this.$offset) {
+      return dayjs(this.format("YYYY-MM-DD HH:mm:ss:SSS")).toDate();
     }
 
     return oldToDate.call(this);

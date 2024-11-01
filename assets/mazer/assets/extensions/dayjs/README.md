@@ -25,15 +25,19 @@ English | [简体中文](./docs/zh-cn/README.zh-CN.md) | [日本語](./docs/ja/R
 > Day.js is a minimalist JavaScript library that parses, validates, manipulates, and displays dates and times for modern browsers with a largely Moment.js-compatible API. If you use Moment.js, you already know how to use Day.js.
 
 ```js
-dayjs().startOf('month').add(1, 'day').set('year', 2018).format('YYYY-MM-DD HH:mm:ss');
+dayjs()
+  .startOf("month")
+  .add(1, "day")
+  .set("year", 2018)
+  .format("YYYY-MM-DD HH:mm:ss");
 ```
 
-* 🕒 Familiar Moment.js API & patterns
-* 💪 Immutable
-* 🔥 Chainable
-* 🌐 I18n support
-* 📦 2kb mini library
-* 👫 All browsers supported
+- 🕒 Familiar Moment.js API & patterns
+- 💪 Immutable
+- 🔥 Chainable
+- 🌐 I18n support
+- 📦 2kb mini library
+- 👫 All browsers supported
 
 ---
 
@@ -56,15 +60,15 @@ npm install dayjs --save
 It's easy to use Day.js APIs to parse, validate, manipulate, and display dates and times.
 
 ```javascript
-dayjs('2018-08-08') // parse
+dayjs("2018-08-08"); // parse
 
-dayjs().format('{YYYY} MM-DDTHH:mm:ss SSS [Z] A') // display
+dayjs().format("{YYYY} MM-DDTHH:mm:ss SSS [Z] A"); // display
 
-dayjs().set('month', 3).month() // get & set
+dayjs().set("month", 3).month(); // get & set
 
-dayjs().add(1, 'year') // manipulate
+dayjs().add(1, "year"); // manipulate
 
-dayjs().isBefore(dayjs()) // query
+dayjs().isBefore(dayjs()); // query
 ```
 
 📚[API Reference](https://day.js.org/docs/en/parse/parse)
@@ -76,12 +80,13 @@ Day.js has great support for internationalization.
 But none of them will be included in your build unless you use it.
 
 ```javascript
-import 'dayjs/locale/es' // load on demand
+import "dayjs/locale/es"; // load on demand
 
-dayjs.locale('es') // use Spanish locale globally
+dayjs.locale("es"); // use Spanish locale globally
 
-dayjs('2018-05-05').locale('zh-cn').format() // use Chinese Simplified locale in a specific instance
+dayjs("2018-05-05").locale("zh-cn").format(); // use Chinese Simplified locale in a specific instance
 ```
+
 📚[Internationalization](https://day.js.org/docs/en/i18n/i18n)
 
 ### Plugin
@@ -89,18 +94,18 @@ dayjs('2018-05-05').locale('zh-cn').format() // use Chinese Simplified locale in
 A plugin is an independent module that can be added to Day.js to extend functionality or add new features.
 
 ```javascript
-import advancedFormat from 'dayjs/plugin/advancedFormat' // load on demand
+import advancedFormat from "dayjs/plugin/advancedFormat"; // load on demand
 
-dayjs.extend(advancedFormat) // use plugin
+dayjs.extend(advancedFormat); // use plugin
 
-dayjs().format('Q Do k kk X x') // more available formats
+dayjs().format("Q Do k kk X x"); // more available formats
 ```
 
 📚[Plugin List](https://day.js.org/docs/en/plugin/plugin)
 
 ## Sponsors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. 
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website.
 
 [[Become a sponsor via Github](https://github.com/sponsors/iamkun/)] [[Become a sponsor via OpenCollective](https://opencollective.com/dayjs#sponsor)]
 

@@ -1,6 +1,11 @@
 export default (function (o, c, d) {
   var sortBy = function sortBy(method, dates) {
-    if (!dates || !dates.length || dates.length === 1 && !dates[0] || dates.length === 1 && Array.isArray(dates[0]) && !dates[0].length) {
+    if (
+      !dates ||
+      !dates.length ||
+      (dates.length === 1 && !dates[0]) ||
+      (dates.length === 1 && Array.isArray(dates[0]) && !dates[0].length)
+    ) {
       return null;
     }
 
@@ -28,12 +33,12 @@ export default (function (o, c, d) {
   d.max = function () {
     var args = [].slice.call(arguments, 0); // eslint-disable-line prefer-rest-params
 
-    return sortBy('isAfter', args);
+    return sortBy("isAfter", args);
   };
 
   d.min = function () {
     var args = [].slice.call(arguments, 0); // eslint-disable-line prefer-rest-params
 
-    return sortBy('isBefore', args);
+    return sortBy("isBefore", args);
   };
 });

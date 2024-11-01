@@ -1,87 +1,87 @@
-import { Options } from 'deepmerge';
-import { Store } from 'redux';
+import { Options } from "deepmerge";
+import { Store } from "redux";
 import {
-  WrappedInput,
-  WrappedSelect,
-  Container,
-  List,
-  Input,
-  Dropdown,
-} from '../components';
-import { Choice } from './choice';
-import { Group } from './group';
-import { Item } from './item';
-import { State } from './state';
-import templates from '../templates';
+	WrappedInput,
+	WrappedSelect,
+	Container,
+	List,
+	Input,
+	Dropdown,
+} from "../components";
+import { Choice } from "./choice";
+import { Group } from "./group";
+import { Item } from "./item";
+import { State } from "./state";
+import templates from "../templates";
 
 export interface Choices {
-  initialised: boolean;
-  config: Options;
+	initialised: boolean;
+	config: Options;
 
-  passedElement: WrappedInput | WrappedSelect;
+	passedElement: WrappedInput | WrappedSelect;
 
-  containerOuter: Container;
+	containerOuter: Container;
 
-  containerInner: Container;
+	containerInner: Container;
 
-  choiceList: List;
+	choiceList: List;
 
-  itemList: List;
+	itemList: List;
 
-  input: Input;
+	input: Input;
 
-  dropdown: Dropdown;
+	dropdown: Dropdown;
 
-  _isTextElement: boolean;
+	_isTextElement: boolean;
 
-  _isSelectOneElement: boolean;
+	_isSelectOneElement: boolean;
 
-  _isSelectMultipleElement: boolean;
+	_isSelectMultipleElement: boolean;
 
-  _isSelectElement: boolean;
+	_isSelectElement: boolean;
 
-  _store: Store;
+	_store: Store;
 
-  _templates: typeof templates;
+	_templates: typeof templates;
 
-  _initialState: State;
+	_initialState: State;
 
-  _currentState: State;
+	_currentState: State;
 
-  _prevState: State;
+	_prevState: State;
 
-  _currentValue: string;
+	_currentValue: string;
 
-  _canSearch: boolean;
+	_canSearch: boolean;
 
-  _isScrollingOnIe: boolean;
+	_isScrollingOnIe: boolean;
 
-  _highlightPosition: number;
+	_highlightPosition: number;
 
-  _wasTap: boolean;
+	_wasTap: boolean;
 
-  _isSearching: boolean;
+	_isSearching: boolean;
 
-  _placeholderValue: string | null;
+	_placeholderValue: string | null;
 
-  _baseId: string;
+	_baseId: string;
 
-  _direction: HTMLElement['dir'];
+	_direction: HTMLElement["dir"];
 
-  _idNames: {
-    itemChoice: string;
-  };
+	_idNames: {
+		itemChoice: string;
+	};
 
-  _presetGroups: Group[] | HTMLOptGroupElement[] | Element[];
+	_presetGroups: Group[] | HTMLOptGroupElement[] | Element[];
 
-  _presetOptions: Item[] | HTMLOptionElement[];
+	_presetOptions: Item[] | HTMLOptionElement[];
 
-  _presetChoices: Partial<Choice>[];
+	_presetChoices: Partial<Choice>[];
 
-  _presetItems: Item[] | string[];
+	_presetItems: Item[] | string[];
 
-  new (
-    element: string | Element | HTMLInputElement | HTMLSelectElement,
-    userConfig: Partial<Options>,
-  );
+	new (
+		element: string | Element | HTMLInputElement | HTMLSelectElement,
+		userConfig: Partial<Options>,
+	);
 }

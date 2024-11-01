@@ -33,10 +33,12 @@ class Borrowing_model extends CI_Model
 	public function viewDataBorrowing()
 	{
 		// 
-		$this->db->select('*');
-		$this->db->from('borrowing');
-		$this->db->join('buku', 'buku.BukuID = borrowing.idBuku', 'left');
+		$this->db->from('peminjaman_detail');
+		$this->db->join('peminjaman', 'peminjaman.id = peminjaman_detail.peminjaman_id', 'left');
+		$this->db->join('user', 'user.UserID = peminjaman.user_id', 'left');
+		$this->db->join('buku', 'buku.BukuID = peminjaman_detail.buku_id', 'left');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
+		$this->db->where('peminjaman.user_id', $this->session->userdata('UserID'));
 
 		$query = $this->db->get()->result_array();
 		return $query;
@@ -56,12 +58,12 @@ class Borrowing_model extends CI_Model
 	// ------------------------------------------------------------------------
 	public function viewDataBorrowingInTemporary()
 	{
-		$this->db->select('b.BukuID, b.Judul, b.Penulis, b.Penerbit, b.TahunTerbit, b.coverBook, k.NamaKategori, b.deskripsi');
+		$this->db->distinct();
+		$this->db->select('b.BukuID, b.Judul, b.Penulis, b.Penerbit, b.TahunTerbit, b.coverBook, k.NamaKategori, b.deskripsi, tb.idTemp');
 		$this->db->from('temporaryborrowing tb');
 		$this->db->join('buku b', 'tb.idBook = b.BukuID');
 		$this->db->join('kategori k', 'b.idKategory = k.KategoriID');
 		$this->db->where('tb.idUser', $this->session->userdata('UserID'));
-		$this->db->group_by('b.BukuID'); // Menghindari duplikasi
 
 		$query = $this->db->get();
 		return $query->result_array();
@@ -118,6 +120,14 @@ class Borrowing_model extends CI_Model
 
 		$query = $this->db->get();
 		return $query->result_array();
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function deleteTemporaryBorrowing($id)
+	{
+		$this->db->where('idTemp', $id);
+		$this->db->delete('temporaryborrowing');
 	}
 	// ------------------------------------------------------------------------
 
