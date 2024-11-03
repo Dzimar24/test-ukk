@@ -30,12 +30,12 @@ class Index extends CI_Controller
 		redirect('Index');
 	}
 
-	public function fullPageBook($idBook){
+	public function fullPageBook($idBook)
+	{
 		$idUser = $this->session->userdata('UserID');
 		$data['viewDataCountBookmark'] = $this->index->count_user_bookmarks($idUser);
 		$data['viewFullDataBook'] = $this->index->viewFullDataBook($idBook);
-		
+
 		$this->template->load('template', 'Pages/public/fullPageBook', $data);
 	}
-
 }
