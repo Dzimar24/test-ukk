@@ -174,10 +174,19 @@ class Borrowing extends CI_Controller
 
 	public function deleteTemp($id)
 	{
-		# code...
-		$this->bm->deleteTemporaryBorrowing($id);
-		$this->session->set_flashdata('success', 'The book has been removed from the Temporary borrowing list!!');
-		redirect('Public/Borrowing/addBorrowing');
+		if ($this->bm->deleteTemporaryBorrowing($id)) {
+			$response = array(
+				'success' => true,
+				'message' => 'The book has been removed from the Temporary borrowing list!!'
+			);
+		} else {
+			$response = array(
+				'success' => false,
+				'message' => 'Failed to delete the book from Temporary borrowing list.'
+			);
+		}
+
+		echo json_encode($response);
 	}
 }
 

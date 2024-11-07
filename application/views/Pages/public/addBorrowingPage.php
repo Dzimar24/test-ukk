@@ -38,7 +38,6 @@
 	.icon-custom {
 		color: #E72929;
 	}
-
 </style>
 <!-- End Style -->
 
@@ -78,35 +77,33 @@
 								<?php
 								$no = 1;
 								foreach ($viewDataBorrowingTemp as $dbt):
-									?>
-									<tr>
+								?>
+									<tr data-id="<?= $dbt['idTemp'] ?>">
 										<td><?= $no++; ?></td>
-										<td><?= $dbt['Judul'] ?></td>
+										<td><?= htmlspecialchars($dbt['Judul']) ?></td>
 										<td>
 											<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView<?= $dbt['BukuID'] ?>">
 												<i class="bi bi-eye"></i> Views
 											</button>
 										</td>
 										<td>
-											<a href="<?= site_url('Public/Borrowing/deleteTemp/' . $dbt['idTemp']) ?>" class="m-2 custom-button-delete" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Borrowing Book">
+											<a href="#" class="m-2 custom-button-delete" data-buku-id="<?= $dbt['BukuID'] ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Borrowing Book">
 												<i class="bi bi-trash3 icon-custom"></i>
 											</a>
 										</td>
 									</tr>
-									<input type="hidden" name="idTemp" value="<?= $dbt['idTemp'] ?>">
 								<?php endforeach; ?>
 							</tbody>
 						</table>
-						<!-- End Tabel Borrowing Temporary -->
 					</div>
 					<form id="borrowingForm" class="mt-3">
 						<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 						<div class="row">
 							<div class="col-3">
-								<input type="date" class="form-control" id="startDate" required>
+								<input type="date" class="form-control" id="startDate" name="tanggal_pinjam" required>
 							</div>
 							<div class="col-3">
-								<input type="date" class="form-control" id="endDate" required>
+								<input type="date" class="form-control" id="endDate" name="tanggal_kembali" required>
 							</div>
 							<div class="col-6 d-flex justify-content-end">
 								<button type="submit" class="btn-sm btn btn-primary book-borrowing-btn">Book Borrowing</button>
@@ -134,7 +131,8 @@
 			<div class="modal-body">
 				<div class="card-body">
 					<div class="table-responsive">
-						<?php if (!empty($viewDataBook)): // Cek apakah data ada ?>
+						<?php if (!empty($viewDataBook)): // Cek apakah data ada 
+						?>
 							<table class="table" id="dataTables">
 								<thead>
 									<tr>
@@ -148,10 +146,12 @@
 								<tbody>
 									<?php
 									foreach ($viewDataBook as $vdb):
-										// var_dump($vdb); exit; ?>
+										// var_dump($vdb); exit; 
+									?>
 										<tr>
-											<td><input type="checkbox" value="<?= $vdb['BukuID'] ?>"
-													class="form-check-input row-checkbox checkbox-many-book"></td>
+											<td>
+												<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book">
+											</td>
 											<td><?= $vdb['Judul'] ?></td>
 											<td><?= $vdb['Penulis'] ?></td>
 											<td><?= date("Y", strtotime($vdb['TahunTerbit'])) ?></td>
@@ -187,98 +187,82 @@
 <script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 
 <script>
-	// Fungsi untuk memperbarui tabel utama
 	function updateMainTable(newData) {
+		console.log("Data yang diterima:", newData);
 		const mainTable = $('#table1 tbody');
-		mainTable.empty(); // Kosongkan tabel terlebih dahulu
+		const deleteTempUrl = '<?= site_url('Public/Borrowing/deleteTemp/') ?>';
 
-		newData.forEach((item, index) => {
-			mainTable.append(`
-					<tr>
-						<td>${index + 1}</td>
-						<td>${item.Judul}</td>
-						<td>
-							<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView${item.BukuID}">
-									<i class="bi bi-eye"></i> Views
+		// Tambahkan pengecekan elemen tabel
+		if (!mainTable.length) {
+			console.error('Table body element not found');
+			return;
+		}
+
+		mainTable.empty();
+
+		if (newData && newData.length > 0) {
+			newData.forEach((item, index) => {
+				mainTable.append(`
+					<tr data-id="${item.idTemp}">
+						<td class="col-no">${index + 1}</td>
+						<td>${escapeHtml(item.Judul)}</td>
+						<td class="col-view-data">
+							<button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modalView${item.BukuID}" title="View Book Details">
+							<i class="bi bi-eye"></i> Views
 							</button>
 						</td>
+						<td>
+							<a href="#" class="m-2 custom-button-delete" data-buku-id="${item.BukuID}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Button Delete Borrowing Book">
+							<i class="bi bi-trash3 icon-custom"></i>
+							</a>
+						</td>
 					</tr>
+				`);
+			});
+
+			// Inisialisasi ulang tooltips
+			const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+			tooltipTriggerList.map(function(tooltipTriggerEl) {
+				return new bootstrap.Tooltip(tooltipTriggerEl);
+			});
+
+			// Bind event handler untuk tombol delete
+			bindDeleteHandlers(deleteTempUrl);
+
+		} else {
+			mainTable.append(`
+				<tr>
+					<td colspan="4" class="text-center">Tidak ada data peminjaman sementara</td>
+				</tr>
 			`);
+		}
+	}
+
+	// Fungsi untuk mengikat event handler delete
+	function bindDeleteHandlers(deleteTempUrl) {
+		$('.custom-button-delete').each(function() {
+			$(this).off('click').on('click', function(e) {
+				e.preventDefault();
+				const bukuID = $(this).data('buku-id');
+				handleDelete(bukuID, deleteTempUrl);
+			});
 		});
 	}
 
-	// Event listener untuk tombol "Accept"
-	$('#borrowing-many-book').on('click', function (event) {
-		event.preventDefault();
-		const bookBorrowed = [];
+	// Fungsi escapeHTML yang aman
+	function escapeHtml(unsafe) {
+		if (!unsafe) return '';
+		return unsafe
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#039;");
+	}
 
-		$('.checkbox-many-book:checked').each(function () {
-			bookBorrowed.push($(this).val());
-		});
-
-		if (bookBorrowed.length > 0) {
-			$.ajax({
-				url: "<?= base_url('Public/Borrowing/BorrowingBook') ?>",
-				method: "POST",
-				data: { buku: bookBorrowed },
-				dataType: 'json',
-				success: function (response) {
-					if (response.status === 'success') {
-						// Perbarui tabel utama
-						updateMainTable(response.data);
-
-						// Hapus baris yang telah dipilih dari modal
-						$('.checkbox-many-book:checked').closest('tr').remove();
-
-						// Perbarui tampilan tabel modal jika kosong
-						const modalTable = $("#dataTables tbody");
-						if (modalTable.children().length === 0) {
-							modalTable.html('<tr><td colspan="5" class="text-center">Tidak ada data tersedia</td></tr>');
-						}
-
-						// Tampilkan pesan sukses
-						Swal.fire({
-							icon: "success",
-							title: "Sukses",
-							text: "Buku telah ditempatkan dalam peminjaman sementara dan siap untuk dipinjam.",
-						});
-
-						// Tutup modal
-						$('#exampleModalScrollable').modal('hide');
-					} else {
-						Swal.fire({
-							icon: "error",
-							title: "Oops...",
-							text: response.message || "Terjadi kesalahan saat memproses permintaan Anda.",
-						});
-					}
-				},
-				error: function (xhr, status, error) {
-					Swal.fire({
-						icon: "error",
-						title: "Oops...",
-						text: "Terjadi kesalahan saat memproses permintaan Anda.",
-					});
-				}
-			});
-		} else {
-			Swal.fire({
-				icon: "error",
-				title: "Oops...",
-				text: "Silakan pilih buku untuk dipinjam",
-			});
-		}
-	});
-
-	// Reset checkbox saat modal dibuka
-	$('#exampleModalScrollable').on('show.bs.modal', function () {
-		$('.checkbox-many-book').prop('checked', false);
-		$('#selectAllCheckbox').prop('checked', false);
-	});
-
-	$('.custom-button-delete').on('click', function(e) {
-		e.preventDefault();
-		const url = $(this).attr('href');
+	// Tempatkan fungsi handleDelete
+	function handleDelete(bukuID, deleteTempUrl) {
+		const url = `${deleteTempUrl}${bukuID}`;
 
 		Swal.fire({
 			title: 'Are you sure?',
@@ -287,127 +271,220 @@
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
 			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
+			confirmButtonText: 'Yes, delete it!',
+			cancelButtonText: 'Cancel'
 		}).then((result) => {
 			if (result.isConfirmed) {
-				document.location.href = url
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: {
+						'<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
+					},
+					dataType: 'JSON',
+					success: function(response) {
+						console.log('Delete response:', response);
+						if (response.success) {
+							Swal.fire({
+								icon: 'success',
+								title: 'Terhapus!',
+								text: 'Data berhasil dihapus.',
+							}).then(() => {
+								// Refresh halaman setelah sukses
+								location.reload();
+							});
+						} else {
+							Swal.fire('Error!', response.message || 'Gagal menghapus data.', 'error');
+						}
+					},
+					error: function(xhr, status, error) {
+						console.error('Delete error:', {
+							status: xhr.status,
+							statusText: xhr.statusText,
+							responseText: xhr.responseText,
+							error: error
+						});
+						Swal.fire('Error!', 'Terjadi kesalahan saat menghapus data.', 'error');
+					}
+				});
 			}
-		})
-	})
-	
-	document.addEventListener('DOMContentLoaded', function () {
+		});
+	}
+
+	// Document ready event
+	$(document).ready(function() {
+		const deleteTempUrl = '<?= site_url('Public/Borrowing/deleteTemp/') ?>';
+
+		// Event delegation untuk tombol delete
+		$(document).on('click', '.custom-button-delete', function(e) {
+			e.preventDefault();
+			const bukuID = $(this).data('buku-id');
+			handleDelete(bukuID, deleteTempUrl);
+		});
+
+		// Event handler untuk checkbox "Select All"
+		$('#selectAllCheckbox').change(function() {
+			$('.checkbox-many-book').prop('checked', $(this).prop('checked'));
+		});
+
+		// Event handler untuk checkbox individual
+		$('.checkbox-many-book').change(function() {
+			let allChecked = $('.checkbox-many-book:checked').length === $('.checkbox-many-book').length;
+			$('#selectAllCheckbox').prop('checked', allChecked);
+		});
+
+		// Event handler untuk tombol peminjaman buku
+		$('#borrowing-many-book').on('click', function(event) {
+			event.preventDefault();
+			const bookBorrowed = [];
+
+			$('.checkbox-many-book:checked').each(function() {
+				bookBorrowed.push($(this).val());
+			});
+
+			if (bookBorrowed.length > 0) {
+				$.ajax({
+					url: "<?= base_url('Public/Borrowing/BorrowingBook') ?>",
+					method: "POST",
+					data: {
+						buku: bookBorrowed,
+						'<?= $this->security->get_csrf_token_name() ?>': '<?= $this->security->get_csrf_hash() ?>'
+					},
+					dataType: 'json',
+					success: function(response) {
+						if (response.status === 'success') {
+							// Update tabel dan UI
+							updateMainTable(response.data);
+
+							// Reset checkbox
+							$('.checkbox-many-book:checked').prop('checked', false);
+							$('#selectAllCheckbox').prop('checked', false);
+
+							// Tampilkan pesan sukses
+							Swal.fire({
+								icon: "success",
+								title: "Sukses",
+								text: "Buku telah ditempatkan dalam peminjaman sementara.",
+							}).then(() => {
+								$('#exampleModalScrollable').modal('hide');
+							});
+						} else {
+							Swal.fire({
+								icon: "error",
+								title: "Oops...",
+								text: response.message || "Terjadi kesalahan saat memproses permintaan.",
+							});
+						}
+					},
+					error: function(xhr, status, error) {
+						console.error('Borrowing error:', {
+							status: xhr.status,
+							statusText: xhr.statusText,
+							responseText: xhr.responseText,
+							error: error
+						});
+						Swal.fire({
+							icon: "error",
+							title: "Oops...",
+							text: "Terjadi kesalahan saat memproses permintaan.",
+						});
+					}
+				});
+			} else {
+				Swal.fire({
+					icon: "warning",
+					title: "Perhatian",
+					text: "Silakan pilih buku untuk dipinjam",
+				});
+			}
+		});
+
+		// Reset modal saat dibuka
+		$('#exampleModalScrollable').on('show.bs.modal', function() {
+			$('.checkbox-many-book').prop('checked', false);
+			$('#selectAllCheckbox').prop('checked', false);
+		});
+	});
+
+	// Form submission handler
+	document.addEventListener('DOMContentLoaded', function() {
 		const borrowButton = document.querySelector('.book-borrowing-btn');
 		const formBorrow = document.querySelector('#borrowingForm');
 
-		if (!borrowButton) {
-			console.error('Button not found!');
+		if (!borrowButton || !formBorrow) {
+			console.error('Required elements not found');
 			return;
 		}
 
-		borrowButton.addEventListener('click', function (e) {
+		formBorrow.addEventListener('submit', function(e) {
 			e.preventDefault();
 
-			const dateInputs = document.querySelectorAll('input[type="date"]');
-			let datesValid = true;
-			let dates = [];
+			const startDate = document.getElementById('startDate');
+			const endDate = document.getElementById('endDate');
 
-			dateInputs.forEach(input => {
-				if (!input.value) {
-					datesValid = false;
-				}
-				dates.push(input.value);
-			});
-
-			if (!datesValid) {
+			if (!startDate.value || !endDate.value) {
 				Swal.fire({
-					icon: 'error',
-					title: 'Oops...',
+					icon: 'warning',
+					title: 'Perhatian',
 					text: 'Silakan isi kedua tanggal terlebih dahulu!'
 				});
 				return;
 			}
 
-			// Ambil data dari tabel
-			const table = document.getElementById('table1');
-			if (!table) {
+			// Kumpulkan data buku
+			const tableRows = document.querySelectorAll('#table1 tbody tr');
+			if (tableRows.length === 0) {
 				Swal.fire({
-					icon: 'error',
-					title: 'Error',
-					text: 'Table not found!'
+					icon: 'warning',
+					title: 'Perhatian',
+					text: 'Tidak ada buku yang dipilih untuk dipinjam!'
 				});
 				return;
 			}
 
-			// Kumpulkan data dari tabel
-			const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-			let tableData = [];
-
-			for (let row of rows) {
-				const cells = row.getElementsByTagName('td');
-				const bukuId = row.querySelector('button').getAttribute('data-bs-target').replace('#modalView', '');
-
-				tableData.push({
-					bukuId: bukuId,
-					judul: cells[1].innerText
-				});
-			}
-
-			// Data yang akan dikirim
 			const formData = {
-				tanggal_pinjam: dates[0],
-				tanggal_kembali: dates[1],
-				books: tableData
+				tanggal_pinjam: startDate.value,
+				tanggal_kembali: endDate.value,
+				books: Array.from(tableRows).map(row => {
+					const button = row.querySelector('button');
+					return {
+						bukuId: button ? button.getAttribute('data-bs-target').replace('#modalView', '') : null,
+						judul: row.cells[1].textContent
+					};
+				}).filter(book => book.bukuId)
 			};
 
-			// Debug: log data yang akan dikirim
-			console.log('Sending data:', formData);
-
-			// Kirim data ke controller
-			fetch('/public/Borrowing/BookBorrowing', {
+			// Kirim data peminjaman
+			fetch('<?= base_url("public/Borrowing/BookBorrowing") ?>', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
-					'Accept': 'application/json'
+					'X-Requested-With': 'XMLHttpRequest'
 				},
 				body: JSON.stringify(formData)
 			})
-				.then(response => {
-					// Debug: log raw response
-					console.log('Raw response:', response);
-					return response.text();
-				})
-				.then(text => {
-					// Debug: log response text
-					console.log('Response text:', text);
-					try {
-						return JSON.parse(text);
-					} catch (error) {
-						throw new Error('Invalid JSON response: ' + text);
-					}
-				})
-				.then(data => {
-					if (data.success) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success!',
-							text: data.message
-						}).then((result) => {
-							if (result.isConfirmed) {
-								window.location.reload();
-							}
-						});
-					} else {
-						throw new Error(data.message || 'Terjadi kesalahan');
-					}
-				})
-				.catch(error => {
-					console.error('Error:', error);
+			.then(response => response.json())
+			.then(data => {
+				if (data.success) {
 					Swal.fire({
-						icon: 'error',
-						title: 'Error',
-						text: error.message
+						icon: 'success',
+						title: 'Sukses!',
+						text: data.message
+					}).then(() => {
+						window.location.reload();
 					});
+				} else {
+					throw new Error(data.message || 'Terjadi kesalahan');
+				}
+			})
+			.catch(error => {
+				console.error('Form submission error:', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Error',
+					text: error.message || 'Terjadi kesalahan saat memproses permintaan'
 				});
+			});
 		});
 	});
 </script>
@@ -415,7 +492,7 @@
 <!-- //? Alert if success -->
 <?php if ($this->session->flashdata('success')): ?>
 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
+		document.addEventListener('DOMContentLoaded', function() {
 			Swal.fire({
 				icon: 'success',
 				title: 'Success!',
@@ -428,7 +505,7 @@
 <!-- //? Alert if Error -->
 <?php if ($this->session->flashdata('error')): ?>
 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
+		document.addEventListener('DOMContentLoaded', function() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',

@@ -54,4 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['Auth/Register/process'] = 'Auth/Register/process';
+$route['Public/Borrowing/deleteTemp/(:num)'] = 'Public/Borrowing/deleteTemp/$1';
 

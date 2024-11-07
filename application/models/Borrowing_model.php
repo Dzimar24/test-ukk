@@ -33,8 +33,8 @@ class Borrowing_model extends CI_Model
 	public function viewDataBorrowing()
 	{
 		// 
-		$this->db->from('peminjaman_detail');
-		$this->db->join('peminjaman', 'peminjaman.id = peminjaman_detail.peminjaman_id', 'left');
+		$this->db->from('peminjaman');
+		$this->db->join('peminjaman_detail', 'peminjaman_detail.peminjaman_id = peminjaman.id', 'left');
 		$this->db->join('user', 'user.UserID = peminjaman.user_id', 'left');
 		$this->db->join('buku', 'buku.BukuID = peminjaman_detail.buku_id', 'left');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
@@ -126,8 +126,16 @@ class Borrowing_model extends CI_Model
 	// ------------------------------------------------------------------------
 	public function deleteTemporaryBorrowing($id)
 	{
-		$this->db->where('idTemp', $id);
-		$this->db->delete('temporaryborrowing');
+		$this->db->where('idBook', $id);
+		$query = $this->db->get('temporaryborrowing');
+
+		if ($query->num_rows() > 0) {
+			$this->db->where('idBook', $id);
+			$this->db->delete('temporaryborrowing');
+			return true;
+		} else {
+			return false;
+		}
 	}
 	// ------------------------------------------------------------------------
 
