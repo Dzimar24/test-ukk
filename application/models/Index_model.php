@@ -43,12 +43,11 @@ class Index_model extends CI_Model
 	// ------------------------------------------------------------------------
 	public function check_existing_borrow()
 	{
-		# code...
+		$this->db->select('peminjaman_detail.buku_id, peminjaman.status');
 		$this->db->from('peminjaman_detail');
 		$this->db->join('peminjaman', 'peminjaman.id = peminjaman_detail.peminjaman_id', 'left');
-
-		$query = $this->db->get()->row();
-		return $query;
+		$query = $this->db->get();
+		return $query->result();
 	}
 	// ------------------------------------------------------------------------
 
@@ -97,15 +96,27 @@ class Index_model extends CI_Model
 		$this->db->insert('bookmark', $saveData);
 	}
 	// ------------------------------------------------------------------------
-	
+
 	// ------------------------------------------------------------------------
-	public function viewFullDataBook($idBook){
+	public function viewFullDataBook($idBook)
+	{
 		$this->db->from('buku');
 		$this->db->join('kategori', 'kategori.KategoriID = buku.idKategory', 'left');
 		$this->db->where('buku.BukuID', $idBook);
-		
+
 		$query = $this->db->get()->result_array();
 		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function dataBookmark()
+	{
+		$this->db->select('BukuID');
+		$this->db->from('bookmark');
+
+		$query = $this->db->get();
+		return $query->result();
 	}
 	// ------------------------------------------------------------------------
 

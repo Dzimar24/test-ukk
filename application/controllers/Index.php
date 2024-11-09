@@ -17,6 +17,7 @@ class Index extends CI_Controller
 		$data['viewDataCountBookmark'] = $this->index->count_user_bookmarks($user_id);
 		$data['checkUserExists'] = $this->index->check_existing_borrow();
 		$data['viewDataBook'] = $this->index->viewDataBook();
+		$data['dataBookmark'] = $this->index->dataBookmark();
 		$this->template->load('template', 'Pages/public/index', $data);
 	}
 

@@ -102,6 +102,15 @@
 								</div>
 							</div>
 						</a>
+						<?php
+							$isBookmarked = false;
+							foreach ($dataBookmark as $db) {
+								if ($db->BukuID == $vdb['BukuID']) {
+									$isBookmarked = true;
+									break;
+								}
+							}
+						?>
 						<div class="btn-group align-items-center mx-2 px-1">
 							<?php if ($this->session->userdata('level') == 'peminjam') : ?>
 								<!-- //! Button Love -->
@@ -110,20 +119,29 @@
 								</button>
 								<!-- //! End Button Love -->
 								<!-- //! Button Borrowing -->
-								<?php if ($checkUserExists->user_id == $this->session->userdata('UserID') || $checkUserExists->buku_id == $vdb['BukuID'] || $checkUserExists->status == 'pending') : ?>
-									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
-										<i class="bi bi-folder-x d-flex align-items-center justify-content-center text-secondary"></i>
-									</button>
-								<?php else : ?>
-									<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
-										<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
-									</button>
-								<?php endif; ?>
+								<?php foreach ($checkUserExists as $check) : 
+									if ($check->buku_id == $vdb['BukuID'] && $check->status == 'pending') : ?>
+										<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
+											<i class="bi bi-folder-check d-flex align-items-center justify-content-center text-secondary"></i>
+										</button>
+									<?php else : ?>
+										<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
+											<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
+										</button>
+									<?php endif;
+								endforeach;
+								?>
 								<!-- //! End Button Borrowing -->
 								<!-- //! Button Bookmark -->
-								<a href="<?= site_url('Index/addBookmark/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
-									<i class="bi bi-bookmark d-flex align-items-center justify-content-center text-secondary"></i>
-								</a>
+								<?php if ($isBookmarked) : ?>
+									<a href="<?= site_url('Public/Bookmark/delete/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
+										<i class="bi bi-bookmark-fill d-flex align-items-center justify-content-center text-secondary bookmark-custom"></i>
+									</a>
+								<?php else : ?>
+									<a href="<?= site_url('Index/addBookmark/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
+										<i class="bi bi-bookmark d-flex align-items-center justify-content-center text-secondary bookmark-custom"></i>
+									</a>
+								<?php endif; ?>
 								<!-- //! End Button Bookmark -->
 							<?php else : ?>
 								

@@ -47,7 +47,7 @@ class Bookmark extends CI_Controller
 		# code...
 		$this->bmm->deleteBookmark($id);
 		$this->session->set_flashdata('success', 'The book has been removed from the bookmark list!!');
-		redirect('Public/Bookmark');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }
