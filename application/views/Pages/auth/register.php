@@ -19,15 +19,14 @@
 			<div class="col-lg-5 col-12">
 				<div id="auth-left">
 					<div class="auth-logo">
-						<a href="index.html"><img src="<?= base_url('/assets/mazer/') ?>assets/compiled/svg/logo.svg"
-								alt="Logo"></a>
+						<a href="<?= site_url('Index') ?>"><img src="<?= base_url('/assets/mazer/') ?>assets/compiled/svg/logo.svg" alt="Logo"></a>
 					</div>
 					<h1 class="auth-title">Sign Up</h1>
 					<p class="auth-subtitle mb-5">Input your data to register to our website.</p>
 
 					<?= form_open('Auth/Register/process'); ?>
 					<div class="form-group position-relative has-icon-left mb-4">
-						<input type="text" name="namaLengkap" class="form-control form-control-xl" placeholder="Name">
+						<input type="text" name="namaLengkap" class="form-control form-control-xl" id="full-name" placeholder="Name">
 						<div class="form-control-icon">
 							<i class="bi bi-person"></i>
 						</div>
@@ -64,8 +63,7 @@
 					<button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Sign Up</button>
 					<?= form_close() ?>
 					<div class="text-center mt-5 text-lg fs-4">
-						<p class='text-gray-600'>Already have an account? <a href="<?= site_url('auth/login') ?>"
-								class="font-bold">Log in</a>.</p>
+						<p class='text-gray-600'>Already have an account? <a href="<?= site_url('auth/login') ?>" class="font-bold">Log in</a>.</p>
 					</div>
 				</div>
 			</div>
@@ -81,6 +79,12 @@
 	<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/jquery/jquery.min.js"></script>
 	<script src="<?= base_url('/assets/mazer/') ?>assets/extensions/sweetalert2/sweetalert2.min.js"></script>
 	<script src="<?= base_url('/assets/mazer/') ?>assets/static/js/pages/sweetalert2.js"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			document.getElementById('full-name').focus();
+		});
+	</script>
 
 	<?php if ($this->session->flashdata('error')): ?>
 		<script>

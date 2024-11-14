@@ -56,6 +56,13 @@
 		color: #9E9E9E;
 		/* text-decoration: underline; */
 	}
+
+	.span-custom {
+		margin-top: 2px;
+		height: 30px;
+		width: 160px;
+		font-size: 20px;
+	}
 </style>
 <!-- End Style Table -->
 
@@ -149,19 +156,36 @@
 												<!-- Input fields for book details -->
 												<div class="col-md-9">
 													<div class="row">
-														<!-- Title and Category -->
-														<div class="col-md-9">
+														<!-- Title -->
+														<div class="col-md-6">
 															<div class="form-group">
 																<label for="bookTitle">Title:</label>
 																<input type="text" class="form-control" value="<?= $vdb['Judul'] ?>" readonly id="bookTitle">
 															</div>
 														</div>
+														<!-- End Title -->
+
+														<!-- Category -->
 														<div class="col-md-3">
 															<div class="form-group">
 																<label for="bookCategory">Category Book:</label>
 																<input type="text" name="categoryBook" class="form-control" value="<?= $vdb['NamaKategori'] ?>" id="bookCategory" readonly>
 															</div>
 														</div>
+														<!-- End Category -->
+
+														<!-- Status Book -->
+														<div class="col-md-3">
+															<div class="form-group">
+																<label for="bookStatus" class="d-flex">Book Status:</label>
+																<?php if ($vdb['status_buku'] == 'available') : ?>
+																	<span class="badge bg-light-success span-custom" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is available and can be borrowed.">Available</span>
+																<?php else : ?>
+																	<span class="badge bg-light-danger span-custom" style="cursor: not-allowed;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is unavailable and cannot be borrowed.">Not Available</span>
+																<?php endif; ?>
+															</div>
+														</div>
+														<!-- End Status Book -->
 													</div>
 													<div class="row">
 														<!-- Author -->
@@ -193,6 +217,10 @@
 													</div>
 												</div>
 											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline-secondary"
+												data-bs-dismiss="modal">Close</button>
 										</div>
 									</div>
 								</div>

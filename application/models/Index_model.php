@@ -41,14 +41,19 @@ class Index_model extends CI_Model
 	// ------------------------------------------------------------------------
 
 	// ------------------------------------------------------------------------
-	public function check_existing_borrow()
+	public function check_existing_borrow($buku_id)
 	{
 		$this->db->select('peminjaman_detail.buku_id, peminjaman.status');
 		$this->db->from('peminjaman_detail');
 		$this->db->join('peminjaman', 'peminjaman.id = peminjaman_detail.peminjaman_id', 'left');
+		$this->db->where('user_id', $this->session->userdata('UserID'));
+		$this->db->where('buku_id', $buku_id);
+		$this->db->where('status', 'pending');
+
 		$query = $this->db->get();
-		return $query->result();
+		return $query->num_rows() > 0;
 	}
+
 	// ------------------------------------------------------------------------
 
 	// ------------------------------------------------------------------------
@@ -117,6 +122,50 @@ class Index_model extends CI_Model
 
 		$query = $this->db->get();
 		return $query->result();
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function dataReview($idBook) {
+		$this->db->select('ulasanbuku.*, user.Username');
+		$this->db->from('ulasanbuku');
+		$this->db->join('user', 'user.UserID = ulasanbuku.UserID', 'left');
+		$this->db->where('BukuID', $idBook);
+
+		$query = $this->db->get()->result_array();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function dataReviewUser() {
+		$this->db->select('ulasanbuku.UserID');
+		$this->db->from('ulasanbuku');
+		
+		$query = $this->db->get()->row();
+		return $query;
+	}
+	// ------------------------------------------------------------------------
+
+	// ------------------------------------------------------------------------
+	public function create($data)
+	{
+		$this->db->insert('ulasanbuku', $data);
+		return $this->db->insert_id();
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function update($idReview, $data) {
+		$this->db->where('UlasanID', $idReview);
+		$this->db->update('ulasanbuku', $data);
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function deleteReview($idReview) {
+		$this->db->where('UlasanID', $idReview);
+		$this->db->delete('ulasanbuku');
 	}
 	// ------------------------------------------------------------------------
 

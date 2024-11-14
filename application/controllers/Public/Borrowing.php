@@ -134,7 +134,6 @@ class Borrowing extends CI_Controller
 				$detail_data = [
 					'peminjaman_id' => $peminjaman_id,
 					'buku_id' => $book['bukuId'],
-					'status' => 'pending'
 				];
 				$this->db->insert('peminjaman_detail', $detail_data);
 			}

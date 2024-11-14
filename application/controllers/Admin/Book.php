@@ -45,6 +45,7 @@ class Book extends CI_Controller
 		$this->form_validation->set_rules('publisher', 'Publisher', 'trim|required');
 		$this->form_validation->set_rules('publication_year', 'Publication Year', 'trim|required');
 		$this->form_validation->set_rules('description', 'Book Description', 'trim|required');
+		$this->form_validation->set_rules('statusOfBook', 'statusOfBook', 'trim|required|in_list[available,not_available]');
 
 		if ($this->form_validation->run() == FALSE) {
 			//! Validasi gagal, tampilkan error flashdata
@@ -76,6 +77,7 @@ class Book extends CI_Controller
 					'Penerbit' => $this->input->post('publisher'),
 					'TahunTerbit' => $this->input->post('publication_year'),
 					'deskripsi' => $this->input->post('description'),
+					'status_buku' => $this->input->post('statusOfBook'), 
 					'coverBook' => $cover_image
 				];
 
@@ -129,6 +131,8 @@ class Book extends CI_Controller
 		$this->form_validation->set_rules('publisherUpdate', 'Publisher', 'trim|required');
 		$this->form_validation->set_rules('publication_year_update', 'Publication Year', 'trim|required');
 		$this->form_validation->set_rules('descriptionUpdate', 'Description', 'trim|required');
+		$this->form_validation->set_rules('statusOfBookUpdate', 'statusOfBookUpdate', 'trim|required|in_list[available,not_available]');
+		
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->session->set_flashdata('error', validation_errors());
@@ -140,7 +144,8 @@ class Book extends CI_Controller
 				'Penulis' => $this->input->post('authorUpdate'),
 				'Penerbit' => $this->input->post('publisherUpdate'),
 				'TahunTerbit' => $this->input->post('publication_year_update'),
-				'deskripsi' => $this->input->post('descriptionUpdate')
+				'deskripsi' => $this->input->post('descriptionUpdate'),
+				'status_buku' => $this->input->post('statusOfBookUpdate')
 			];
 
 			$old_cover = $this->book->getOldCover($id);

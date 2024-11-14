@@ -79,6 +79,10 @@
 		color: #333;
 		border-bottom: 1px solid #ddd;
 	}
+
+	.star-custom {
+		color: gold;
+	}
 </style>
 <!-- Page Content -->
 <div class="page-content">
@@ -110,17 +114,13 @@
 									break;
 								}
 							}
+
+							$isPending = $this->index->check_existing_borrow($vdb['BukuID']);
 						?>
 						<div class="btn-group align-items-center mx-2 px-1">
 							<?php if ($this->session->userdata('level') == 'peminjam') : ?>
-								<!-- //! Button Love -->
-								<button type="button" class="btn btn-link p-2 m-1 text-decoration-none">
-									<i class="bi bi-heart d-flex align-items-center justify-content-center text-secondary"></i>
-								</button>
-								<!-- //! End Button Love -->
 								<!-- //! Button Borrowing -->
-								<?php foreach ($checkUserExists as $check) : 
-									if ($check->buku_id == $vdb['BukuID'] && $check->status == 'pending') : ?>
+								<?php if ($isPending) : ?>
 										<button type="button" class="btn btn-link p-2 m-1 text-decoration-none custom-button-check-borrowing">
 											<i class="bi bi-folder-check d-flex align-items-center justify-content-center text-secondary"></i>
 										</button>
@@ -128,17 +128,16 @@
 										<button type="button" class="btn btn-link p-2 m-1 text-decoration-none" data-bs-toggle="modal" data-bs-target="#borrowingModal<?= $vdb['BukuID']?>">
 											<i class="bi bi-folder-plus d-flex align-items-center justify-content-center text-secondary"></i>
 										</button>
-									<?php endif;
-								endforeach;
-								?>
+									<?php endif;?>
 								<!-- //! End Button Borrowing -->
+
 								<!-- //! Button Bookmark -->
 								<?php if ($isBookmarked) : ?>
-									<a href="<?= site_url('Public/Bookmark/delete/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
+									<a href="<?= site_url('Public/Bookmark/delete/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 mt-2 text-decoration-none">
 										<i class="bi bi-bookmark-fill d-flex align-items-center justify-content-center text-secondary bookmark-custom"></i>
 									</a>
 								<?php else : ?>
-									<a href="<?= site_url('Index/addBookmark/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 text-decoration-none">
+									<a href="<?= site_url('Index/addBookmark/' . $vdb['BukuID']); ?>" class="btn btn-link p-2 m-1 mt-2 text-decoration-none">
 										<i class="bi bi-bookmark d-flex align-items-center justify-content-center text-secondary bookmark-custom"></i>
 									</a>
 								<?php endif; ?>
@@ -192,9 +191,9 @@
 	buttonTriggers.forEach(button => {
 		button.addEventListener('click', function () {
 			Swal.fire({
-					icon: "warning",
-					title: "Oops...",
-					text: "The book is in the process of being borrowed",
+				icon: "warning",
+				title: "Oops...",
+				text: "The book is in the process of being borrowed",
 			});
 		});
 	});
@@ -210,3 +209,28 @@
 		});
 	});
 </script>
+<!-- //? Alert if success -->
+<?php if ($this->session->flashdata('success')): ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			Swal.fire({
+				icon: 'success',
+				title: 'Success!',
+				text: '<?php echo $this->session->flashdata('success'); ?>'
+			});
+		});
+	</script>
+<?php endif; ?>
+
+<!-- //? Alert if Error -->
+<?php if ($this->session->flashdata('error')): ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: '<?php echo $this->session->flashdata('error'); ?>'
+			});
+		});
+	</script>
+<?php endif; ?>

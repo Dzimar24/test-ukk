@@ -1,4 +1,4 @@
-<!-- Header Page User -->
+<!-- Header Page Add Borrowing -->
 <div class="page-title">
 	<div class="row">
 		<div class="col-12 col-md-6 order-md-1 order-last">
@@ -14,7 +14,7 @@
 		</div>
 	</div>
 </div>
-<!-- End Header Page User -->
+<!-- End Header Page Add Borrowing -->
 
 <!-- Style -->
 <style>
@@ -37,6 +37,12 @@
 
 	.icon-custom {
 		color: #E72929;
+	}
+
+	.icon-x {
+		color: #000000;
+		font-size: 20px;
+		text-shadow: 0 0 1px #000000; /* Menambah efek ketebalan */
 	}
 </style>
 <!-- End Style -->
@@ -131,8 +137,7 @@
 			<div class="modal-body">
 				<div class="card-body">
 					<div class="table-responsive">
-						<?php if (!empty($viewDataBook)): // Cek apakah data ada 
-						?>
+						<?php if (!empty($viewDataBook)): // Cek apakah data ada  ?>
 							<table class="table" id="dataTables">
 								<thead>
 									<tr>
@@ -150,13 +155,17 @@
 									?>
 										<tr>
 											<td>
-												<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book">
+												<?php if($vdb['status_buku'] == 'available') : ?>
+													<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book">
+												<?php else : ?>
+													<i class="bi bi-x-lg icon-x"></i>
+												<?php endif; ?>
 											</td>
 											<td><?= $vdb['Judul'] ?></td>
 											<td><?= $vdb['Penulis'] ?></td>
 											<td><?= date("Y", strtotime($vdb['TahunTerbit'])) ?></td>
 											<td>
-												<span class="badge bg-success"><?= $vdb['bookStatus'] ?></span>
+												<span class="badge bg-success"><?= $vdb['status_buku'] ?></span>
 											</td>
 										</tr>
 									<?php endforeach; ?>
@@ -367,6 +376,7 @@
 								text: "Buku telah ditempatkan dalam peminjaman sementara.",
 							}).then(() => {
 								$('#exampleModalScrollable').modal('hide');
+								window.location.reload();
 							});
 						} else {
 							Swal.fire({

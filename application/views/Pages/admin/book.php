@@ -42,14 +42,16 @@
 							<!-- Input fields for book details -->
 							<div class="col-md-9">
 								<div class="row">
-									<!-- Title and Category -->
-									<div class="col-md-9">
+									<!-- Title -->
+									<div class="col-md-6">
 										<div class="form-group">
 											<label for="bookTitle">Title:</label>
-											<input type="text" class="form-control" name="title" placeholder="Enter Book Title"
-												id="bookTitle" required>
+											<input type="text" class="form-control" name="title" placeholder="Enter Book Title" id="bookTitle" required>
 										</div>
 									</div>
+									<!-- End Title -->
+
+									<!-- Category -->
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="bookCategory">Category Book:</label>
@@ -61,30 +63,41 @@
 											</select>
 										</div>
 									</div>
+									<!-- End Category -->
+
+									<!-- Status Book -->
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="statusOfBook">Status Book</label>
+											<select name="statusOfBook" class="form-control" id="statusOfBook">
+												<option selected>- Status Book -</option>
+												<option value="available">Available</option>
+												<option value="not_available">Not Available</option>
+											</select>
+										</div>
+									</div>
+									<!-- End Status Book -->
 								</div>
 								<div class="row">
 									<!-- Author -->
 									<div class="col-md-4">
 										<div class="form-group mt-2">
 											<label for="bookAuthor">Author:</label>
-											<input type="text" class="form-control" name="author" placeholder="Enter Book Author"
-												id="bookAuthor" required>
+											<input type="text" class="form-control" name="author" placeholder="Enter Book Author" id="bookAuthor" required>
 										</div>
 									</div>
 									<!-- Publisher -->
 									<div class="col-md-4">
 										<div class="form-group mt-2">
 											<label for="bookPublisher">Publisher:</label>
-											<input type="text" class="form-control" name="publisher"
-												placeholder="Enter Book Publisher" id="bookPublisher" required>
+											<input type="text" class="form-control" name="publisher" placeholder="Enter Book Publisher" id="bookPublisher" required>
 										</div>
 									</div>
 									<!-- Publication Year -->
 									<div class="col-md-4">
 										<div class="form-group mt-2">
 											<label for="publicationYear">Publication Year:</label>
-											<input type="date" class="form-control" name="publication_year" id="publicationYear"
-												required>
+											<input type="date" class="form-control" name="publication_year" id="publicationYear" required>
 										</div>
 									</div>
 								</div>
@@ -150,13 +163,16 @@
 								<!-- Input fields for book details -->
 								<div class="col-md-9">
 									<div class="row">
-										<!-- Title and Category -->
-										<div class="col-md-9">
+										<!-- Title -->
+										<div class="col-md-6">
 											<div class="form-group">
 												<label for="bookTitle">Title:</label>
 												<input type="text" class="form-control" name="titleUpdate" value="<?= $vde['Judul'] ?>" id="bookTitle">
 											</div>
 										</div>
+										<!-- End Title -->
+
+										<!-- Category -->
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="bookCategory">Category Book:</label>
@@ -169,6 +185,19 @@
 												</select>
 											</div>
 										</div>
+										<!-- End Category -->
+
+										<!-- Status Book -->
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="statusOfBook">Status Book</label>
+												<select name="statusOfBookUpdate" class="form-control" id="statusOfBook">
+													<option value="available" <?= ($vde['status_buku'] == 'available') ? 'selected' : '' ?>>Available</option>
+													<option value="not_available" <?= ($vde['status_buku'] == 'not_available') ? 'selected' : '' ?>>Not Available</option>
+												</select>
+											</div>
+										</div>
+										<!-- End Status Book -->
 									</div>
 									<div class="row">
 										<!-- Author -->
@@ -248,6 +277,13 @@
 		width: 400px;
 		/* Ubah sesuai kebutuhan */
 	}
+
+	.span-custom {
+		margin-top: 2px;
+		height: 30px;
+		width: 160px;
+		font-size: 20px;
+	}
 </style>
 <!-- End Style Table -->
 
@@ -310,19 +346,36 @@
 														<!-- Input fields for book details -->
 														<div class="col-md-9">
 															<div class="row">
-																<!-- Title and Category -->
-																<div class="col-md-9">
+																<!-- Title -->
+																<div class="col-md-6">
 																	<div class="form-group">
 																		<label for="bookTitle">Title:</label>
 																		<input type="text" class="form-control" value="<?= $vdb['Judul'] ?>" readonly id="bookTitle">
 																	</div>
 																</div>
+																<!-- End Title -->
+
+																<!-- Category -->
 																<div class="col-md-3">
 																	<div class="form-group">
 																		<label for="bookCategory">Category Book:</label>
 																		<input type="text" name="categoryBook" class="form-control" value="<?= $vdb['NamaKategori'] ?>" id="bookCategory" readonly>
 																	</div>
 																</div>
+																<!-- End Category -->
+
+																<!-- Status Book -->
+																<div class="col-md-3">
+																	<div class="form-group">
+																		<label for="bookStatus" class="d-flex">Book Status:</label>
+																		<?php if ($vdb['status_buku'] == 'available') : ?>
+																			<span class="badge bg-light-success span-custom" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is available and can be borrowed.">Available</span>
+																		<?php else : ?>
+																			<span class="badge bg-light-danger span-custom" style="cursor: not-allowed;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is unavailable and cannot be borrowed.">Not Available</span>
+																		<?php endif; ?>
+																	</div>
+																</div>
+																<!-- End Status Book -->
 															</div>
 															<div class="row">
 																<!-- Author -->
@@ -369,7 +422,6 @@
 					</div>
 				</div>
 			</div>
-
 		</section>
 	</div>
 </div>

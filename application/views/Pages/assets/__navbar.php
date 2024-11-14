@@ -25,10 +25,21 @@
 				</a>
 			</li>
 			<li class="menu-item">
-				<a href="<?= site_url('Admin/User') ?>" class='menu-link'>
-					<span><i class="bi bi-person"></i> User</span>
+				<a href="<?= site_url('Admin/BorrowingDetails') ?>" class='menu-link'>
+					<span><i class="bi bi-folder2-open"></i> Borrowing Details</span>
 				</a>
 			</li>
+
+			<?php if($this->session->userdata('level') == 'admin') : ?> 
+				<li class="menu-item">
+					<a href="<?= site_url('Admin/User') ?>" class='menu-link'>
+						<span><i class="bi bi-person"></i> User</span>
+					</a>
+				</li>
+			<?php endif; ?>
+
+			
+
 			<?php endif; ?>
 			<?php if($this->session->userdata('level') == true) : ?>
 				
