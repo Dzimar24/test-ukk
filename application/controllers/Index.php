@@ -92,7 +92,7 @@ class Index extends CI_Controller
 	public function Review()
 	{
 		$rating = $this->input->post('rating');
-		$comment = $this->input->post('rating');
+		$comment = $this->input->post('comment');
 		$idBook = $this->input->post('idBook');
 
 		if (empty($rating) || empty($comment) || empty($idBook)) {

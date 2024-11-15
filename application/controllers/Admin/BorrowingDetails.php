@@ -41,6 +41,7 @@ class BorrowingDetails extends CI_Controller
 		if (!$id) {
 			# code...
 			$this->session->set_flashdata('error', 'Failed Approved Borrowing !!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		$data = array(
@@ -61,6 +62,7 @@ class BorrowingDetails extends CI_Controller
 		if (!$id) {
 			# code...
 			$this->session->set_flashdata('error', 'Failed Completed Borrowing !!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		$data = array(
@@ -83,6 +85,7 @@ class BorrowingDetails extends CI_Controller
 		if (!$id) {
 			# code...
 			$this->session->set_flashdata('error', 'Failed Completed Borrowing !!');
+			redirect($_SERVER['HTTP_REFERER']);
 		}
 
 		$data = array(

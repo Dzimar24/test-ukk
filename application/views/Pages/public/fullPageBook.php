@@ -270,13 +270,9 @@
 			<div class="container container-custom">
 				<div class="row-custom align-items-center">
 					<h1 class="text-center mx-auto h1-custom">Comment</h1>
-					<?php if(empty($viewDataReviewUser->UserID)) : ?>
-
-					<?php else : ?>
-						<button class="ms-auto button-custom btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">
-							<i class="bi bi-chat-right-dots"></i>
-						</button>
-					<?php endif; ?>
+					<button class="ms-auto button-custom btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">
+						<i class="bi bi-chat-right-dots"></i>
+					</button>
 				</div>
 				<div class="row">
 					<?php if(empty($viewDataReview)) : ?>

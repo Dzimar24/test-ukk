@@ -109,7 +109,7 @@
 										</button>
 									</td>
 									<td>
-										<?php if ($vadb['status'] == 'rejected' || $vadb['status'] == 'completed' || $vadb['status'] == 'approved') : ?>
+										<?php if ($vadb['status'] == 'rejected' || $vadb['status'] == 'completed') : ?>
 										
 										<?php else : ?>
 											<div class="btn-group dropdown me-1 mb-1">
