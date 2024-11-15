@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
@@ -59,7 +62,7 @@ class Borrowing_model extends CI_Model
 	public function viewDataBorrowingInTemporary()
 	{
 		$this->db->distinct();
-		$this->db->select('b.BukuID, b.Judul, b.Penulis, b.Penerbit, b.TahunTerbit, b.coverBook, k.NamaKategori, b.deskripsi, tb.idTemp');
+		$this->db->select('b.BukuID, b.Judul, b.Penulis, b.Penerbit, b.TahunTerbit, b.coverBook, k.NamaKategori, b.deskripsi, tb.idTemp, b.status_buku');
 		$this->db->from('temporaryborrowing tb');
 		$this->db->join('buku b', 'tb.idBook = b.BukuID');
 		$this->db->join('kategori k', 'b.idKategory = k.KategoriID');
@@ -136,6 +139,20 @@ class Borrowing_model extends CI_Model
 		} else {
 			return false;
 		}
+	}
+	// ------------------------------------------------------------------------
+	
+	// ------------------------------------------------------------------------
+	public function viewDataBookInBorrowing()
+	{
+		// 
+		$this->db->select('peminjaman_detail.buku_id, peminjaman.status');
+		$this->db->from('peminjaman');
+		$this->db->join('peminjaman_detail', 'peminjaman_detail.peminjaman_id = peminjaman.id', 'left');
+		$this->db->join('buku', 'buku.BukuID = peminjaman_detail.buku_id', 'left');
+		$this->db->where('peminjaman.user_id', $this->session->userdata('UserID'));
+
+		return $this->db->get()->result();
 	}
 	// ------------------------------------------------------------------------
 

@@ -51,6 +51,7 @@ class Borrowing extends CI_Controller
 		$data['viewDataBook'] = $this->bm->viewDataBook();
 		$data['viewDataCountBookmark'] = $this->bm->count_user_bookmarks($user_id);
 		$data['viewDataBorrowingTemp'] = $this->bm->viewDataBorrowingInTemporary();
+		$data['viewDataBookInBorrowing'] = $this->bm->viewDataBookInBorrowing();
 		$this->template->load('template', 'Pages/public/addBorrowingPage', $data);
 	}
 

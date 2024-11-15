@@ -44,6 +44,13 @@
 		font-size: 20px;
 		text-shadow: 0 0 1px #000000; /* Menambah efek ketebalan */
 	}
+
+	.span-custom {
+		margin-top: 2px;
+		height: 30px;
+		width: 160px;
+		font-size: 20px;
+	}
 </style>
 <!-- End Style -->
 
@@ -98,6 +105,99 @@
 											</a>
 										</td>
 									</tr>
+									<!-- //! Modal View -->
+									<div class="modal fade" id="modalView<?= $dbt['BukuID'] ?>" tabindex="-1" aria-labelledby="modalViewLabel<?= $dbt['BukuID'] ?>" aria-hidden="true">
+										<div class="modal-dialog modal-xl modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="modalViewLabel<?= $dbt['BukuID'] ?>">Book Details</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<!-- Add your modal content here -->
+													<div class="row">
+														<!-- Input for book cover image -->
+														<div class="col-md-3">
+															<label for="bookCover" class="form-label" style="margin-left: 20px;">Cover Book</label>
+															<div class="form-group">
+																<div style="max-width: 200px; max-height: 500px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.8) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px; margin-top: 10px; margin-left: 20px;">
+																	<img src="<?= base_url('/assets/uploads/coverBook/' . $dbt['coverBook']) ?>" alt="Image Error" style="width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain;">
+																</div>
+															</div>
+														</div>
+														<!-- Input fields for book details -->
+														<div class="col-md-9">
+															<div class="row">
+																<!-- Title -->
+																<div class="col-md-6">
+																	<div class="form-group">
+																		<label for="bookTitle">Title:</label>
+																		<input type="text" class="form-control" value="<?= $dbt['Judul'] ?>" readonly id="bookTitle">
+																	</div>
+																</div>
+																<!-- End Title -->
+
+																<!-- Category -->
+																<div class="col-md-3">
+																	<div class="form-group">
+																		<label for="bookCategory">Category Book:</label>
+																		<input type="text" name="categoryBook" class="form-control" value="<?= $dbt['NamaKategori'] ?>" id="bookCategory" readonly>
+																	</div>
+																</div>
+																<!-- End Category -->
+
+																<!-- Status Book -->
+																<div class="col-md-3">
+																	<div class="form-group">
+																		<label for="bookStatus" class="d-flex">Book Status:</label>
+																		<?php if ($dbt['status_buku'] == 'available') : ?>
+																			<span class="badge bg-light-success span-custom" style="cursor: pointer;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is available and can be borrowed.">Available</span>
+																		<?php else : ?>
+																			<span class="badge bg-light-danger span-custom" style="cursor: not-allowed;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="This book is unavailable and cannot be borrowed.">Not Available</span>
+																		<?php endif; ?>
+																	</div>
+																</div>
+																<!-- End Status Book -->
+															</div>
+															<div class="row">
+																<!-- Author -->
+																<div class="col-md-4">
+																	<div class="form-group mt-2">
+																		<label for="bookAuthor">Author:</label>
+																		<input type="text" class="form-control" value="<?= $dbt['Penulis'] ?>" id="bookAuthor" readonly>
+																	</div>
+																</div>
+																<!-- Publisher -->
+																<div class="col-md-4">
+																	<div class="form-group mt-2">
+																		<label for="bookPublisher">Publisher:</label>
+																		<input type="text" class="form-control" value="<?= $dbt['Penerbit'] ?>" id="bookPublisher" readonly>
+																	</div>
+																</div>
+																<!-- Publication Year -->
+																<div class="col-md-4">
+																	<div class="form-group mt-2">
+																		<label for="publicationYear">Publication Year:</label>
+																		<input type="text" class="form-control" value="<?= date("l, d F Y", strtotime($dbt['TahunTerbit'])) ?>" id="publicationYear" readonly>
+																	</div>
+																</div>
+															</div>
+															<!-- Book Description -->
+															<div class="form-group mt-3">
+																<label for="readonlyTinyMCE">Book Description:</label>
+																<textarea cols="30" class="form-control" id="readonlyTinyMCE"  rows="10"><?= $dbt['deskripsi'] ?></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-outline-secondary"
+														data-bs-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- //! End Modal View -->
 								<?php endforeach; ?>
 							</tbody>
 						</table>
@@ -152,20 +252,34 @@
 									<?php
 									foreach ($viewDataBook as $vdb):
 										// var_dump($vdb); exit; 
+										$isPending = false;
+
+										if($viewDataBookInBorrowing) {
+											foreach($viewDataBookInBorrowing as $borrowing) {
+												if($borrowing->buku_id == $vdb['BukuID'] && $borrowing->status == 'pending') {
+													$isPending = true;
+													break;
+												}
+											}
+										}
 									?>
 										<tr>
 											<td>
-												<?php if($vdb['status_buku'] == 'available') : ?>
-													<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book">
-												<?php else : ?>
+												<?php if($vdb['status_buku'] == 'not_available' || $isPending) : ?>
 													<i class="bi bi-x-lg icon-x"></i>
+												<?php else : ?>
+													<input type="checkbox" value="<?= $vdb['BukuID'] ?>" class="form-check-input row-checkbox checkbox-many-book">
 												<?php endif; ?>
 											</td>
 											<td><?= $vdb['Judul'] ?></td>
 											<td><?= $vdb['Penulis'] ?></td>
 											<td><?= date("Y", strtotime($vdb['TahunTerbit'])) ?></td>
 											<td>
-												<span class="badge bg-success"><?= $vdb['status_buku'] ?></span>
+												<?php if($vdb['status_buku'] == 'available') :  ?>
+													<span class="badge bg-success">Available</span>
+												<?php else : ?>
+													<span class="badge bg-danger">Not Available</span>
+												<?php endif; ?>
 											</td>
 										</tr>
 									<?php endforeach; ?>

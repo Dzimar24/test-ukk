@@ -146,13 +146,9 @@ class Index extends CI_Controller
 			redirect($_SERVER['HTTP_REFERER']);
 		}
 
-		try {
-			$this->index->delete($idReview);
-			$this->session->set_flashdata('success', 'The review has been successfully deleted');
-			redirect($_SERVER['HTTP_REFERER']);
-		} catch (Exception $e) {
-			$this->session->set_flashdata('error', 'Failed to delete review. Please try again.');
-			redirect($_SERVER['HTTP_REFERER']);
-		}
+		$this->index->deleteReview($idReview);
+
+		$this->session->set_flashdata('success', 'The review has been successfully deleted');
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }
