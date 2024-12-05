@@ -270,9 +270,13 @@
 			<div class="container container-custom">
 				<div class="row-custom align-items-center">
 					<h1 class="text-center mx-auto h1-custom">Comment</h1>
-					<button class="ms-auto button-custom btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">
-						<i class="bi bi-chat-right-dots"></i>
-					</button>
+					<?php if($this->session->userdata('UserID') == null || $this->session->userdata('level') == 'admin' || $this->session->userdata('level') == 'petugas') : ?>
+						
+					<?php else : ?>
+						<button class="ms-auto button-custom btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ratingModal">
+							<i class="bi bi-chat-right-dots"></i>
+						</button>
+					<?php endif; ?>
 				</div>
 				<div class="row">
 					<?php if(empty($viewDataReview)) : ?>
